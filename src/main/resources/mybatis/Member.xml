@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.khcare.spring">
-    <select id="login_check" resultType="String">
-        SELECT name FROM member
-        WHERE userid=#{userid} AND passwd=#{passwd}
+    <select id="getUserAccount" resultType="String">
+        SELECT * FROM user
+        WHERE USER_ID=#{userId}
     </select>
 </mapper>
