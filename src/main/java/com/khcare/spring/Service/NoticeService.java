@@ -6,7 +6,7 @@ import java.util.Map;
 public interface NoticeService {
 
     //공지사항 게시판 전체 조회
-    List<Map<String,Object>> noticeList();
+    List<Map<String,Object>> noticeList(Map<String,Object> pMap);
 
     //공지사항 게시판 검색
     List<Map<String,Object>> noticeSelectList();
