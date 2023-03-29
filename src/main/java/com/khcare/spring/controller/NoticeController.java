@@ -51,4 +51,5 @@ public class NoticeController {
         result = noticeServiceImpl.noticeHit(Integer.parseInt(pMap.get("notice_no").toString()));
 
     }
+    //
 }

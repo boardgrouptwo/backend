@@ -14,4 +14,5 @@ public interface PaymentMapper {
 
     @Insert("INSERT INTO pay")
     Payment paymentInsert();
+
 }
