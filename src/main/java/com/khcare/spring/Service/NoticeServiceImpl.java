@@ -15,15 +15,23 @@ public class NoticeServiceImpl implements NoticeService{
 
     @Override
     public List<Map<String, Object>> noticeList(Map<String,Object> pMap) {
-
         List<Map<String, Object>> bList = null;
         bList = noticeDao.noticeList(pMap);
         return bList;
     }
 
     @Override
-    public List<Map<String, Object>> noticeSelectList() {
-        return null;
+    public List<Map<String, Object>> noticeSearchList(Map<String,Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = noticeDao.noticeList(pMap);
+        return bList;
+    }
+
+    @Override
+    public int noticeHit(int notice_no) {
+        int result = 0;
+        result = noticeDao.noticeHit(notice_no);
+        return result;
     }
 
     @Override

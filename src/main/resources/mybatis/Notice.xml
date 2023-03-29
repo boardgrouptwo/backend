@@ -9,6 +9,16 @@
             <if test='notice_no != null'>
                 AND notice_no = #{notice_no}
             </if>
+            <if test='search != null'>
+                AND notice_title LIKE '%' #{search} '%'
+            </if>
         </where>
     </select>
+
+    <update id="noticeHit">
+        UPDATE notice SET
+        notice_hit = notice_hit + 1
+        WHERE notice_no = #{notice_no}
+    </update>
+
 </mapper>

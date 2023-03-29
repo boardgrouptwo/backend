@@ -9,7 +9,10 @@ public interface NoticeService {
     List<Map<String,Object>> noticeList(Map<String,Object> pMap);
 
     //공지사항 게시판 검색
-    List<Map<String,Object>> noticeSelectList();
+    List<Map<String,Object>> noticeSearchList(Map<String,Object> pMap);
+
+    //공지사항 게시판 조회수
+    int noticeHit(int notice_no);
 
     //공지사항 게시판 추가
     int noticeInsert();

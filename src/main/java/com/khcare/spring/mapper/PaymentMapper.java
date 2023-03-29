@@ -13,5 +13,5 @@ public interface PaymentMapper {
     Payment paymentUser(@Param("user_id") String user_id);
 
     @Insert("INSERT INTO pay")
-    Payment paymentInsert()
+    Payment paymentInsert();
 }

@@ -21,4 +21,14 @@ public class NoticeDao {
        // log.info(bList);
         return bList;
     }
+
+    public int noticeHit(int notice_no) {
+        int result = 0;
+        result = sqlSessionTemplate.update("noticeHit",notice_no);
+        log.info("조회수 증가");
+        log.info(result);
+        return result;
+    }
+
+
 }

@@ -30,4 +30,25 @@ public class NoticeController {
         String temp =g.toJson(bList);
         return temp;
     }
+
+    @GetMapping("/Search")
+    public String noticeSearchList(@RequestParam Map<String,Object> pMap) {
+        log.info("notice 검색 조회");
+        log.info(pMap);
+        List<Map<String,Object>> bList = null;
+        bList = noticeServiceImpl.noticeSearchList(pMap);
+        log.info(bList);
+        Gson g = new Gson();
+        String temp =g.toJson(bList);
+        return temp;
+    }
+
+    @GetMapping("/hitAdd")
+    public void HitAdd(@RequestParam Map<String, Object> pMap) {
+        log.info(pMap);
+        log.info(pMap.get("notice_no"));
+        int result = 0;
+        result = noticeServiceImpl.noticeHit(Integer.parseInt(pMap.get("notice_no").toString()));
+
+    }
 }
