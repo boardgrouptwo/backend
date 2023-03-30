@@ -49,7 +49,17 @@ public class NoticeController {
         log.info(pMap.get("notice_no"));
         int result = 0;
         result = noticeServiceImpl.noticeHit(Integer.parseInt(pMap.get("notice_no").toString()));
-
     }
-    //
+
+    @GetMapping("/noticeAfterBefore")
+    public String noticeAfterBefore(@RequestParam Map<String, Object> pMap) {
+        log.info("notice 이전 이후 글");
+        log.info(pMap);
+        List<Map<String,Object>> bList = null;
+        bList = noticeServiceImpl.noticeAfterBefore(pMap);
+        log.info(bList);
+        Gson g = new Gson();
+        String temp =g.toJson(bList);
+        return temp;
+    }
 }

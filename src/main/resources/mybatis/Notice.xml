@@ -21,4 +21,15 @@
         WHERE notice_no = #{notice_no}
     </update>
 
+    <select id="noticeAfterBefore" resultType="map">
+        SELECT * FROM
+            (SELECT notice_no, notice_title,
+                    LAG(notice_title) over (ORDER BY notice_title) AS beforeNotice,
+                    LAG(notice_no) over (ORDER BY notice_title) AS beforeNo,
+                    LEAD(notice_title) over (ORDER BY notice_title) AS afterNotice,
+                    LEAD(notice_no) over (ORDER BY notice_title) AS afterNo
+             FROM notice) a
+        WHERE notice_no = #{notice_no}
+    </select>
+
 </mapper>

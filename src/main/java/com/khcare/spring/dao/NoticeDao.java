@@ -31,4 +31,10 @@ public class NoticeDao {
     }
 
 
+    public List<Map<String, Object>> noticeAfterBefore(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = sqlSessionTemplate.selectList("noticeAfterBefore", pMap);
+        // log.info(bList);
+        return bList;
+    }
 }

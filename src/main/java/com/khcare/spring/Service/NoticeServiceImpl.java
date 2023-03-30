@@ -35,6 +35,13 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
+    public List<Map<String, Object>> noticeAfterBefore(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = noticeDao.noticeAfterBefore(pMap);
+        return bList;
+    }
+
+    @Override
     public int noticeInsert() {
         return 0;
     }
