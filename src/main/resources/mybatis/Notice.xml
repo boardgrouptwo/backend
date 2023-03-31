@@ -21,6 +21,13 @@
         WHERE notice_no = #{notice_no}
     </update>
 
+    <insert id="noticeInsert" parameterType="map">
+        INSERT INTO notice
+        (notice_title, notice_content, notice_date ,notice_hit) VALUES
+        (#{notice_title}, #{notice_content}, now(), 0);
+    </insert>
+
+
     <select id="noticeAfterBefore" resultType="map">
         SELECT * FROM
             (SELECT notice_no, notice_title,

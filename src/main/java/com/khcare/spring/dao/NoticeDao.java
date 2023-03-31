@@ -37,4 +37,10 @@ public class NoticeDao {
         // log.info(bList);
         return bList;
     }
+
+    public int noticeInsert(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("noticeInsert", pMap);
+        return result;
+    }
 }

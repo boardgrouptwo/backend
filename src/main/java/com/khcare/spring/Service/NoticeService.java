@@ -18,7 +18,7 @@ public interface NoticeService {
     List<Map<String, Object>> noticeAfterBefore(Map<String,Object> pMap);
 
     //공지사항 게시판 추가
-    int noticeInsert();
+    int noticeInsert(Map<String,Object> pMap);
 
     //공지사항 게시판 삭제
     int noticeDelete();

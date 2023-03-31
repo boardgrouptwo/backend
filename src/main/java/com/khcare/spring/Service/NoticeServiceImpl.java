@@ -42,9 +42,12 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public int noticeInsert() {
-        return 0;
+    public int noticeInsert(Map<String, Object> pMap) {
+        int result = 0;
+        result = noticeDao.noticeInsert(pMap);
+        return result;
     }
+
 
     @Override
     public int noticeDelete() {
