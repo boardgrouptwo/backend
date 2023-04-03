@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+    <insert id="paymentInsert" parameterType="map">
+        INSERT INTO payment (user_id, pay_amount, pay_date, pay_content)
+        VALUES ( #{user_id}, #{pay_amount}, now(), #{pay_content} )
+    </insert>
+
+    <select id="paymentList" resultType="map">
+        SELECT pay_no, user_id, pay_amount, pay_date, pay_content FROM payment
+
+    </select>
+
+    <select id="paymentNumList" parameterType="int" resultType="map">
+        SELECT pay_no, user_id, pay_amount, pay_date, pay_content FROM payment
+        <where>
+            <if test='pay_no != null'>
+                AND pay_no = #{pay_no}
+            </if>
+        </where>
+    </select>
+
+    <select id="paymentUserList" parameterType="String" resultType="map">
+
+    </select>
+
+    <select id="paymentDateList" parameterType="map" resultType="map">
+
+    </select>
+
+    <delete id="paymentDelete" parameterType="int">
+        DELETE FROM payment WHERE pay_no = #{pay_no}
+    </delete>
+</mapper>

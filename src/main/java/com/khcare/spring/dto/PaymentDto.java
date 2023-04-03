@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Payment {
+public class PaymentDto {
 
     private int pay_no;                 // 결제 번호
     private String user_id;             // 회원ID
