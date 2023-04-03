@@ -43,4 +43,16 @@ public class NoticeDao {
         result = sqlSessionTemplate.update("noticeInsert", pMap);
         return result;
     }
+
+    public int noticeUpdate(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("noticeUpdate", pMap);
+        return result;
+    }
+
+    public int noticeDelete(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("noticeDelete", pMap);
+        return result;
+    }
 }

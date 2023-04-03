@@ -36,6 +36,24 @@ public class NoticeController {
         return result;
     }
 
+    @PostMapping("/update")
+    public int noticeUpdate(@RequestBody Map<String,Object> pMap) {
+        log.info("공지사항 수정");
+        log.info(pMap);
+        int result = 0;
+        result = noticeServiceImpl.noticeUpdate(pMap);
+        return result;
+    }
+
+    @GetMapping("/delete")
+    public int noticeDelete(@RequestParam Map<String,Object> pMap) {
+        log.info("공지사항 삭제");
+        int result = 0;
+        result = noticeServiceImpl.noticeDelete(pMap);
+        return result;
+    }
+
+
 
     @GetMapping("/Search")
     public String noticeSearchList(@RequestParam Map<String,Object> pMap) {

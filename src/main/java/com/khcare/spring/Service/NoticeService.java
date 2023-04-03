@@ -21,9 +21,9 @@ public interface NoticeService {
     int noticeInsert(Map<String,Object> pMap);
 
     //공지사항 게시판 삭제
-    int noticeDelete();
+    int noticeDelete(Map<String,Object> pMap);
 
     //공지사항 게시판 수정
-    int noticeUpdate();
+    int noticeUpdate(Map<String,Object> pMap);
 
 }
