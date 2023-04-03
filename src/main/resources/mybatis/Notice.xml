@@ -27,6 +27,19 @@
         (#{notice_title}, #{notice_content}, now(), 0);
     </insert>
 
+    <delete id="noticeDelete" parameterType="map">
+        DELETE FROM notice
+        WHERE notice_no = #{notice_no}
+    </delete>
+
+    <update id="noticeUpdate" parameterType="map" >
+        UPDATE notice SET
+        notice_title = #{notice_title}
+        , notice_content = #{notice_content}
+        WHERE notice_no = #{notice_no}
+    </update>
+
+
 
     <select id="noticeAfterBefore" resultType="map">
         SELECT * FROM

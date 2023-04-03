@@ -50,12 +50,16 @@ public class NoticeServiceImpl implements NoticeService{
 
 
     @Override
-    public int noticeDelete() {
-        return 0;
+    public int noticeDelete(Map<String,Object> pMap) {
+        int result = 0;
+        result = noticeDao.noticeDelete(pMap);
+        return result;
     }
 
     @Override
-    public int noticeUpdate() {
-        return 0;
+    public int noticeUpdate(Map<String,Object> pMap) {
+        int result = 0;
+        result = noticeDao.noticeUpdate(pMap);
+        return result;
     }
 }
