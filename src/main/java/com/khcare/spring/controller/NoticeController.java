@@ -20,6 +20,7 @@ public class NoticeController {
     @GetMapping("/boardList")
     public String boardList(@RequestParam Map<String,Object> pMap) {
         log.info("notice 게시판 리스트 호출");
+        log.info(pMap);
         List<Map<String,Object>> bList = null;
         bList = noticeServiceImpl.noticeList(pMap);
         log.info(bList);

@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.khcare.spring">
-    <select id="noticeList" resultType="map">
-        SELECT * FROM notice
+    <select id="noticeList" parameterType="map" resultType="map">
+        SELECT * ,  (SELECT count(*) FROM notice) as total_count FROM notice
         <where>
             <if test='notice_no != null'>
                 AND notice_no = #{notice_no}
@@ -13,6 +13,9 @@
                 AND notice_title LIKE '%' #{search} '%'
             </if>
         </where>
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
     </select>
 
     <update id="noticeHit">

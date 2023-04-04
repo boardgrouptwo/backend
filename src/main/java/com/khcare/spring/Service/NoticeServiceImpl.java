@@ -1,6 +1,8 @@
 package com.khcare.spring.Service;
 
 import com.khcare.spring.dao.NoticeDao;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Log4j2
 public class NoticeServiceImpl implements NoticeService{
 
     @Autowired
@@ -16,6 +19,11 @@ public class NoticeServiceImpl implements NoticeService{
     @Override
     public List<Map<String, Object>> noticeList(Map<String,Object> pMap) {
         List<Map<String, Object>> bList = null;
+        if(pMap.get("page") != null) {
+            int num = Integer.parseInt(pMap.get("page").toString());
+            pMap.put("page", (num-1)*10);
+        }
+        log.info(pMap);
         bList = noticeDao.noticeList(pMap);
         return bList;
     }
