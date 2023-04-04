@@ -30,37 +30,7 @@ public class PaymentDao {
         List<Map<String, Object>> rList = null;
 
         rList = sqlSessionTemplate.selectList("paymentList");
-        logger.info(rList.toString());
-
-        return rList;
-    }
-
-    public List<Map<String, Object>> paymentNumList(int payNo) {
-        logger.info("paymentNumList 호출");
-        List<Map<String, Object>> rList = null;
-
-        rList = sqlSessionTemplate.selectOne("paymentNumList", payNo);
-        logger.info(rList.toString());
-
-        return rList;
-    }
-
-    public List<Map<String, Object>> paymentUserList(String userId) {
-        logger.info("paymentUserList 호출");
-        List<Map<String, Object>> rList = null;
-
-        rList = sqlSessionTemplate.selectList("paymentUserList", userId);
-        logger.info(rList.toString());
-
-        return rList;
-    }
-
-    public List<Map<String, Object>> paymentDateList(Map<String, Object> pMap) {
-        logger.info("paymentDateList 호출");
-        List<Map<String, Object>> rList = null;
-
-        rList = sqlSessionTemplate.selectList("paymentDateList", pMap);
-        logger.info(rList.toString());
+        logger.info("쿼리결과 : " + rList.toString());
 
         return rList;
     }

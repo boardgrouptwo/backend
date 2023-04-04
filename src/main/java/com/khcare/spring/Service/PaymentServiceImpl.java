@@ -36,36 +36,6 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    public List<Map<String, Object>> paymentNumList(int payNo) {
-        logger.info("paymentNumList 호출");
-        List<Map<String, Object>> rList = null;
-
-        rList = paymentDao.paymentNumList(payNo);
-
-        return rList;
-    }
-
-    @Override
-    public List<Map<String, Object>> paymentUserList(String userId) {
-        logger.info("paymentUserList 호출");
-        List<Map<String, Object>> rList = null;
-
-        rList = paymentDao.paymentUserList(userId);
-
-        return rList;
-    }
-
-    @Override
-    public List<Map<String, Object>> paymentDateList(Map<String, Object> pMap) {
-        logger.info("paymentDateList 호출");
-        List<Map<String, Object>> rList = null;
-
-        rList = paymentDao.paymentDateList(pMap);
-
-        return rList;
-    }
-
-    @Override
     public int paymentDelete(int payNo) {
         logger.info("paymentDelete 호출");
         int result = 0;

@@ -3,33 +3,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.khcare.spring">
+    <!--  후원 내역 추가  -->
     <insert id="paymentInsert" parameterType="map">
         INSERT INTO payment (user_id, pay_amount, pay_date, pay_content)
         VALUES ( #{user_id}, #{pay_amount}, now(), #{pay_content} )
     </insert>
 
+    <!--  후원 내역 출력  -->
     <select id="paymentList" resultType="map">
-        SELECT pay_no, user_id, pay_amount, pay_date, pay_content FROM payment
-
+        SELECT p.pay_no, p.user_id, p.pay_amount, p.pay_date, p.pay_content
+                , u.user_name
+        FROM payment p, users u
+        WHERE p.user_id = u.user_id
+            <where>
+                <if test='pay_no != null and pay_no > 0'>
+                    AND p.pay_no = #{pay_no}
+                </if>
+                <if test='content != null'>
+                    <choose>
+                        <when test='condition != null and condition.equals("후원자ID")'>
+                            AND u.user_name LIKE '%'||#{content}||'%'
+                        </when>
+                        <when test='condition != null and condition.equals("날짜")'>
+                            AND p.pay_date LIKE '%'||#{content}||'%'
+                        </when>
+                    </choose>
+                </if>
+            </where>
+        ORDER BY pay_no desc
     </select>
 
-    <select id="paymentNumList" parameterType="int" resultType="map">
-        SELECT pay_no, user_id, pay_amount, pay_date, pay_content FROM payment
-        <where>
-            <if test='pay_no != null'>
-                AND pay_no = #{pay_no}
-            </if>
-        </where>
-    </select>
-
-    <select id="paymentUserList" parameterType="String" resultType="map">
-
-    </select>
-
-    <select id="paymentDateList" parameterType="map" resultType="map">
-
-    </select>
-
+    <!--  후원 내역 삭제 -->
     <delete id="paymentDelete" parameterType="int">
         DELETE FROM payment WHERE pay_no = #{pay_no}
     </delete>

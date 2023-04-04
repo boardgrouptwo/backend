@@ -34,8 +34,6 @@ public class PaymentController {
         return result;
     }
 
-    //TODO: 조회 관련 모든 메소드 파라미터 수정 필요
-
     /**
      * 전체 결제 내역 출력
      * @return
@@ -43,66 +41,15 @@ public class PaymentController {
     @GetMapping("/list")
     public String paymentList(@RequestBody Map<String,Object> pMap) {
         logger.info("paymentList 호출");
-        List<Map<String,Object>> rList = null;
-
-        rList = paymentServiceImpl.paymentList();
-        Gson g = new Gson();
-        String result = g.toJson(rList);
-        logger.info("result : " + result);
-
-        return result;
-    }
-
-    /**
-     * 결제번호를 통한 결제 내역 조회
-     * @param payNo: 결제 번호
-     * @return
-     */
-    @GetMapping("/numlist")
-    public String paymentNumList(@RequestParam int payNo) {
-        logger.info("paymepaymentNumListntList 호출");
-        logger.info("payNo : " + payNo);
-        List<Map<String,Object>> rList = null;
-
-        rList = paymentServiceImpl.paymentNumList(payNo);
-        Gson g = new Gson();
-        String result = g.toJson(rList);
-        logger.info("result : " + result);
-
-        return result;
-    }
-
-    /**
-     * 특정 사용자의 결제 내역 조회
-     * @param userId: 회원 ID
-     * @return
-     */
-    @GetMapping("/userlist")
-    public String paymentUserList(@RequestParam String userId) {
-        logger.info("paymentUserList 호출");
-        logger.info("userId : " + userId);
-        List<Map<String,Object>> rList = null;
-
-        rList = paymentServiceImpl.paymentUserList(userId);
-        Gson g = new Gson();
-        String result = g.toJson(rList);
-        logger.info("result : " + result);
-
-        return result;
-    }
-
-    /**
-     * 특정 날짜 결제 내역 조회
-     * @param pMap: 날짜 정보
-     * @return
-     */
-    @GetMapping("/datelist")
-    public String paymentDateList(@RequestBody Map<String,Object> pMap) {
-        logger.info("paymentDateList 호출");
         logger.info("pMap : " + pMap);
         List<Map<String,Object>> rList = null;
 
-        rList = paymentServiceImpl.paymentDateList(pMap);
+        if (pMap.get("condition") != null) {
+            logger.info("검색 분류 ===> " + pMap.get("condition"));
+        }
+
+        rList = paymentServiceImpl.paymentList();
+
         Gson g = new Gson();
         String result = g.toJson(rList);
         logger.info("result : " + result);
