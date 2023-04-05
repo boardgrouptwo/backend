@@ -2,9 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.khcare.spring">
-    <select id="getUserAccount" resultType="String">
-        SELECT * FROM user
-        WHERE USER_ID=#{userId}
+<mapper namespace="com.khcare.spring.mapper.UserMapper">
+    <select id="findUserByUsername" resultType="UserDto">
+        SELECT user_id userId, user_name, user_pw password, user_type role
+        FROM users
+        WHERE user_id = #{mem_id}
     </select>
+
+    <select id="findByUserId" resultType="UserDto">
+        SELECT user_id userId, user_name, user_pw password, user_type role
+        FROM users
+        WHERE user_id = #{mem_id}
+    </select>
+
+
 </mapper>
