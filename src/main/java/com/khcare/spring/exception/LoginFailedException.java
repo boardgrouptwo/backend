@@ -17,4 +17,6 @@ public class LoginFailedException extends RuntimeException {
     public LoginFailedException(Throwable cause) {
         super(cause);
     }
+
+
 }

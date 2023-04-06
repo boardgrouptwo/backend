@@ -26,25 +26,34 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginDto loginDto) {
+    public String login(@RequestBody LoginDto loginDto) {
         logger.info(loginDto+"");
 
         ResponseEntity responseEntity = null;
+        String access_token = null;
         try {
-            String token = userService.login(loginDto);
+            access_token = userService.login(loginDto);
             logger.info("login 성공");
-            HttpHeaders httpHeaders = new HttpHeaders();
+
+/*            HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("Authorization", "Bearer " + token);
-
             SingleDataResponse<String> response = responseService.getSingleDataResponse(true, "로그인 성공", token);
-
             responseEntity = ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(response);
-            logger.info(responseEntity+"");
-        } catch (LoginFailedException e) {
-            logger.info("login 실패");
-        }
-        logger.info("성공");
-        return responseEntity;
-    }
 
+            logger.info(token);
+            logger.info("response : "+response);
+            logger.info(responseEntity+"");*/
+
+        } catch (LoginFailedException e) {
+            String message = e.toString();
+            int colonIndex = message.indexOf(":");
+            if (colonIndex != -1) {
+                access_token = message.substring(colonIndex + 1).trim();
+            }
+
+            logger.info(e+"");
+
+        }
+        return access_token;
+    }
 }

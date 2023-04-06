@@ -31,6 +31,6 @@ public class UserService {
             throw new LoginFailedException("잘못된 비밀번호입니다");
         }
         logger.info("성공");
-        return jwtTokenProvider.createToken(userDto.getPassword(), Collections.singletonList(userDto.getRole()));
+        return jwtTokenProvider.createToken(userDto.getPassword(), Collections.singletonList(userDto.getRole()), userDto.getUser_name());
     }
 }
