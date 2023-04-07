@@ -1,5 +1,7 @@
 package com.khcare.spring.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.khcare.spring.Service.KakaoUserService;
 import com.khcare.spring.Service.ResponseService;
 import com.khcare.spring.Service.UserService;
 import com.khcare.spring.dto.LoginDto;
@@ -11,10 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/user")
@@ -23,6 +25,8 @@ public class UserController {
 
     private final UserService userService;
     private final ResponseService responseService;
+    private final KakaoUserService kakaoUserService;
+
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/login")
@@ -54,6 +58,25 @@ public class UserController {
             logger.info(e+"");
 
         }
+        return access_token;
+    }
+
+    /*
+    * code : 카카오 서버로부터 받은 인가 코드
+    *
+    */
+    @GetMapping("/kakao/callback")
+    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+
+        String access_token = null;
+        try {
+            access_token = kakaoUserService.oauth2AuthorizationKakao(code);
+            logger.info(access_token);
+
+        } catch (Exception e) {
+         e.printStackTrace();
+        }
+
         return access_token;
     }
 }
