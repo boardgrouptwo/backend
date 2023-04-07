@@ -1,7 +1,10 @@
 package com.khcare.spring.controller;
 
+import com.google.gson.Gson;
+import com.khcare.spring.dto.KakaoPayDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
@@ -15,6 +18,7 @@ import java.util.Map;
 @RequestMapping("/kakaopay")
 public class KakaopayController {
     Logger logger = LoggerFactory.getLogger(KakaopayController.class);
+    KakaoPayDto kakaoPayDto = new KakaoPayDto();
 
     /**
      * 카카오페이 결제 준비
@@ -26,16 +30,32 @@ public class KakaopayController {
     public String kakaoPayReady(@RequestBody Map<String,Object> pMap) {
         // API주소 : https://developers.kakao.com/docs/latest/ko/kakaopay/single-payment#prepare
         logger.info("kakaoPayReady 호출");
-        logger.info("pMap : " + pMap);
         String resultText = "";
+        String user_id = "";
 
-        String userID = pMap.get("user_id").toString();                               // 가맹점 회원 id
-        String order_id = pMap.get("order_id").toString();                            // 주문번호
-        String item_name = pMap.get("item_name").toString();                          // 회원 id
-        int total_amount = Integer.parseInt(pMap.get("total_amount").toString());     // 상품 총액
-        String approval_url = "https://localhost:7000/kakaopay/success";              // 성공 시 redirect url
-        String cancel_url = "https://localhost:7000/kakaopay/cancel";                 // 취소 시 redirect url
-        String fail_url = "https://localhost:7000/kakaopay/fail";                     // 실패 시 redirect url
+        // json 파라미터
+        logger.info("pMap : " + pMap);
+
+        // 결제자가 회원 or 비회원 확인
+        if (pMap.get("user_id") != null) {
+            logger.info("해당 사용자는 회원입니다");
+            user_id = pMap.get("user_id").toString();
+        } else {
+            logger.info("해당 사용자는 비회원입니다");
+            user_id = pMap.get("user_tel").toString();
+        }
+
+        logger.info(pMap.get("order_id").toString());
+        String order_id = pMap.get("order_id").toString();
+
+
+        kakaoPayDto.setPartner_order_id("123");                            // 주문번호
+        kakaoPayDto.setPartner_user_id(user_id);                                                      // 회원 id
+        kakaoPayDto.setItem_name(pMap.get("item_name").toString());                                  // 상품명
+        kakaoPayDto.setTotal_amount(Integer.parseInt(pMap.get("total_amount").toString()));          // 상품 총액
+        String approval_url = "http://localhost:7000/kakaopay/success";                             // 성공 시 redirect url
+        String cancel_url = "http://localhost:7000/kakaopay/cancel";                                // 취소 시 redirect url
+        String fail_url = "http://localhost:7000/kakaopay/fail";                                    // 실패 시 redirect url
 
         try {
             URL kakaoUrl = new URL("https://kapi.kakao.com/v1/payment/ready");
@@ -49,8 +69,8 @@ public class KakaopayController {
 
             // 송신 할 쿼리스트링
             // https://developers.kakao.com/docs/latest/ko/kakaopay/single-payment#prepare-request
-            String params = "cid=TC0ONETIME&partner_order_id=" + order_id + "&partner_user_id=" + userID
-                    + "&item_name=" + item_name + "&quantity=1&total_amount=" + total_amount + "&vat_amount=0&tax_free_amount=0&payment_method_type=MONEY"
+            String params = "cid=TC0ONETIME&partner_order_id=" + kakaoPayDto.getPartner_order_id() + "&partner_user_id=" + kakaoPayDto.getPartner_user_id()
+                    + "&item_name=" + kakaoPayDto.getItem_name() + "&quantity=1&total_amount=" + kakaoPayDto.getTotal_amount() + "&vat_amount=0&tax_free_amount=0&payment_method_type=MONEY"
                     + "&approval_url=" + approval_url + "&cancel_url=" + cancel_url + "&fail_url=" + fail_url;
 
             // 카카오서버로 송신
@@ -95,8 +115,19 @@ public class KakaopayController {
 
         logger.info("결과 : " + resultText);
 
-        return resultText;
+        Gson g = new Gson();
+        Map<String,Object> rMap = g.fromJson(resultText, Map.class);
+        logger.info(rMap.toString());
+
+        kakaoPayDto.setTid(rMap.get("tid").toString());                                                 // 결제 고유 번호
+        kakaoPayDto.setNext_redirect_mobile_url(rMap.get("next_redirect_mobile_url").toString());       // 카카오톡 결제 페이지 (모바일)
+        kakaoPayDto.setNext_redirect_pc_url(rMap.get("next_redirect_pc_url").toString());               // 카카오톡 결제 페이지 (PC)
+        kakaoPayDto.setCreated_at(rMap.get("created_at").toString());                                   // 결제 준비 요청 시간
+
+        // 카카오페이 결제창 호출
+        return "redirect:" + kakaoPayDto.getNext_redirect_pc_url();
     } // end of kakaoPayReady
+
 
     /**
      * 카카오페이 승인 요청
@@ -105,12 +136,14 @@ public class KakaopayController {
      */
     @RequestMapping("/success")
     @ResponseBody
-    public String kakaoPaySucces(@RequestParam Map<String,Object> pMap) {
+    public void kakaoPaySucces(@RequestParam Map<String, String> pMap) {
         // API주소 : https://developers.kakao.com/docs/latest/ko/kakaopay/single-payment#approve
         logger.info("kakaoPaySucces 호출");
 
-        String pg_token = pMap.get("pg_token").toString();
-        logger.info("pg_token: " + pg_token);
+        // 카카오서버로 부터 전달 받은 파라미터
+        logger.info("pMap " + pMap);
+        kakaoPayDto.setPg_token(pMap.get("pg_token"));                            // 결제승인 요청을 인증하는 토큰, 쿼리스트링
+
         String resultText = "";
 
         try {
@@ -125,9 +158,9 @@ public class KakaopayController {
 
             // 송신 할 쿼리스트링
             // https://developers.kakao.com/docs/latest/ko/kakaopay/single-payment#approve-request
-            String tid = "test";    // 테스트용
-            String params = "cid=TC0ONETIME&tid=" + tid + "partner_order_id=partner_order_id&partner_user_id=partner_user_id"
-                    + "&pg_token=" + pg_token;
+            String params = "cid=TC0ONETIME&tid=" + kakaoPayDto.getTid() + "&partner_order_id=" + kakaoPayDto.getPartner_order_id() + "&partner_user_id=" + kakaoPayDto.getPartner_user_id()
+                    + "&pg_token=" + kakaoPayDto.getPg_token();
+            logger.info(params);
 
             // 카카오서버로 송신
             OutputStream outputStream = connServer.getOutputStream();
@@ -171,8 +204,15 @@ public class KakaopayController {
 
         logger.info("결과 : " + resultText);
 
-        return "/";
+        Gson g = new Gson();
+        Map<String,Object> rMap = g.fromJson(resultText, Map.class);
+        logger.info(rMap.toString());
+
+        kakaoPayDto.setAid(rMap.get("aid").toString());
+        kakaoPayDto.setApproved_at(rMap.get("approved_at").toString());
+        //return resultText;
     } // end of kakaoPaySucces
+
 
     /**
      * 카카오페이 취소 요청
