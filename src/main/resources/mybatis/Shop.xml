@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+    <select id="productList" resultType="map">
+        SELECT *  FROM product
+        order by product_hit
+    </select>
+
+    <insert id="productUpload" parameterType="map">
+        INSERT INTO product
+        (product_title, product_price, product_date
+        <if test="product_image!= null">
+            ,product_image
+        </if>
+            ) values
+        (#{product_title}, #{product_price},  now()
+         <if test="product_image!= null">
+             ,#{product_image}
+         </if>
+        )
+    </insert>
+
+
+
+
+
+</mapper>
