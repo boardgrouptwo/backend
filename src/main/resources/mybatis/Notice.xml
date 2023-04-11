@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+    <select id="noticeList" parameterType="map" resultType="map">
+        SELECT * ,  (SELECT count(*) FROM notice) as total_count FROM notice
+        <where>
+            <if test='notice_no != null'>
+                AND notice_no = #{notice_no}
+            </if>
+            <if test='search != null'>
+                AND notice_title LIKE '%' #{search} '%'
+            </if>
+        </where>
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+    </select>
+
+    <update id="noticeHit">
+        UPDATE notice SET
+        notice_hit = notice_hit + 1
+        WHERE notice_no = #{notice_no}
+    </update>
+
+    <insert id="noticeInsert" parameterType="map">
+        INSERT INTO notice
+        (notice_title, notice_content, notice_date ,notice_hit) VALUES
+        (#{notice_title}, #{notice_content}, now(), 0);
+    </insert>
+
+    <delete id="noticeDelete" parameterType="map">
+        DELETE FROM notice
+        WHERE notice_no = #{notice_no}
+    </delete>
+
+    <update id="noticeUpdate" parameterType="map" >
+        UPDATE notice SET
+        notice_title = #{notice_title}
+        , notice_content = #{notice_content}
+        WHERE notice_no = #{notice_no}
+    </update>
+
+
+
+    <select id="noticeAfterBefore" resultType="map">
+        SELECT * FROM
+            (SELECT notice_no, notice_title,
+                    LAG(notice_title) over (ORDER BY notice_title) AS beforeNotice,
+                    LAG(notice_no) over (ORDER BY notice_title) AS beforeNo,
+                    LEAD(notice_title) over (ORDER BY notice_title) AS afterNotice,
+                    LEAD(notice_no) over (ORDER BY notice_title) AS afterNo
+             FROM notice) a
+        WHERE notice_no = #{notice_no}
+    </select>
+
+</mapper>
