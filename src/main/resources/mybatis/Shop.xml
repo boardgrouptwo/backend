@@ -3,20 +3,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.khcare.spring">
-    <select id="productList" resultType="map">
-        SELECT *  FROM product
-        order by product_hit
+    <select id="productList" parameterType="map" resultType="map">
+        SELECT * FROM product
+        <where>
+            <if test="product_type != null">
+                product_type = #{product_type}
+            </if>
+        </where>
+        <if test="select_type != null || select_type != ''">
+            order by ${select_type} desc
+        </if>
     </select>
 
     <insert id="productUpload" parameterType="map">
         INSERT INTO product
-        (product_title, product_price, product_date
-        <if test="product_image!= null">
+        (product_title, product_price, product_type, product_date
+        <if test="product_image != null">
             ,product_image
         </if>
             ) values
-        (#{product_title}, #{product_price},  now()
-         <if test="product_image!= null">
+        (#{product_title}, #{product_price}, #{product_type}, now()
+         <if test="product_image != null">
              ,#{product_image}
          </if>
         )

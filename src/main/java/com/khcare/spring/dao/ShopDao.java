@@ -19,6 +19,7 @@ public class ShopDao {
     private SqlSessionTemplate sqlSessionTemplate;
 
     public List<Map<String, Object>> productList(Map<String,Object> pMap) {
+        logger.info(pMap+"");
         List<Map<String, Object>> pList = null;
         pList = sqlSessionTemplate.selectList("productList", pMap);
         logger.info(pList+"");

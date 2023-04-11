@@ -25,7 +25,10 @@ public class ShopController {
     @PostMapping("/imageUpload")
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         String fileName = file.getOriginalFilename();
-        String filePath = "D://project/final/frontend/public/images/shop" + "/" + fileName;
+
+        // 경로는 해당 pc에 맞게 바꿔야함
+        String filePath = "D://final_project/frontend/public/images/shop" + "/" + fileName;
+
         logger.info(fileName);
         logger.info(filePath);
         File dest = new File(filePath);
