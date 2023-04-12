@@ -6,11 +6,14 @@
     <select id="productList" parameterType="map" resultType="map">
         SELECT * FROM product
         <where>
+            <if test="product_no != null">
+                AND product_no = #{product_no}
+            </if>
             <if test="product_type != null">
-                product_type = #{product_type}
+                AND product_type = #{product_type}
             </if>
         </where>
-        <if test="select_type != null || select_type != ''">
+        <if test="select_type != null">
             order by ${select_type} desc
         </if>
     </select>
