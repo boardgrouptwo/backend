@@ -4,13 +4,13 @@
 
 <mapper namespace="com.khcare.spring.mapper.UserMapper">
     <select id="findUserByUsername" resultType="UserDto">
-        SELECT user_id userId, user_name, user_pw password, user_type role
+        SELECT user_id , user_name, user_pw password, user_type role
         FROM users
         WHERE user_id = #{mem_id}
     </select>
 
     <select id="findByUserId" resultType="UserDto">
-        SELECT user_id userId, user_name, user_pw password, user_type role
+        SELECT user_id , user_name, user_pw password, user_type role
         FROM users
         WHERE user_id = #{mem_id}
     </select>

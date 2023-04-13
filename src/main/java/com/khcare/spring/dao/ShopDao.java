@@ -32,4 +32,11 @@ public class ShopDao {
         logger.info(result+"");
         return result;
     }
+
+    public int productHit(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("productHit", pMap);
+        logger.info(result+"");
+        return result;
+    }
 }

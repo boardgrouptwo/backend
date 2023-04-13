@@ -30,6 +30,7 @@ public class NoticeController {
     }
 
     @PostMapping("/insert")
+    @CrossOrigin(origins = "http://localhost:3000")
     public int noticeInsert(@RequestBody Map<String,Object> pMap) {
         log.info("공지사항 추가");
         int result = 0;

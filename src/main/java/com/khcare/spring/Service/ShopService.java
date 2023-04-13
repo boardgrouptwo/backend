@@ -8,4 +8,6 @@ public interface ShopService {
     List<Map<String,Object>> productList(Map<String,Object> pMap);
 
     int productUpload(Map<String, Object> pMap);
+
+    int productHit(Map<String, Object> pMap);
 }

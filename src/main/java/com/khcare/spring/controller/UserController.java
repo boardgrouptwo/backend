@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -78,5 +80,11 @@ public class UserController {
         }
 
         return access_token;
+    }
+
+    @GetMapping("/auth")
+    public @ResponseBody Authentication auth() {
+        logger.info(SecurityContextHolder.getContext().getAuthentication()+"");
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

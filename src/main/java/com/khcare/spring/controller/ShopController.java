@@ -54,4 +54,12 @@ public class ShopController {
         result = shopService.productUpload(pMap);
         return result;
     }
+
+    @GetMapping("/hitAdd")
+    public int productHit(@RequestParam Map<String, Object> pMap) {
+        logger.info(pMap+"");
+        int result=0;
+        result = shopService.productHit(pMap);
+        return result;
+    }
 }

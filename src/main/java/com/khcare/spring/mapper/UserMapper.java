@@ -8,5 +8,5 @@ import java.util.Optional;
 @Mapper
 public interface UserMapper {
     Optional<UserDto> findUserByUsername(String username);
-    Optional<UserDto> findByUserId(Long userId);
+    Optional<UserDto> findByUserId(String userId);
 }

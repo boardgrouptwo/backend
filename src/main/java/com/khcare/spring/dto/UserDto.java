@@ -2,9 +2,12 @@ package com.khcare.spring.dto;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,9 +24,13 @@ public class UserDto implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        return authorities;
     }
 
     @Override
