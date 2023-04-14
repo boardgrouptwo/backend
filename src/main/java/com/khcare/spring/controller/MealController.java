@@ -24,7 +24,6 @@ public class MealController {
         public String mealList(@RequestParam Map<String,Object> pMap){
             log.info("mealList 호출 성공");
             log.info(pMap);
-
             List<Map<String,Object>> bList = null;
             bList = mealServiceImpl.mealList(pMap);
             log.info(bList);
