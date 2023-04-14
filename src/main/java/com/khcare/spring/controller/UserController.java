@@ -1,12 +1,16 @@
 package com.khcare.spring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.khcare.spring.Service.GoogleService;
 import com.khcare.spring.Service.KakaoUserService;
 import com.khcare.spring.Service.ResponseService;
 import com.khcare.spring.Service.UserService;
 import com.khcare.spring.dto.LoginDto;
 import com.khcare.spring.dto.SingleDataResponse;
 import com.khcare.spring.exception.LoginFailedException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +22,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -28,6 +35,7 @@ public class UserController {
     private final UserService userService;
     private final ResponseService responseService;
     private final KakaoUserService kakaoUserService;
+    private final GoogleService googleService;
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -82,9 +90,34 @@ public class UserController {
         return access_token;
     }
 
-    @GetMapping("/auth")
-    public @ResponseBody Authentication auth() {
-        logger.info(SecurityContextHolder.getContext().getAuthentication()+"");
-        return SecurityContextHolder.getContext().getAuthentication();
+   @PostMapping("/googleLogin")
+    public String GoogleLogin(@RequestBody Map<String,Object> pMap) {
+        logger.info(pMap+"");
+        String access_token=pMap.get("access_token").toString();
+        logger.info(access_token+"");
+
+        try {
+            String token = googleService.verifyAccessToken(access_token);
+
+        } catch(IOException e) {
+
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
+/*    @PostMapping("/googleLogin")
+    public String GoogleLogin(@RequestHeader("Authorization") String authorizationHeader) {
+        String accessToken = authorizationHeader.split(" ")[1]; // "Bearer <access_token>" 형식에서 <access_token> 부분 추출
+        logger.info(accessToken);
+        try {
+            String token = googleService.verifyAccessToken(accessToken);
+
+        } catch(IOException e) {
+
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }*/
 }
