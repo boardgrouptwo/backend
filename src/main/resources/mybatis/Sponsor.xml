@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+    <insert id="sponsorFormInsert" parameterType="map">
+        INSERT INTO sponsor
+            (user_id, spon_number ,spon_date, spon_huwon, spon_money, spon_pay, spon_open, spon_content) VALUES
+            (#{user_id}, #{spon_number}, #{spon_date}, #{spon_huwon}, #{spon_money}, #{spon_pay}, #{spon_open}, #{spon_content});
+    </insert>
+</mapper>
