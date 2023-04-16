@@ -1,30 +1,26 @@
 package com.khcare.spring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.khcare.spring.Service.GoogleService;
 import com.khcare.spring.Service.KakaoUserService;
 import com.khcare.spring.Service.ResponseService;
 import com.khcare.spring.Service.UserService;
+import com.khcare.spring.dto.BaseResponse;
 import com.khcare.spring.dto.LoginDto;
 import com.khcare.spring.dto.SingleDataResponse;
+import com.khcare.spring.dto.UserDto;
+import com.khcare.spring.exception.DuplicatedUserIdException;
 import com.khcare.spring.exception.LoginFailedException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
 import java.util.Map;
 
 @RestController
@@ -106,6 +102,25 @@ public class UserController {
         }
         return null;
     }
+
+    @PostMapping("/join")
+    public ResponseEntity join(@RequestBody UserDto userDto) {
+        ResponseEntity responseEntity = null;
+        try {
+            UserDto savedUser = userService.join(userDto);
+            SingleDataResponse<UserDto> response = responseService.getSingleDataResponse(true, "회원가입 성공", savedUser);
+
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (DuplicatedUserIdException exception) {
+            logger.debug(exception.getMessage());
+            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
+
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+        return responseEntity;
+    }
+
+
 /*    @PostMapping("/googleLogin")
     public String GoogleLogin(@RequestHeader("Authorization") String authorizationHeader) {
         String accessToken = authorizationHeader.split(" ")[1]; // "Bearer <access_token>" 형식에서 <access_token> 부분 추출

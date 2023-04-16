@@ -15,5 +15,9 @@
         WHERE user_id = #{mem_id}
     </select>
 
+    <insert id="save" parameterType="UserDto">
+        INSERT INTO user (username, password)
+        VALUES ( #{username}, #{password} )
+    </insert>
 
 </mapper>

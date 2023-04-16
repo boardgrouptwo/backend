@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface UserMapper {
     Optional<UserDto> findUserByUsername(String username);
     Optional<UserDto> findByUserId(String userId);
+
+    void save(UserDto userDto);
 }
