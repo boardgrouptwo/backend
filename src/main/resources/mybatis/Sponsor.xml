@@ -6,6 +6,11 @@
     <insert id="sponsorFormInsert" parameterType="map">
         INSERT INTO sponsor
             (user_id, spon_number ,spon_date, spon_huwon, spon_money, spon_pay, spon_open, spon_content) VALUES
-            (#{user_id}, #{spon_number}, #{spon_date}, #{spon_huwon}, #{spon_money}, #{spon_pay}, #{spon_open}, #{spon_content});
+            (#{user_id}, #{spon_number}, #{spon_date}, #{spon_huwon}, #{spon_money}, #{spon_pay}, #{spon_open}, #{spon_content})
     </insert>
+
+    <select id="sponsorList" parameterType="map" resultType="map">
+        SELECT user_id, SUM(spon_money) spon_money FROM sponsor GROUP BY user_id
+        ORDER BY 2 DESC
+    </select>
 </mapper>

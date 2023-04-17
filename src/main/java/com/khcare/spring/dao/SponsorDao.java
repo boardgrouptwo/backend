@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -17,5 +18,11 @@ public class SponsorDao {
         int result = 0;
         result = sqlSessionTemplate.update("sponsorFormInsert", pMap);
         return result;
+    }
+
+    public List<Map<String, Object>> sponsorList(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = sqlSessionTemplate.selectList("sponsorList", pMap);
+        return bList;
     }
 }
