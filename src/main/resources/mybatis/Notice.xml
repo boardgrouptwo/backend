@@ -3,8 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.khcare.spring">
+<<<<<<< HEAD
     <select id="noticeList" resultType="map">
         SELECT * FROM notice
+=======
+    <select id="noticeList" parameterType="map" resultType="map">
+        SELECT * ,  (SELECT count(*) FROM notice) as total_count FROM notice
+>>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
         <where>
             <if test='notice_no != null'>
                 AND notice_no = #{notice_no}
@@ -13,6 +18,12 @@
                 AND notice_title LIKE '%' #{search} '%'
             </if>
         </where>
+<<<<<<< HEAD
+=======
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+>>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
     </select>
 
     <update id="noticeHit">
@@ -21,4 +32,38 @@
         WHERE notice_no = #{notice_no}
     </update>
 
+<<<<<<< HEAD
+=======
+    <insert id="noticeInsert" parameterType="map">
+        INSERT INTO notice
+        (notice_title, notice_content, notice_date ,notice_hit) VALUES
+        (#{notice_title}, #{notice_content}, now(), 0);
+    </insert>
+
+    <delete id="noticeDelete" parameterType="map">
+        DELETE FROM notice
+        WHERE notice_no = #{notice_no}
+    </delete>
+
+    <update id="noticeUpdate" parameterType="map" >
+        UPDATE notice SET
+        notice_title = #{notice_title}
+        , notice_content = #{notice_content}
+        WHERE notice_no = #{notice_no}
+    </update>
+
+
+
+    <select id="noticeAfterBefore" resultType="map">
+        SELECT * FROM
+            (SELECT notice_no, notice_title,
+                    LAG(notice_title) over (ORDER BY notice_title) AS beforeNotice,
+                    LAG(notice_no) over (ORDER BY notice_title) AS beforeNo,
+                    LEAD(notice_title) over (ORDER BY notice_title) AS afterNotice,
+                    LEAD(notice_no) over (ORDER BY notice_title) AS afterNo
+             FROM notice) a
+        WHERE notice_no = #{notice_no}
+    </select>
+
+>>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
 </mapper>

@@ -14,6 +14,7 @@ public interface NoticeService {
     //공지사항 게시판 조회수
     int noticeHit(int notice_no);
 
+<<<<<<< HEAD
     //공지사항 게시판 추가
     int noticeInsert();
 
@@ -22,5 +23,18 @@ public interface NoticeService {
 
     //공지사항 게시판 수정
     int noticeUpdate();
+=======
+    //공지사항 이전 이후 게시글 가져오기
+    List<Map<String, Object>> noticeAfterBefore(Map<String,Object> pMap);
+
+    //공지사항 게시판 추가
+    int noticeInsert(Map<String,Object> pMap);
+
+    //공지사항 게시판 삭제
+    int noticeDelete(Map<String,Object> pMap);
+
+    //공지사항 게시판 수정
+    int noticeUpdate(Map<String,Object> pMap);
+>>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
 
 }

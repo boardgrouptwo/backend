@@ -31,4 +31,28 @@ public class NoticeDao {
     }
 
 
+    public List<Map<String, Object>> noticeAfterBefore(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = sqlSessionTemplate.selectList("noticeAfterBefore", pMap);
+        // log.info(bList);
+        return bList;
+    }
+
+    public int noticeInsert(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("noticeInsert", pMap);
+        return result;
+    }
+
+    public int noticeUpdate(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("noticeUpdate", pMap);
+        return result;
+    }
+
+    public int noticeDelete(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("noticeDelete", pMap);
+        return result;
+    }
 }

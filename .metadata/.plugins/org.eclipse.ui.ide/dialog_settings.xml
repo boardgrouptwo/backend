@@ -1,13 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+<<<<<<< HEAD
+=======
+	<list key="installedFeatures">
+		<item value="org.eclipse.buildship:3.1.6.v20220511-1359"/>
+		<item value="org.eclipse.datatools.connectivity.feature:1.14.102.201911250848"/>
+		<item value="org.eclipse.datatools.doc.user:1.14.102.201911250848"/>
+		<item value="org.eclipse.datatools.enablement.feature:1.14.102.201911250848"/>
+		<item value="org.eclipse.datatools.modelbase.feature:1.14.102.201911250848"/>
+		<item value="org.eclipse.datatools.sqldevtools.ddlgen.feature:1.14.201.202107090755"/>
+		<item value="org.eclipse.datatools.sqldevtools.feature:1.14.201.202107090755"/>
+		<item value="org.eclipse.dltk.core.index.lucene:6.2.0.202005020530"/>
+		<item value="org.eclipse.dltk.core:6.2.0.202005020530"/>
+		<item value="org.eclipse.draw2d:3.15.0.202211301913"/>
+		<item value="org.eclipse.egit.gitflow.feature:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.egit:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.emf.codegen.ecore.ui:2.32.0.v20220925-1245"/>
+		<item value="org.eclipse.emf.codegen.ecore:2.32.0.v20221121-1400"/>
+		<item value="org.eclipse.emf.codegen.ui:2.24.0.v20210924-1718"/>
+		<item value="org.eclipse.emf.codegen:2.23.0.v20210924-1718"/>
+		<item value="org.eclipse.emf.common.ui:2.19.0.v20220226-1304"/>
+		<item value="org.eclipse.emf.common:2.28.0.v20221121-1400"/>
+		<item value="org.eclipse.emf.converter:2.18.0.v20220706-1313"/>
+		<item value="org.eclipse.emf.databinding.edit:1.9.0.v20210924-1718"/>
+		<item value="org.eclipse.emf.databinding:1.9.0.v20220517-0824"/>
+		<item value="org.eclipse.emf.ecore.edit:2.15.0.v20210924-1718"/>
+		<item value="org.eclipse.emf.ecore.editor:2.18.0.v20210924-1718"/>
+		<item value="org.eclipse.emf.ecore:2.30.0.v20221121-1400"/>
+		<item value="org.eclipse.emf.edit.ui:2.24.0.v20220619-0533"/>
+		<item value="org.eclipse.emf.edit:2.18.0.v20220201-1551"/>
+		<item value="org.eclipse.emf.mapping.ecore.editor:2.15.0.v20210924-1718"/>
+		<item value="org.eclipse.emf.mapping.ecore:2.13.0.v20210924-1718"/>
+		<item value="org.eclipse.emf.mapping.ui:2.14.0.v20210924-1718"/>
+		<item value="org.eclipse.emf.mapping:2.14.0.v20210924-1718"/>
+		<item value="org.eclipse.emf:2.32.0.v20221121-1400"/>
+		<item value="org.eclipse.epp.mpc:1.10.1.v20221110-1841"/>
+		<item value="org.eclipse.gef:3.15.0.202211301913"/>
+		<item value="org.eclipse.graphiti.feature:0.19.1.202211181144"/>
+		<item value="org.eclipse.help:2.3.1200.v20221123-1800"/>
+		<item value="org.eclipse.jdt:3.18.1400.v20221123-1800"/>
+		<item value="org.eclipse.jgit.gpg.bc:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.jgit.http.apache:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.jgit.lfs:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.jgit.ssh.apache:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.jgit:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.jpt.common.eclipselink.feature:1.3.200.v202208190239"/>
+		<item value="org.eclipse.jpt.common.feature:1.5.100.v201903221940"/>
+		<item value="org.eclipse.jpt.jaxb.eclipselink.feature:1.4.203.v202104080213"/>
+		<item value="org.eclipse.jpt.jaxb.feature:1.5.201.v202104080213"/>
+		<item value="org.eclipse.jpt.jpa.eclipselink.feature:3.4.101.v201903221940"/>
+		<item value="org.eclipse.jpt.jpa.feature:3.6.1.v202204060305"/>
+		<item value="org.eclipse.jpt.jpadiagrameditor.feature:1.2.300.v202106211225"/>
+		<item value="org.eclipse.jst.common.fproj.enablement.jdt:3.27.0.v202208260526"/>
+		<item value="org.eclipse.jst.enterprise_ui.feature:3.28.0.v202209230232"/>
+		<item value="org.eclipse.jst.ws.axis2tools.feature:1.1.401.v201909051708"/>
+		<item value="org.eclipse.jst.ws.cxf.feature:1.1.900.v202211121326"/>
+		<item value="org.eclipse.jst.ws.jaxws.feature:1.2.800.v202211121326"/>
+		<item value="org.eclipse.justj.openjdk.hotspot.jre.full:17.0.6.v20230125-1136"/>
+		<item value="org.eclipse.m2e.feature:2.1.2.20221130-2239"/>
+		<item value="org.eclipse.m2e.logback.feature:2.1.0.20221015-0744"/>
+		<item value="org.eclipse.m2e.wtp.feature:1.5.2.20220906-1452"/>
+		<item value="org.eclipse.m2e.wtp.jaxrs.feature:1.5.0.20220805-2025"/>
+		<item value="org.eclipse.m2e.wtp.jpa.feature:1.5.0.20220805-2025"/>
+		<item value="org.eclipse.m2e.wtp.jsf.feature:1.5.0.20220805-2025"/>
+		<item value="org.eclipse.mylyn.wikitext.editors_feature:3.0.45.202211090110"/>
+		<item value="org.eclipse.pde:3.14.1400.v20221123-1800"/>
+		<item value="org.eclipse.php:7.2.1.202112011741"/>
+		<item value="org.eclipse.platform:4.26.0.v20221123-2302"/>
+		<item value="org.eclipse.rcp:4.26.0.v20221123-2302"/>
+		<item value="org.eclipse.tm.terminal.connector.ssh.feature:11.0.0.202211062329"/>
+		<item value="org.eclipse.tm.terminal.control.feature:11.0.0.202211062329"/>
+		<item value="org.eclipse.tm.terminal.feature:11.0.0.202210031642"/>
+		<item value="org.eclipse.tm.terminal.view.feature:11.0.0.202211062329"/>
+		<item value="org.eclipse.userstorage:1.2.0.v20210517-0327"/>
+		<item value="org.eclipse.wst.common.fproj:3.7.3.v202111212041"/>
+		<item value="org.eclipse.wst.jsdt.chromium.debug.feature:0.6.300.v202205232338"/>
+		<item value="org.eclipse.wst.jsdt.feature:2.4.400.v202211200038"/>
+		<item value="org.eclipse.wst.json_ui.feature:1.1.10.v202211200019"/>
+		<item value="org.eclipse.wst.web_ui.feature:3.28.0.v202211200019"/>
+		<item value="org.eclipse.wst.xml.xpath2.processor.feature:2.0.400.v202211200019"/>
+		<item value="org.eclipse.wst.xml_ui.feature:3.28.0.v202211200019"/>
+		<item value="org.eclipse.wst.xsl.feature:1.3.1200.v202211200019"/>
+		<item value="org.jboss.tools.m2e.wro4j.feature:1.2.1.202301111328"/>
+		<item value="org.sonatype.m2e.egit.feature:0.17.0.202209271423"/>
+	</list>
+>>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
 	<section name="SmartImportWizard">
 		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
 		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+<<<<<<< HEAD
+=======
+			<item value="D:\finalproject\backend"/>
+>>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
 			<item value="D:\test"/>
 			<item value="D:\final_project\backend"/>
 		</list>
 	</section>
+<<<<<<< HEAD
+=======
+	<section name="ExternalProjectImportWizard">
+	</section>
+>>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
 </section>
