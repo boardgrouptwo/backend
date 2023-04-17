@@ -10,7 +10,9 @@
     </insert>
 
     <select id="sponsorList" parameterType="map" resultType="map">
-        SELECT user_id, SUM(spon_money) spon_money FROM sponsor GROUP BY user_id
+        SELECT user_id, SUM(spon_money) spon_money, spon_content, spon_open
+        FROM sponsor
+        GROUP BY user_id
         ORDER BY 2 DESC
     </select>
 </mapper>
