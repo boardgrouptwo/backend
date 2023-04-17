@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <mapper namespace="com.khcare.spring">
     <select id="getUserAccount" resultType="String">
         SELECT * FROM user
@@ -18,10 +19,29 @@
 
     <select id="findByUserId" resultType="UserDto">
         SELECT user_id userId, user_name, user_pw password, user_type role
+=======
+<mapper namespace="com.khcare.spring.mapper.UserMapper">
+    <select id="findUserByUsername" resultType="UserDto">
+        SELECT user_id , user_name, user_pw password, user_type role
         FROM users
         WHERE user_id = #{mem_id}
     </select>
 
+    <select id="findByUserId" resultType="UserDto">
+        SELECT user_id , user_name, user_pw password, user_type role
+>>>>>>> develop
+        FROM users
+        WHERE user_id = #{mem_id}
+    </select>
+
+<<<<<<< HEAD
 
 >>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
+=======
+    <insert id="save" parameterType="UserDto">
+        INSERT INTO user (username, password)
+        VALUES ( #{username}, #{password} )
+    </insert>
+
+>>>>>>> develop
 </mapper>

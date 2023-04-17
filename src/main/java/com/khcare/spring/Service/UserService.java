@@ -3,6 +3,7 @@ package com.khcare.spring.Service;
 import com.khcare.spring.config.JwtTokenProvider;
 import com.khcare.spring.dto.LoginDto;
 import com.khcare.spring.dto.UserDto;
+import com.khcare.spring.exception.DuplicatedUserIdException;
 import com.khcare.spring.exception.LoginFailedException;
 import com.khcare.spring.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
@@ -31,6 +33,25 @@ public class UserService {
             throw new LoginFailedException("잘못된 비밀번호입니다");
         }
         logger.info("성공");
-        return jwtTokenProvider.createToken(userDto.getPassword(), Collections.singletonList(userDto.getRole()), userDto.getUser_name());
+        logger.info(userDto+"");
+        logger.info(userDto.getUser_id());
+        logger.info(userDto.getUser_name());
+        logger.info(userDto.getPassword());
+        logger.info(userDto.getRole());
+
+        //return jwtTokenProvider.createToken(userDto.getPassword(), Collections.singletonList(userDto.getRole()), userDto.getUser_name());
+        return jwtTokenProvider.createToken(userDto.getUser_id(), Collections.singletonList(userDto.getRole()), userDto.getUser_name());
+    }
+
+    @Transactional
+    public UserDto join(UserDto userDto) {
+        if (userMapper.findUserByUsername(userDto.getUsername()).isPresent()) {
+            throw new DuplicatedUserIdException("이미 가입된 유저입니다");
+        }
+
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userMapper.save(userDto);
+
+        return userMapper.findUserByUsername(userDto.getUsername()).get();
     }
 }

@@ -4,12 +4,17 @@
 
 <mapper namespace="com.khcare.spring">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <select id="noticeList" resultType="map">
         SELECT * FROM notice
 =======
     <select id="noticeList" parameterType="map" resultType="map">
         SELECT * ,  (SELECT count(*) FROM notice) as total_count FROM notice
 >>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
+=======
+    <select id="noticeList" parameterType="map" resultType="map">
+        SELECT * ,  (SELECT count(*) FROM notice) as total_count FROM notice
+>>>>>>> develop
         <where>
             <if test='notice_no != null'>
                 AND notice_no = #{notice_no}
@@ -19,11 +24,17 @@
             </if>
         </where>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         <if test="page != null">
             LIMIT 10 OFFSET #{page}
         </if>
 >>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
+=======
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+>>>>>>> develop
     </select>
 
     <update id="noticeHit">
@@ -33,7 +44,10 @@
     </update>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> develop
     <insert id="noticeInsert" parameterType="map">
         INSERT INTO notice
         (notice_title, notice_content, notice_date ,notice_hit) VALUES
@@ -65,5 +79,8 @@
         WHERE notice_no = #{notice_no}
     </select>
 
+<<<<<<< HEAD
 >>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
+=======
+>>>>>>> develop
 </mapper>

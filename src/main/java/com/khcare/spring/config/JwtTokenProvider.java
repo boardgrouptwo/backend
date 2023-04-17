@@ -2,6 +2,7 @@ package com.khcare.spring.config;
 
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Log4j2
 public class JwtTokenProvider {
     //JwtTokenProvider가 검증을 끝낸 Jwt로부터 유저 정보를 조회해와서 UserPasswordAuthenticationFilter 로 전달
     // secretKey
@@ -42,8 +44,8 @@ public class JwtTokenProvider {
     *  user_name : 유저 닉네임
     * */
     public String createToken(String userId, List<String> roles, String user_name) {
-
-        Claims claims = Jwts.claims().setSubject(userId); //payload에 담기는 정보
+        logger.info(userId);
+        Claims claims = Jwts.claims().setSubject(userId); //payload에 담기는 정보 subject에 userId를 담는다
         claims.put("roles", roles);
         claims.put("user_name",user_name);
         Date now = new Date();
@@ -57,8 +59,12 @@ public class JwtTokenProvider {
     }
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
+        logger.info(token);
+        logger.info(this.getUserId(token));
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
-
+        logger.info(userDetails+"");
+        logger.info(userDetails.getAuthorities()+"");
+        logger.info(new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities())+"");
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

@@ -26,4 +26,11 @@ public class ShopServiceImpl implements ShopService {
         result = shopDao.productUpload(pMap);
         return 0;
     }
+
+    @Override
+    public int productHit(Map<String, Object> pMap) {
+        int result = 0;
+        result = shopDao.productHit(pMap);
+        return 0;
+    }
 }

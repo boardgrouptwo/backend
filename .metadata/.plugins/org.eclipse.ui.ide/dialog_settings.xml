@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> develop
 	<list key="installedFeatures">
 		<item value="org.eclipse.buildship:3.1.6.v20220511-1359"/>
 		<item value="org.eclipse.datatools.connectivity.feature:1.14.102.201911250848"/>
@@ -84,7 +87,10 @@
 		<item value="org.jboss.tools.m2e.wro4j.feature:1.2.1.202301111328"/>
 		<item value="org.sonatype.m2e.egit.feature:0.17.0.202209271423"/>
 	</list>
+<<<<<<< HEAD
 >>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
+=======
+>>>>>>> develop
 	<section name="SmartImportWizard">
 		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
 		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
@@ -92,16 +98,25 @@
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			<item value="D:\finalproject\backend"/>
 >>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
+=======
+			<item value="D:\finalproject\backend"/>
+>>>>>>> develop
 			<item value="D:\test"/>
 			<item value="D:\final_project\backend"/>
 		</list>
 	</section>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	<section name="ExternalProjectImportWizard">
 	</section>
 >>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
+=======
+	<section name="ExternalProjectImportWizard">
+	</section>
+>>>>>>> develop
 </section>

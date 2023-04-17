@@ -3,13 +3,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.khcare.spring">
+<<<<<<< HEAD
     <select id="productList" resultType="map">
         SELECT *  FROM product
         order by product_hit
+=======
+    <select id="productList" parameterType="map" resultType="map">
+        SELECT * FROM product
+        <where>
+            <if test="product_no != null">
+                AND product_no = #{product_no}
+            </if>
+            <if test="product_type != null">
+                AND product_type = #{product_type}
+            </if>
+        </where>
+        <if test="select_type != null">
+            order by ${select_type} desc
+        </if>
+>>>>>>> develop
     </select>
 
     <insert id="productUpload" parameterType="map">
         INSERT INTO product
+<<<<<<< HEAD
         (product_title, product_price, product_date
         <if test="product_image!= null">
             ,product_image
@@ -17,12 +34,29 @@
             ) values
         (#{product_title}, #{product_price},  now()
          <if test="product_image!= null">
+=======
+        (product_title, product_price, product_type, product_date
+        <if test="product_image != null">
+            ,product_image
+        </if>
+            ) values
+        (#{product_title}, #{product_price}, #{product_type}, now()
+         <if test="product_image != null">
+>>>>>>> develop
              ,#{product_image}
          </if>
         )
     </insert>
 
+<<<<<<< HEAD
 
+=======
+    <update id="productHit">
+        UPDATE product SET
+            product_hit = product_hit + 1
+        WHERE product_no = #{product_no}
+    </update>
+>>>>>>> develop
 
 
 

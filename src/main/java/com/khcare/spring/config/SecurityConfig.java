@@ -38,9 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // csrf 사용 안함
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용 안함
                 .and()
+                .cors()
+                .and()
                 .authorizeRequests() // 요청에 대한 사용권한 체크
-/*                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasRole("USER")*/
+                .antMatchers("/notice/insert").hasAuthority("admin")
+                //.antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+    <insert id="serviceInsert" parameterType="map">
+        INSERT INTO service
+            (user_id, service_date ,service_number, service_radios, service_person, service_memo) VALUES
+            (#{user_id}, #{service_date}, #{service_number}, #{service_radios}, #{service_person}, #{service_memo});
+    </insert>
+</mapper>

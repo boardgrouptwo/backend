@@ -19,6 +19,7 @@ public class ShopDao {
     private SqlSessionTemplate sqlSessionTemplate;
 
     public List<Map<String, Object>> productList(Map<String,Object> pMap) {
+        logger.info(pMap+"");
         List<Map<String, Object>> pList = null;
         pList = sqlSessionTemplate.selectList("productList", pMap);
         logger.info(pList+"");
@@ -28,6 +29,13 @@ public class ShopDao {
     public int productUpload(Map<String, Object> pMap) {
         int result = 0;
         result = sqlSessionTemplate.update("productUpload", pMap);
+        logger.info(result+"");
+        return result;
+    }
+
+    public int productHit(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("productHit", pMap);
         logger.info(result+"");
         return result;
     }

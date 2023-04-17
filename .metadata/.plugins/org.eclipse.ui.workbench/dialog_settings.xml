@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	<section name="ImportExportAction">
 	</section>
 >>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
+=======
+	<section name="ImportExportAction">
+	</section>
+>>>>>>> develop
 </section>
