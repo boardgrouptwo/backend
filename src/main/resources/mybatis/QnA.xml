@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+    <select id="qnaList" parameterType="map" resultType="map">
+        SELECT qna_no, qna_type, user_name, qna_title, qna_content, qna_date, qna_result, (SELECT count(*) FROM qna) as total_count
+        FROM qna
+        <where>
+            <if test='qna_no != null'>
+                AND qna_no = #{qna_no}
+            </if>
+            <if test='search != null'>
+                AND qna_title LIKE '%' #{search} '%'
+            </if>
+        </where>
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+    </select>
+
+
+    <insert id="qnaInsert" parameterType="map">
+        INSERT INTO qna
+        (
+        qna_type
+        ,user_name
+        ,qna_title
+        ,qna_content
+        ,qna_date
+        ,qna_result
+        )
+        VALUES
+        (
+        #{qna_type}
+        ,#{user_name}
+        ,#{qna_title}
+        ,#{qna_content}
+        ,sysDate()
+        ,#{qna_result}
+        );
+    </insert>
+
+
+    <delete id="qnaDelete" parameterType="map">
+        DELETE FROM qna
+        WHERE qna_no = #{qna_no}
+    </delete>
+
+
+    <update id="qnaUpdate" parameterType="map" >
+        UPDATE qna SET
+        qna_type = #{qna_type}
+        ,qna_title = #{qna_title}
+        ,qna_content = #{qna_content}
+        WHERE qna_no = #{qna_no}
+    </update>
+
+
+    <select id="qnaAfterBefore" resultType="map">
+        SELECT * FROM
+            (SELECT qna_no, qna_title,
+                    LAG(qna_title) over (ORDER BY qna_title) AS beforeQnA,
+                    LAG(qna_no) over (ORDER BY qna_title) AS beforeNo,
+                    LEAD(qna_title) over (ORDER BY qna_title) AS afterQnA,
+                    LEAD(qna_no) over (ORDER BY qna_title) AS afterNo
+             FROM qna) a
+        WHERE qna_no = #{qna_no}
+    </select>
+
+</mapper>
