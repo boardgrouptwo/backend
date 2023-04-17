@@ -15,9 +15,15 @@
         WHERE user_id = #{mem_id}
     </select>
 
+    <select id="findId" resultType="map">
+        SELECT user_id from users
+        WHERE user_name = #{user_name}
+        AND user_birth = #{user_birth}
+    </select>
+
     <insert id="save" parameterType="UserDto">
-        INSERT INTO user (username, password)
-        VALUES ( #{username}, #{password} )
+        INSERT INTO users (user_id, user_name, user_pw, user_type)
+        VALUES ( #{user_id}, #{user_name}, #{password}, #{role} )
     </insert>
 
 </mapper>

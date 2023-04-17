@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +46,7 @@ public class UserService {
 
     @Transactional
     public UserDto join(UserDto userDto) {
-        if (userMapper.findUserByUsername(userDto.getUsername()).isPresent()) {
+        if (userMapper.findUserByUsername(userDto.getUser_id()).isPresent()) {
             throw new DuplicatedUserIdException("이미 가입된 유저입니다");
         }
 
@@ -53,5 +54,12 @@ public class UserService {
         userMapper.save(userDto);
 
         return userMapper.findUserByUsername(userDto.getUsername()).get();
+    }
+
+    public Map<String, Object> findId(Map<String,Object> pMap) {
+        Map<String, Object> userId = userMapper.findId(pMap);
+        logger.info(userId+"");
+        logger.info(userId.get("user_id")+"");
+        return userId;
     }
 }

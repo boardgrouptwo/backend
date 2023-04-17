@@ -1,75 +1,75 @@
 package com.khcare.spring.Service;
 
-import com.google.api.client.auth.oauth2.TokenResponseException;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
+import com.khcare.spring.config.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+//import com.google.api.services.oauth2.Oauth2;
+
 import org.springframework.stereotype.Service;
-
-
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.Scanner;
 
 @Service
+@RequiredArgsConstructor
 public class GoogleService {
-
+    private final JwtTokenProvider jwtTokenProvider;
     private final Logger logger = LoggerFactory.getLogger(GoogleService.class);
     private static final String CLIENT_ID = "559072792143-366521ue3tu5jpmc1721ptke087c4ct0.apps.googleusercontent.com";
-    private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 
-    private static final NetHttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+    public String getUserInfo(String accessToken) throws IOException{
+        URL url = new URL("https://www.googleapis.com/oauth2/v3/userinfo");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Authorization", "Bearer " + accessToken);
+        con.setRequestProperty("Accept", "application/json");
+        int status = con.getResponseCode();
+        if (status == 200) {
+            Scanner scanner = new Scanner(con.getInputStream());
+            String responseBody = scanner.useDelimiter("\\A").next();
+            scanner.close();
 
-    public String verifyAccessToken(String accessToken) throws IOException, GeneralSecurityException, TokenResponseException {
-        logger.info(accessToken);
+            // Parse the response JSON to extract user information
+            String name = extractName(responseBody);
+            String email = extractEmail(responseBody);
 
-        GoogleIdToken idToken = GoogleIdToken.parse(JSON_FACTORY, accessToken); // 수정된 부분
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(HTTP_TRANSPORT, JSON_FACTORY)
-                .setAudience(Collections.singletonList(CLIENT_ID))
-                .build();
-        logger.info(verifier+"");
+            logger.info(name);
+            logger.info(email);
 
-        try {
-            if (verifier.verify(idToken)) {
-                String name = extractUserInfoFromToken(idToken);
-                logger.info(name);
-                return name;
-            } else {
-                logger.error("Failed to verify access token: Invalid token");
-                return  null;
-            }
-        } catch (GeneralSecurityException | IOException e) {
-            logger.error("Failed to verify access token", e);
-            throw e;
-        } catch (Exception e) {
-            logger.error("Unknown error occurred while verifying access token", e);
-            throw e;
+            return jwtTokenProvider.createToken(email, Collections.singletonList("USER"), name);
+        } else {
+            throw new IOException("Failed to fetch user information: " + con.getResponseMessage());
         }
-
+    }
+    private String extractName(String responseBody) {
+        // Parse the "name" field from the JSON response
+        // This assumes that the response is in the following format:
+        // {
+        //   "name": "John Smith",
+        //   "email": "john.smith@example.com",
+        //   ...
+        // }
+        return responseBody.split("\"name\"\\s*:\\s*\"")[1].split("\"")[0];
     }
 
-    // 추가된 메서드
-    protected JsonFactory getJsonFactory() {
-        return JSON_FACTORY;
+    private String extractEmail(String responseBody) {
+        // Parse the "email" field from the JSON response
+        // This assumes that the response is in the following format:
+        // {
+        //   "name": "John Smith",
+        //   "email": "john.smith@example.com",
+        //   ...
+        // }
+        return responseBody.split("\"email\"\\s*:\\s*\"")[1].split("\"")[0];
     }
 
-    public String extractUserInfoFromToken(GoogleIdToken idToken) throws GeneralSecurityException, IOException {
-
-        GoogleIdToken.Payload payload = idToken.getPayload();
-        String email = payload.getEmail();
-        String name = (String) payload.get("name");
-        String locale = (String) payload.get("locale");
-
-        logger.info(email);
-        logger.info(name);
-
-        return name;
-
-    }
 
 }

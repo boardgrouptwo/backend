@@ -91,16 +91,14 @@ public class UserController {
         logger.info(pMap+"");
         String access_token=pMap.get("access_token").toString();
         logger.info(access_token+"");
-
+       String token = null;
         try {
-            String token = googleService.verifyAccessToken(access_token);
+            token = googleService.getUserInfo(access_token);
 
         } catch(IOException e) {
 
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
         }
-        return null;
+        return token;
     }
 
     @PostMapping("/join")
@@ -120,19 +118,10 @@ public class UserController {
         return responseEntity;
     }
 
-
-/*    @PostMapping("/googleLogin")
-    public String GoogleLogin(@RequestHeader("Authorization") String authorizationHeader) {
-        String accessToken = authorizationHeader.split(" ")[1]; // "Bearer <access_token>" 형식에서 <access_token> 부분 추출
-        logger.info(accessToken);
-        try {
-            String token = googleService.verifyAccessToken(accessToken);
-
-        } catch(IOException e) {
-
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }*/
+    @PostMapping("findId")
+    public Map<String, Object> findId(@RequestBody Map<String,Object> pMap) {
+        logger.info(pMap+"");
+        Map<String, Object> userId = userService.findId(pMap);
+        return userId;
+    }
 }
