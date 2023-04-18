@@ -14,8 +14,14 @@ public interface UserMapper {
     // 로그인시 UserId 검색
     Optional<UserDto> findByUserId(String userId);
 
-    // Id 찾기 시도
+    // Id 찾기
     Map<String,Object> findId(Map<String, Object> pMap);
+
+    // 비밀번호 찾기
+    Map<String, Object> findPw(Map<String, Object> pMap);
+
+    // 비밀번호 변경
+    int changePw(Map<String,Object> pMap);
 
     // 회원가입
     void save(UserDto userDto);

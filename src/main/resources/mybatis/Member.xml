@@ -16,10 +16,23 @@
     </select>
 
     <select id="findId" resultType="map">
-        SELECT user_id from users
+        SELECT user_id FROM users
         WHERE user_name = #{user_name}
-        AND user_birth = #{user_birth}
+        AND user_tel = #{user_tel}
     </select>
+
+    <select id="findPw" resultType="map">
+        SELECT user_id FROM users
+        WHERE user_id = #{user_id}
+        AND user_name = #{user_name}
+    </select>
+
+    <update id="changePw" parameterType="map">
+        UPDATE users SET
+        user_pw = #{user_password}
+        WHERE user_id = #{user_id}
+    </update>
+
 
     <insert id="save" parameterType="UserDto">
         INSERT INTO users (user_id, user_name, user_pw, user_type)

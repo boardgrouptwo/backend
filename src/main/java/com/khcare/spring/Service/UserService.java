@@ -56,10 +56,42 @@ public class UserService {
         return userMapper.findUserByUsername(userDto.getUsername()).get();
     }
 
+    /*
+    * 아이디 찾기    *
+    */
     public Map<String, Object> findId(Map<String,Object> pMap) {
         Map<String, Object> userId = userMapper.findId(pMap);
         logger.info(userId+"");
-        logger.info(userId.get("user_id")+"");
         return userId;
+    }
+
+    /*
+     * 비밀번호 찾기
+     */
+    public int findPw(Map<String,Object> pMap) {
+        Map<String, Object> userid = userMapper.findPw(pMap);
+        int result = 0;
+        try {
+            if(userid.get("user_id").toString().equals(pMap.get("user_id").toString())) {
+                result = 1;
+            }
+        } catch (NullPointerException e) {
+
+        }
+
+        return result;
+    }
+
+    /*
+    * 비밀번호 변경
+    */
+    public int changePw(Map<String,Object> pMap) {
+        int result =0;
+        String password = pMap.get("user_password").toString();
+        // 패스워드 인코딩
+        pMap.put("user_password",passwordEncoder.encode(password));
+        logger.info(pMap+"");
+        result = userMapper.changePw(pMap);
+        return result;
     }
 }

@@ -118,10 +118,26 @@ public class UserController {
         return responseEntity;
     }
 
-    @PostMapping("findId")
+    @PostMapping("/findId")
     public Map<String, Object> findId(@RequestBody Map<String,Object> pMap) {
-        logger.info(pMap+"");
+
         Map<String, Object> userId = userService.findId(pMap);
         return userId;
+    }
+
+    @PostMapping("/findPw")
+    public int findPw(@RequestBody Map<String,Object> pMap) {
+        logger.info(pMap+"");
+        int result = 0;
+        result = userService.findPw(pMap);
+        return result;
+    }
+
+    @PostMapping("/changePw")
+    public int changePw(@RequestBody Map<String, Object> pMap) {
+        int result = 0;
+        result = userService.changePw(pMap);
+        logger.info(result+"");
+        return result;
     }
 }
