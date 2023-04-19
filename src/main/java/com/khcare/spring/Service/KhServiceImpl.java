@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -20,5 +21,12 @@ public class KhServiceImpl implements KhService{
         int result =0;
         result = serviceDao.serviceInsert(pMap);
         return result;
+    }
+
+    @Override
+    public List<Map<String, Object>> managerList(Map<String,Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = serviceDao.managerList(pMap);
+        return bList;
     }
 }

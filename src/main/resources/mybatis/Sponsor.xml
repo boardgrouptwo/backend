@@ -10,9 +10,19 @@
     </insert>
 
     <select id="sponsorList" parameterType="map" resultType="map">
-        SELECT user_id, SUM(spon_money) spon_money, spon_content, spon_open
-        FROM sponsor
+        SELECT user_id,
+               SUM(spon_money) AS spon_money,
+               (SELECT spon_content
+                FROM sponsor
+                WHERE user_id = A.user_id
+                ORDER BY spon_date DESC
+                                  LIMIT 1) AS spon_content,
+                   CASE
+                     WHEN EXISTS (SELECT 1 FROM sponsor WHERE user_id = A.user_id AND spon_open = '공개') THEN '공개'
+                     ELSE '비공개'
+                    END AS spon_open
+        FROM sponsor A
         GROUP BY user_id
-        ORDER BY 2 DESC
+        ORDER BY spon_money DESC;
     </select>
 </mapper>

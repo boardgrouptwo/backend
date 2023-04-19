@@ -8,4 +8,11 @@
             (user_id, service_date ,service_number, service_radios, service_person, service_memo) VALUES
             (#{user_id}, #{service_date}, #{service_number}, #{service_radios}, #{service_person}, #{service_memo});
     </insert>
+
+    <select id="managerList" parameterType="map" resultType="map">
+        SELECT user_id, service_date, service_radios, service_person, service_memo, service_check
+        FROM service
+        order by service_date asc
+    </select>
+
 </mapper>
