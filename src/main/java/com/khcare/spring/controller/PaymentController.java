@@ -22,7 +22,7 @@ public class PaymentController {
      * @param pMap: 결제 정보
      * @return 0: 실패 / 1: 성공
      */
-    @PostMapping("/Insert")
+    @PostMapping("/insert")
     public int paymentInsert(@RequestBody Map<String,Object> pMap) {
         logger.info("paymentInsert 호출");
         logger.info("pMap : " + pMap);
@@ -40,16 +40,12 @@ public class PaymentController {
      * @return
      */
     @GetMapping("/list")
-    public String paymentList(@RequestBody Map<String,Object> pMap) {
+    public String paymentList(@RequestParam Map<String,Object> pMap) {
         logger.info("paymentList 호출");
         logger.info("pMap : " + pMap);
         List<Map<String,Object>> rList = null;
 
-        if (pMap.get("condition") != null) {
-            logger.info("검색 분류 ===> " + pMap.get("condition"));
-        }
-
-        rList = paymentServiceImpl.paymentList();
+        rList = paymentServiceImpl.paymentList(pMap);
 
         Gson g = new Gson();
         String result = g.toJson(rList);

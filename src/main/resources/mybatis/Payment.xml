@@ -9,28 +9,52 @@
         VALUES ( #{user_id}, #{pay_amount}, now(), #{pay_content} )
     </insert>
 
-    <!--  후원 내역 출력  -->
-    <select id="paymentList" resultType="map">
-        SELECT p.pay_no, p.user_id, p.pay_amount, p.pay_date, p.pay_content
-                , u.user_name
-        FROM payment p, users u
-        WHERE p.user_id = u.user_id
-            <where>
-                <if test='pay_no != null and pay_no > 0'>
-                    AND p.pay_no = #{pay_no}
-                </if>
-                <if test='content != null'>
-                    <choose>
-                        <when test='condition != null and condition.equals("후원자ID")'>
-                            AND u.user_name LIKE '%'||#{content}||'%'
-                        </when>
-                        <when test='condition != null and condition.equals("날짜")'>
-                            AND p.pay_date LIKE '%'||#{content}||'%'
-                        </when>
-                    </choose>
-                </if>
-            </where>
-        ORDER BY pay_no desc
+    <!--  결제 내역 출력  -->
+    <select id="paymentList" parameterType="map" resultType="map">
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS out_type FROM payment
+        UNION ALL
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS out_type FROM sponsor
+        <where>
+            <if test="user_id != null and user_id > 0">
+                user_id = #{user_id}
+            </if>
+        </where>
+        <if test="!'전체'.equals(pay_type)">
+            <choose>
+                <when test="'원비'.equals(pay_type)">
+                    HAVING out_type LIKE '%원비%'
+                </when>
+                <when test="'후원'.equals(pay_type)">
+                    HAVING out_type LIKE '%후원%'
+                </when>
+            </choose>
+        </if>
+        ORDER BY pay_date desc
+    </select>
+
+    <select id="paymentListP" parameterType="map" resultType="map">
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS out_type FROM payment
+        UNION ALL
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS out_type FROM sponsor
+        <where>
+            <if test="user_id != null and user_id > 0">
+                user_id = #{user_id}
+            </if>
+        </where>
+        HAVING out_type LIKE '%원비%'
+        ORDER BY pay_date desc
+    </select>
+    <select id="paymentListS" parameterType="map" resultType="map">
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS out_type FROM payment
+        UNION ALL
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS out_type FROM sponsor
+        <where>
+            <if test="user_id != null and user_id > 0">
+                user_id = #{user_id}
+            </if>
+        </where>
+        HAVING out_type LIKE '%후원%'
+        ORDER BY pay_date desc
     </select>
 
     <!--  후원 내역 삭제 -->

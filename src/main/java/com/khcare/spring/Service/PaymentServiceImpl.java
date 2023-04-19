@@ -26,11 +26,11 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    public List<Map<String, Object>> paymentList() {
+    public List<Map<String, Object>> paymentList(Map<String, Object> pMap) {
         logger.info("paymentList 호출");
         List<Map<String, Object>> rList = null;
 
-        rList = paymentDao.paymentList();
+        rList = paymentDao.paymentList(pMap);
 
         return rList;
     }
