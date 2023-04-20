@@ -31,34 +31,52 @@ public class QnAServiceImpl implements QnAService{
         return bList;
     }
 
-
-    @Override
-    public List<Map<String, Object>> qnaSearchList(Map<String, Object> pMap) {
-        return null;
-    }
-
-
-    @Override
-    public List<Map<String, Object>> qnaAfterBefore(Map<String, Object> pMap) {
-        return null;
-    }
-
-
     @Override
     public int qnaInsert(Map<String, Object> pMap) {
-        return 0;
-    }
+        int result = 0;
 
+        log.info(pMap);
 
-    @Override
-    public int qnaDelete(Map<String, Object> pMap) {
-        return 0;
+        result = qnaDao.qnaInsert(pMap);
+
+        return result;
     }
 
 
     @Override
     public int qnaUpdate(Map<String, Object> pMap) {
-        return 0;
+        int result = 0;
+        result = qnaDao.qnaUpdate(pMap);
+
+        return result;
     }
+
+    @Override
+    public int qnaDelete(Map<String, Object> pMap) {
+        int result = 0;
+        result = qnaDao.qnaDelete(pMap);
+
+        return result;
+    }
+
+
+
+    @Override
+    public List<Map<String, Object>> qnaSearchList(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = qnaDao.qnaList(pMap);
+
+        return bList;
+    }
+
+
+    @Override
+    public List<Map<String, Object>> qnaAfterBefore(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = qnaDao.qnaAfterBefore(pMap);
+
+        return bList;
+    }
+
 
 }//end of class
