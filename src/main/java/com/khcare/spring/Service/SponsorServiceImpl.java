@@ -2,6 +2,8 @@ package com.khcare.spring.Service;
 
 import com.khcare.spring.dao.SponsorDao;
 import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,7 @@ import java.util.Map;
 @Service
 @Log4j2
 public class SponsorServiceImpl implements SponsorService{
-
+    Logger logger = LoggerFactory.getLogger(SponsorServiceImpl.class);
     @Autowired
     private SponsorDao sponsorDao;
 
@@ -28,5 +30,15 @@ public class SponsorServiceImpl implements SponsorService{
         log.info(pMap);
         bList = sponsorDao.sponsorList(pMap);
         return bList;
+    }
+
+    @Override
+    public int sponsorNo() {
+        logger.info("sponsorNo 호출");
+        int result = 0;
+
+        result = sponsorDao.sponsorNo();
+
+        return result;
     }
 }

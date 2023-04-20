@@ -25,4 +25,35 @@
         GROUP BY user_id
         ORDER BY spon_money DESC;
     </select>
+
+    <!-- spon_no값 확인 -->
+    <select id="sponsorNo" resultType="map">
+        SELECT spon_no FROM sponsor
+        ORDER BY spon_no DESC LIMIT 1;
+    </select>
+
+    <!-- 카카오페이 결제 내역 추가 -->
+    <insert id="sponsorInsertKakao" parameterType="com.khcare.spring.dto.KakaoPayDto">
+        INSERT INTO sponsor (
+                                user_id
+                                , spon_number
+                                , spon_date
+                                , spon_huwon
+                                , spon_money
+                                , spon_pay
+                                , spon_open
+                                , spon_content
+                                , spon_tid
+                            ) VALUES (
+                                #{partner_user_id}
+                                , #{partner_order_id}
+                                , #{approved_at}
+                                , "일반 후원"
+                                , #{total_amount}
+                                , #{spon_pay}
+                                , #{spon_open}
+                                , #{spon_content}
+                                , #{tid}
+                            )
+    </insert>
 </mapper>

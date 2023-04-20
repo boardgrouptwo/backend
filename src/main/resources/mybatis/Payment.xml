@@ -10,55 +10,77 @@
     </insert>
 
     <!--  결제 내역 출력  -->
-    <select id="paymentList" parameterType="map" resultType="map">
-        select user_id, pay_date, pay_amount, pay_content, '결제' AS out_type FROM payment
+    <select id="paymentList" parameterType="java.util.HashMap" resultType="map">
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment
         UNION ALL
-        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS out_type FROM sponsor
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor
         <where>
             <if test="user_id != null and user_id > 0">
                 user_id = #{user_id}
             </if>
+<!--            <if test='pay_type.equals("결제")'>-->
+<!--                HAVING pay_type LIKE '%결제%'-->
+<!--            </if>-->
+<!--            <if test='pay_type.equals("후원")'>-->
+<!--                HAVING pay_type LIKE '%후원%'-->
+<!--            </if>-->
+                <if test='pay_type == "결제"'>
+                    AND pay_type LIKE '%결제%'
+                </if>
+                <if test='pay_type == "후원"'>
+                    AND pay_type LIKE '%후원%'
+                </if>
         </where>
-        <if test="!'전체'.equals(pay_type)">
-            <choose>
-                <when test="'원비'.equals(pay_type)">
-                    HAVING out_type LIKE '%원비%'
-                </when>
-                <when test="'후원'.equals(pay_type)">
-                    HAVING out_type LIKE '%후원%'
-                </when>
-            </choose>
-        </if>
+        <choose>
+<!--            <when test='pay_type.equals("결제")'>-->
+<!--                HAVING pay_type LIKE '%결제%'-->
+<!--            </when>-->
+<!--            <when test='pay_type.equals("후원")'>-->
+<!--                HAVING pay_type LIKE '%후원%'-->
+<!--            </when>-->
+<!--            <when test='pay_type == "결제"'>-->
+<!--                HAVING pay_type LIKE '%결제%'-->
+<!--            </when>-->
+<!--            <when test='pay_type == "후원"'>-->
+<!--                HAVING pay_type LIKE '%후원%'-->
+<!--            </when>-->
+        </choose>
         ORDER BY pay_date desc
     </select>
 
     <select id="paymentListP" parameterType="map" resultType="map">
-        select user_id, pay_date, pay_amount, pay_content, '결제' AS out_type FROM payment
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment
         UNION ALL
-        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS out_type FROM sponsor
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor
         <where>
             <if test="user_id != null and user_id > 0">
                 user_id = #{user_id}
             </if>
         </where>
-        HAVING out_type LIKE '%원비%'
+        HAVING pay_type = '결제'
         ORDER BY pay_date desc
     </select>
     <select id="paymentListS" parameterType="map" resultType="map">
-        select user_id, pay_date, pay_amount, pay_content, '결제' AS out_type FROM payment
-        UNION ALL
-        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS out_type FROM sponsor
+--         select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment
+--         UNION ALL
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor
         <where>
             <if test="user_id != null and user_id > 0">
                 user_id = #{user_id}
             </if>
         </where>
-        HAVING out_type LIKE '%후원%'
+--         HAVING pay_type = '후원'
         ORDER BY pay_date desc
     </select>
 
-    <!--  후원 내역 삭제 -->
+    <!-- 후원 내역 삭제 -->
     <delete id="paymentDelete" parameterType="int">
         DELETE FROM payment WHERE pay_no = #{pay_no}
     </delete>
+
+    <!-- pay_no값 확인 -->
+    <select id="paymentNo" resultType="map">
+        SELECT pay_no FROM payment
+        ORDER BY pay_no DESC LIMIT 1;
+    </select>
 </mapper>

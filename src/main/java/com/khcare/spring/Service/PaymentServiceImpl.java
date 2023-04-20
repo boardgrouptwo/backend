@@ -44,4 +44,14 @@ public class PaymentServiceImpl implements PaymentService{
 
         return result;
     }
+
+    @Override
+    public int paymentNo() {
+        logger.info("paymentNo 호출");
+        int result = 0;
+
+        result = paymentDao.paymentNo();
+
+        return result;
+    }
 }
