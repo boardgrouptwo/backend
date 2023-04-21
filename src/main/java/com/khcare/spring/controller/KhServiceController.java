@@ -46,6 +46,14 @@ public class KhServiceController {
         return temp;
     }
 
+    @GetMapping("/delete")
+    public int serviceDelete(@RequestParam Map<String, Object> pMap){
+        log.info("봉사활동 삭제");
+        int result = 0;
+        result = khServiceImpl.serviceDelete(pMap);
+        return result;
+    }
+
 }
 
 

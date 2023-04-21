@@ -14,4 +14,5 @@ public interface KhService {
     //매니저 봉사활동 리스트 조회
     List<Map<String,Object>> managerList(Map<String,Object> pMap);
 
+    int serviceDelete(Map<String, Object> pMap);
 }
