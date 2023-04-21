@@ -37,7 +37,13 @@
         SELECT service_no, user_id, service_date, service_radios, service_person, service_memo, service_check
         FROM service
         order by service_date asc
+
     </select>
+
+    <delete id="serviceDelete" parameterType="map">
+        DELETE FROM service
+        WHERE service_no = #{service_no}
+    </delete>
 
 
 </mapper>

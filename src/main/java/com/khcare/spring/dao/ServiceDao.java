@@ -14,6 +14,7 @@ public class ServiceDao {
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
+
     public int serviceInsert(Map<String, Object> pMap) {
         int result = 0;
         result = sqlSessionTemplate.update("serviceInsert", pMap);
@@ -34,4 +35,11 @@ public class ServiceDao {
         log.info(result);
         return result;
     }
+
+    public int serviceDelete(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("serviceDelete", pMap);
+        return result;
+    }
+
 }

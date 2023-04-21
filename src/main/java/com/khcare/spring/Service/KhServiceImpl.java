@@ -36,4 +36,11 @@ public class KhServiceImpl implements KhService{
         bList = serviceDao.managerList(pMap);
         return bList;
     }
+
+    @Override
+    public int serviceDelete(Map<String, Object> pMap) {
+        int result =0;
+        result = serviceDao.serviceDelete(pMap);
+        return result;
+    }
 }
