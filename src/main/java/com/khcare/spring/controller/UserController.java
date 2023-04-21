@@ -45,15 +45,6 @@ public class UserController {
             access_token = userService.login(loginDto);
             logger.info("login 성공");
 
-/*            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization", "Bearer " + token);
-            SingleDataResponse<String> response = responseService.getSingleDataResponse(true, "로그인 성공", token);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(response);
-
-            logger.info(token);
-            logger.info("response : "+response);
-            logger.info(responseEntity+"");*/
-
         } catch (LoginFailedException e) {
             String message = e.toString();
             int colonIndex = message.indexOf(":");

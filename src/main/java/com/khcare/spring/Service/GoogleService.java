@@ -41,9 +41,6 @@ public class GoogleService {
             String name = extractName(responseBody);
             String email = extractEmail(responseBody);
 
-            logger.info(name);
-            logger.info(email);
-
             return jwtTokenProvider.createToken(email, Collections.singletonList("USER"), name);
         } else {
             throw new IOException("Failed to fetch user information: " + con.getResponseMessage());
