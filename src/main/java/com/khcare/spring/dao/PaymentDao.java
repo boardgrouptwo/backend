@@ -29,17 +29,16 @@ public class PaymentDao {
 
     public List<Map<String, Object>> paymentList(Map<String, Object> pMap) {
         logger.info("paymentList 호출");
-        List<Map<String, Object>> qList = null;
+        List<Map<String, Object>> qList = new ArrayList<Map<String, Object>>();
 
         String listType = pMap.get("pay_type").toString();
         pMap.put("pay_type", listType);
-        logger.info("검색 분류 ===> " + listType);
+        logger.info("검색 분류(pay_type) ===> " + pMap.get("pay_type").toString());
 
-        //rList = sqlSessionTemplate.selectList("paymentList");
         if (listType.equals("전체")) {
             qList = sqlSessionTemplate.selectList("paymentList");
         }
-        else if (listType.equals("원비")) {
+        else if (listType.equals("결제")) {
             qList = sqlSessionTemplate.selectList("paymentListP");
         }
         else if (listType.equals("후원")) {
@@ -70,6 +69,19 @@ public class PaymentDao {
         int result = 0;
 
         result = sqlSessionTemplate.delete("paymentDelete", payNo);
+        logger.info(Integer.toString(result));
+
+        return result;
+    }
+
+    public int paymentNo() {
+        logger.info("paymentNo 호출");
+        int result = 0;
+        Map<String,Object> rMap = null;
+
+        rMap = sqlSessionTemplate.selectOne("paymentNo");
+
+        result = Integer.parseInt(rMap.get("pay_no").toString());
         logger.info(Integer.toString(result));
 
         return result;

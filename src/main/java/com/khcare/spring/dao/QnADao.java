@@ -25,4 +25,32 @@ public class QnADao {
     }
 
 
+    public int qnaInsert(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("qnaInsert", pMap);
+
+        return result;
+    }
+
+    public int qnaUpdate(Map<String,Object> pMap){
+        int result = 0;
+        result = sqlSessionTemplate.update("qnaUpdate", pMap);
+
+        return result;
+    }
+
+    public int qnaDelete(Map<String, Object> pMap){
+        int result = 0;
+        result = sqlSessionTemplate.update("qnaDelete", pMap);
+
+        return result;
+    }
+
+
+    public List<Map<String, Object>> qnaAfterBefore(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = sqlSessionTemplate.selectList("qnaAfterBefore", pMap);
+
+        return bList;
+    }
 }//end of class

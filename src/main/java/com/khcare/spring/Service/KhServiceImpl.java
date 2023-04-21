@@ -24,6 +24,13 @@ public class KhServiceImpl implements KhService{
     }
 
     @Override
+    public int serviceUpdate(Map<String, Object> pMap) {
+        int result = 0;
+        result = serviceDao.serviceUpdate(pMap);
+        return result;
+    }
+
+    @Override
     public List<Map<String, Object>> managerList(Map<String,Object> pMap) {
         List<Map<String, Object>> bList = null;
         bList = serviceDao.managerList(pMap);

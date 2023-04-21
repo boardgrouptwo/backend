@@ -12,4 +12,7 @@ public interface PaymentService {
 
     // 결제 환불
     int paymentDelete(int payNo);
+
+    // 결제 테이블 pay_no값 확인
+    int paymentNo();
 }

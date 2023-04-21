@@ -10,6 +10,9 @@ public interface SponsorService {
 
     //공지사항 게시판 전체 조회
     List<Map<String,Object>> sponsorList(Map<String,Object> pMap);
+
+    // 후원 테이블 spon_no값 확인
+    int sponsorNo();
 }
 
 
