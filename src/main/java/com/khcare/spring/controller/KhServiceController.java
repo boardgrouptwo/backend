@@ -24,6 +24,16 @@ public class KhServiceController {
         result = khServiceImpl.serviceInsert(pMap);
         return result;
     }
+
+    @PostMapping("/update")
+    public int serviceUpdate(@RequestBody Map<String,Object> pMap) {
+        log.info("form update");
+        log.info(pMap);
+        int result = 0;
+        result = khServiceImpl.serviceUpdate(pMap);
+        return result;
+    }
+
     @GetMapping("/managerList")
     public String managerList(@RequestParam Map<String,Object> pMap) {
         log.info("service manager 리스트 호출");

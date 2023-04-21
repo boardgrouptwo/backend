@@ -25,4 +25,13 @@ public class ServiceDao {
         bList = sqlSessionTemplate.selectList("managerList", pMap);
         return bList;
     }
+
+    public int serviceUpdate(Map<String, Object> pMap) {
+        int result = 0;
+        log.info(pMap.get("service_no").toString());
+        result = sqlSessionTemplate.update("serviceUpdate", pMap);
+        result = sqlSessionTemplate.update("serviceUpdate2", pMap);
+        log.info(result);
+        return result;
+    }
 }
