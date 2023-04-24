@@ -173,7 +173,6 @@ public class KakaopayController {
      * @return
      */
     @RequestMapping("/success")
-    @ResponseBody
     public String kakaoPaySucces(@RequestParam Map<String, String> pMap) {
         // API주소 : https://developers.kakao.com/docs/latest/ko/kakaopay/single-payment#approve
         logger.info("kakaoPaySucces 호출");
@@ -263,16 +262,32 @@ public class KakaopayController {
         kakaoPayDto.setAid(rMap.get("aid").toString());                         // aid: 요청 고유 번호
         kakaoPayDto.setApproved_at(rMap.get("approved_at").toString());         // approved_at: 결제 승인 시각
 
+        StringBuilder sb = new StringBuilder();
+
         // 결제 완료한 값 DB에 저장
         String pay_type = kakaoPayDto.getPay_type();
         if ("결제".equals(pay_type)) {
             qResult = sqlSessionTemplate.insert("paymentInsertKakao", kakaoPayDto);
-            return "";
+            logger.info("카카오페이 결제 로직 완료");
+
+            sb.append("<script>");
+            sb.append("  window.opener.parent.location=\'http://localhost:3000/payment/success\';");
+            sb.append("  window.close();");
+            sb.append("</script>");
+
+            return sb.toString();
         } else if ("후원".equals(pay_type)) {
             qResult = sqlSessionTemplate.insert("sponsorInsertKakao", kakaoPayDto);
-            return "redirect:http://localhost:3000/sponsor/success";
+            logger.info("카카오페이 후원 로직 완료");
+
+            sb.append("<script>");
+            sb.append("  window.opener.parent.location=\'http://localhost:3000/sponsor/success\';");
+            sb.append("  window.close();");
+            sb.append("</script>");
+
+            return sb.toString();
         } else {
-            return "redirect:http://localhost:3000/sponsor/from";
+            return "";
         }
     } // end of kakaoPaySucces
 
@@ -282,7 +297,6 @@ public class KakaopayController {
      * @return
      */
     @RequestMapping("/cancel")
-    @ResponseBody
     public String kakaoPayCancel() {
         // API주소 : https://developers.kakao.com/docs/latest/ko/kakaopay/cancellation#결제-취소하기
         logger.info("kakaoPayCancel 호출");
