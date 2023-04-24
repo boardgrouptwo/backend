@@ -62,4 +62,11 @@
         )
     </insert>
 
+
+    <select id="userInfo" parameterType="map" resultType="map">
+        SELECT user_id, user_name, user_birth, user_gender, user_tel, user_email
+                , user_enter, user_type, user_profile_url, user_memo
+        FROM users
+        WHERE user_id = #{user_id}
+    </select>
 </mapper>

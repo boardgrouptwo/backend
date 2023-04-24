@@ -1,6 +1,7 @@
 package com.khcare.spring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
 import com.khcare.spring.Service.GoogleService;
 import com.khcare.spring.Service.KakaoUserService;
 import com.khcare.spring.Service.ResponseService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -130,6 +132,21 @@ public class UserController {
         int result = 0;
         result = userService.changePw(pMap);
         logger.info(result+"");
+        return result;
+    }
+
+    @PostMapping("/userInfo")
+    public String userInfo(@RequestBody Map<String,Object> pMap) {
+        logger.info("userInfo 호출");
+        logger.info("pMap : " + pMap);
+        Map<String,Object> rMap = null;
+
+        rMap = userService.userInfo(pMap);
+
+        Gson g = new Gson();
+        String result = g.toJson(rMap);
+        logger.info("result : " + result);
+
         return result;
     }
 }
