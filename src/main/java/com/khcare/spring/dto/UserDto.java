@@ -21,6 +21,13 @@ public class UserDto implements UserDetails {
     private String password;
     private String role;
 
+    private String user_birth;
+    private String user_gender;
+    private String user_tel;
+    private String user_email;
+    private String user_enter;
+    private String user_date;
+
 
     private Collection<? extends GrantedAuthority> authorities;
 

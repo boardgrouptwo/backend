@@ -95,6 +95,7 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity join(@RequestBody UserDto userDto) {
         ResponseEntity responseEntity = null;
+        logger.info(userDto+"");
         try {
             UserDto savedUser = userService.join(userDto);
             SingleDataResponse<UserDto> response = responseService.getSingleDataResponse(true, "회원가입 성공", savedUser);

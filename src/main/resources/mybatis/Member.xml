@@ -35,8 +35,31 @@
 
 
     <insert id="save" parameterType="UserDto">
-        INSERT INTO users (user_id, user_name, user_pw, user_type)
-        VALUES ( #{user_id}, #{user_name}, #{password}, #{role} )
+        INSERT INTO users
+            (
+             user_id,
+             user_name,
+             user_pw,
+             user_type,
+             user_birth,
+             user_gender,
+             user_tel,
+             user_email,
+             user_enter,
+             user_date
+            )
+        VALUES (
+                #{user_id},
+                #{user_name},
+                #{password},
+                #{role},
+                #{user_birth},
+                #{user_gender},
+                #{user_tel},
+                #{user_email},
+                #{user_enter},
+                #{user_date}
+        )
     </insert>
 
 </mapper>
