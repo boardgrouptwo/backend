@@ -25,4 +25,7 @@ public interface UserMapper {
 
     // 회원가입
     void save(UserDto userDto);
+
+    // 사용자 정보 찾기
+    Map<String,Object> userInfo(Map<String,Object> pMap);
 }

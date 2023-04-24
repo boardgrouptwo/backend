@@ -48,6 +48,16 @@
         ORDER BY pay_date desc
     </select>
 
+    <!--  5건 결제 내역 출력  -->
+    <select id="paymentListPreview" parameterType="java.util.HashMap" resultType="map">
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment
+        UNION ALL
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor
+        WHERE user_id = #{user_id}
+        ORDER BY pay_date desc
+        LIMIT 5
+    </select>
+
     <select id="paymentListP" parameterType="map" resultType="map">
         select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment
         UNION ALL
