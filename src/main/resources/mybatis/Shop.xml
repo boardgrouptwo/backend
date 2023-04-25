@@ -6,7 +6,6 @@
     <select id="productList" parameterType="map" resultType="map">
         SELECT * FROM product
         <where>
-            product_type='많이 선물한'
             <if test="product_no != null">
                 AND product_no = #{product_no}
             </if>
