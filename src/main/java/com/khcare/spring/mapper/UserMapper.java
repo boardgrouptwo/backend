@@ -28,4 +28,7 @@ public interface UserMapper {
 
     // 사용자 정보 찾기
     Map<String,Object> userInfo(Map<String,Object> pMap);
+
+    // 회원 중복검사
+    Map<String, Object> duplicateCheck(Map<String, Object> pMap);
 }

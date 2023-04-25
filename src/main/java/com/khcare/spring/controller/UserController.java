@@ -149,4 +149,13 @@ public class UserController {
 
         return result;
     }
+
+    @PostMapping("/duplicate")
+    public int duplicateCheck(@RequestBody Map<String,Object> pMap) {
+        logger.info(pMap+"");
+        int result = 0;
+        result = userService.duplicateCheck(pMap);
+        logger.info(result+"");
+        return result;
+    }
 }

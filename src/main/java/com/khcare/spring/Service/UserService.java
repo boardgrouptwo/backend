@@ -107,4 +107,19 @@ public class UserService {
 
         return rMap;
     }
+
+    public int duplicateCheck(Map<String, Object> pMap) {
+        int result = 0;
+        Map<String, Object> rMap = null;
+        rMap = userMapper.duplicateCheck(pMap);
+        logger.info(rMap+"");
+        try {
+            if(rMap.size()!=0) {
+                result = 1;
+            }
+        } catch (NullPointerException e) {
+            result = 0;
+        }
+        return result;
+    }
 }

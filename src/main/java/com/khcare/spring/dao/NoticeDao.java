@@ -46,6 +46,7 @@ public class NoticeDao {
 
     public int noticeUpdate(Map<String, Object> pMap) {
         int result = 0;
+        log.info(pMap);
         result = sqlSessionTemplate.update("noticeUpdate", pMap);
         return result;
     }

@@ -69,4 +69,10 @@
         FROM users
         WHERE user_id = #{user_id}
     </select>
+
+    <select id="duplicateCheck" parameterType="map" resultType="map">
+        SELECT user_id FROM users
+        WHERE user_id = #{user_id}
+    </select>
+
 </mapper>
