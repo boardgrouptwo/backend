@@ -36,6 +36,16 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
+    public List<Map<String, Object>> paymentListPre(Map<String, Object> pMap) {
+        logger.info("paymentListPre 호출");
+        List<Map<String, Object>> rList = null;
+
+        rList = paymentDao.paymentListPre(pMap);
+
+        return rList;
+    }
+
+    @Override
     public int paymentDelete(int payNo) {
         logger.info("paymentDelete 호출");
         int result = 0;

@@ -64,6 +64,31 @@ public class PaymentDao {
         return rList;
     }
 
+    public List<Map<String, Object>> paymentListPre(Map<String, Object> pMap) {
+        logger.info("paymentListPre 호출");
+        List<Map<String, Object>> qList = new ArrayList<Map<String, Object>>();
+
+        qList = sqlSessionTemplate.selectList("paymentListPreview", pMap);
+
+        // 결제 금액 단위 나누기
+        List<Map<String,Object>> rList = new ArrayList<Map<String,Object>>();
+        for (int i=0; i<qList.size(); i++) {
+            Map<String, Object> tMap = qList.get(i);
+            int mInt = Integer.parseInt(tMap.get("pay_amount").toString());
+
+            // 숫자에 천단위 콤마찍기 (금액 표기하기)
+            DecimalFormat df = new DecimalFormat("###,###");
+            String money = df.format(mInt) + " 원";
+
+            tMap.put("pay_amount", money);
+            rList.add(tMap);
+        }
+
+        logger.info("쿼리결과 : " + rList.toString());
+
+        return rList;
+    }
+
     public int paymentDelete(int payNo) {
         logger.info("paymentDelete 호출");
         int result = 0;

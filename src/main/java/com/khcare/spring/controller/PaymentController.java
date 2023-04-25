@@ -67,6 +67,25 @@ public class PaymentController {
         return result;
     } // end of paymentList
 
+    /**
+     * 5건 결제 내역 출력
+     * @return
+     */
+    @GetMapping("/listpreview")
+    public String paymentListPre(@RequestParam Map<String,Object> pMap) {
+        logger.info("paymentListPre 호출");
+        logger.info("pMap : " + pMap);
+        List<Map<String,Object>> rList = null;
+
+        rList = paymentServiceImpl.paymentListPre(pMap);
+
+        Gson g = new Gson();
+        String result = g.toJson(rList);
+        logger.info("result : " + result);
+
+        return result;
+    } // end of paymentList
+
 
     /**
      * 결제 환불

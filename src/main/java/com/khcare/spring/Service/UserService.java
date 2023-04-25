@@ -1,6 +1,7 @@
 package com.khcare.spring.Service;
 
 import com.khcare.spring.config.JwtTokenProvider;
+import com.khcare.spring.dao.UserDao;
 import com.khcare.spring.dto.LoginDto;
 import com.khcare.spring.dto.UserDto;
 import com.khcare.spring.exception.DuplicatedUserIdException;
@@ -9,11 +10,13 @@ import com.khcare.spring.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -23,6 +26,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
 
     public String login(LoginDto loginDto) {
         logger.info(loginDto.getMem_id()+"");
@@ -93,5 +97,14 @@ public class UserService {
         logger.info(pMap+"");
         result = userMapper.changePw(pMap);
         return result;
+    }
+
+    public Map<String, Object> userInfo(Map<String, Object> pMap) {
+        logger.info("userInfo 호출");
+        Map<String, Object> rMap = null;
+
+        rMap = userMapper.userInfo(pMap);
+
+        return rMap;
     }
 }

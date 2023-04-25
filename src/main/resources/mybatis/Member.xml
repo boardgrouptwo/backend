@@ -35,8 +35,38 @@
 
 
     <insert id="save" parameterType="UserDto">
-        INSERT INTO users (user_id, user_name, user_pw, user_type)
-        VALUES ( #{user_id}, #{user_name}, #{password}, #{role} )
+        INSERT INTO users
+            (
+             user_id,
+             user_name,
+             user_pw,
+             user_type,
+             user_birth,
+             user_gender,
+             user_tel,
+             user_email,
+             user_enter,
+             user_date
+            )
+        VALUES (
+                #{user_id},
+                #{user_name},
+                #{password},
+                #{role},
+                #{user_birth},
+                #{user_gender},
+                #{user_tel},
+                #{user_email},
+                #{user_enter},
+                #{user_date}
+        )
     </insert>
 
+
+    <select id="userInfo" parameterType="map" resultType="map">
+        SELECT user_id, user_name, user_birth, user_gender, user_tel, user_email
+                , user_enter, user_type, user_profile_url, user_memo
+        FROM users
+        WHERE user_id = #{user_id}
+    </select>
 </mapper>

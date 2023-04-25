@@ -22,6 +22,19 @@
         </where>
     </update>
 
+    <delete id="serviceDelete" parameterType="map">
+        DELETE FROM service
+        <where>
+            <if test="service_no != null and service_no.size() > 0">
+                AND service_no IN
+                <foreach collection="service_no" item="item" index="index" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+
+
     <update id="serviceUpdate2" parameterType="map">
         UPDATE service
         SET service_check = 0
@@ -39,11 +52,5 @@
         order by service_date asc
 
     </select>
-
-    <delete id="serviceDelete" parameterType="map">
-        DELETE FROM service
-        WHERE service_no = #{service_no}
-    </delete>
-
 
 </mapper>
