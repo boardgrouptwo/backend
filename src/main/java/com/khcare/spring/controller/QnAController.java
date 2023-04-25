@@ -35,7 +35,7 @@ public class QnAController {
     @PostMapping("/qnaInsert")
     @CrossOrigin(origins = "http://localhost:3000")
     public int qnaInsert(@RequestBody Map<String, Object> pMap){
-        log.info("QnA 추가");
+        log.info("QnA 글 추가");
 
         int result = 0;
         result = qnaServiceImpl.qnaInsert(pMap);
@@ -50,6 +50,16 @@ public class QnAController {
         log.info(pMap);
         int result = 0;
         result = qnaServiceImpl.qnaUpdate(pMap);
+
+        return result;
+    }
+
+    @PostMapping("/repleInsert")
+    public int repleInsert(@RequestBody Map<String, Object> pMap){
+        log.info("QnA 수정");
+        log.info(pMap);
+        int result = 0;
+        result = qnaServiceImpl.repleInsert(pMap);
 
         return result;
     }

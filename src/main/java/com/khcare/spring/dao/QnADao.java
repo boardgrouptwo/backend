@@ -42,6 +42,16 @@ public class QnADao {
         return result;
     }
 
+    public int repleInsert(Map<String, Object> pMap) {
+        log.info("qna 댓글달기");
+        log.info(pMap);
+
+        int result = 0;
+        result = sqlSessionTemplate.update("repleInsert", pMap);
+        log.info(result);
+        return result;
+    }
+
     public int qnaDelete(Map<String, Object> pMap){
         int result = 0;
         result = sqlSessionTemplate.update("qnaDelete", pMap);
@@ -56,4 +66,6 @@ public class QnADao {
 
         return bList;
     }
+
+
 }//end of class
