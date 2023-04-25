@@ -56,6 +56,16 @@ public class QnAServiceImpl implements QnAService{
     }
 
     @Override
+    public int repleInsert(Map<String, Object> pMap) {
+        log.info("Qna 댓글달기");
+        log.info(pMap);
+        int result = 0;
+        result = qnaDao.repleInsert(pMap);
+
+        return result;
+    }
+
+    @Override
     public int qnaDelete(Map<String, Object> pMap) {
         log.info("qna 삭제하기");
         log.info(pMap);

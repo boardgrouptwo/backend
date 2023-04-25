@@ -75,4 +75,29 @@
         WHERE user_id = #{user_id}
     </select>
 
+    <update id="userUpdate" parameterType="map">
+        UPDATE users SET
+            <if test="user_name != null and user_name.length > 0">
+                user_name = #{user_name}
+            </if>
+            <if test="user_birth != null and user_birth.length > 0">
+                , user_birth = #{user_birth}
+            </if>
+            <if test="user_gender != null and user_gender.length > 0">
+                , user_gender = #{user_gender}
+            </if>
+            <if test="user_tel != null and user_tel > 0">
+                , user_tel = #{user_tel}
+            </if>
+            <if test="user_email != null and user_email.length > 0">
+                , user_email = #{user_email}
+            </if>
+            <if test="user_profile_url != null and user_profile_url.length > 0">
+                , user_profile_url = #{user_profile_url}
+            </if>
+            <if test="user_memo != null and user_memo.length > 0">
+                , user_memo = #{user_memo}
+            </if>
+        WHERE user_id = #{user_id}
+    </update>
 </mapper>

@@ -13,6 +13,9 @@ public interface SponsorService {
 
     // 후원 테이블 spon_no값 확인
     int sponsorNo();
+
+    // 사용자 총 후원 금액
+    int sponsorUserSum(Map<String,Object> pMap);
 }
 
 

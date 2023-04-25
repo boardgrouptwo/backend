@@ -4,7 +4,7 @@
 
 <mapper namespace="com.khcare.spring">
     <select id="qnaList" parameterType="map" resultType="map">
-        SELECT qna_no, qna_type, user_name, qna_title, qna_content, qna_date, qna_result, (SELECT count(*) FROM qna) as total_count
+        SELECT qna_no, qna_type, user_id, qna_title, qna_content, qna_date, qna_result, reple_content, (SELECT count(*) FROM qna) as total_count
         FROM qna
         <where>
             <if test='qna_no != null'>
@@ -25,7 +25,7 @@
         INSERT INTO qna
         (
         qna_type
-        ,user_name
+        ,user_id
         ,qna_title
         ,qna_content
         ,qna_date
@@ -34,7 +34,7 @@
         VALUES
         (
         #{qna_type}
-        ,#{user_name}
+        ,#{user_id}
         ,#{qna_title}
         ,#{qna_content}
         ,sysDate()
@@ -47,6 +47,14 @@
         UPDATE qna SET
         qna_title = #{qna_title}
         ,qna_content = #{qna_content}
+        WHERE qna_no = #{qna_num}
+    </update>
+
+
+    <update id="repleInsert" parameterType="map" >
+        UPDATE qna SET
+        qna_result = #{qna_result}
+        ,reple_content = #{reple_content}
         WHERE qna_no = #{qna_no}
     </update>
 

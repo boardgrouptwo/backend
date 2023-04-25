@@ -260,7 +260,7 @@ public class KakaopayController {
         logger.info(rMap.toString());
 
         kakaoPayDto.setAid(rMap.get("aid").toString());                         // aid: 요청 고유 번호
-        kakaoPayDto.setApproved_at(rMap.get("approved_at").toString());         // approved_at: 결제 승인 시각
+        //kakaoPayDto.setApproved_at(rMap.get("approved_at").toString());         // approved_at: 결제 승인 시각
 
         StringBuilder sb = new StringBuilder();
 

@@ -41,4 +41,14 @@ public class SponsorServiceImpl implements SponsorService{
 
         return result;
     }
+
+    @Override
+    public int sponsorUserSum(Map<String,Object> pMap) {
+        logger.info("sponsorUserSum 호출");
+        int result = 0;
+
+        result = sponsorDao.sponsorUserSum(pMap);
+
+        return result;
+    }
 }
