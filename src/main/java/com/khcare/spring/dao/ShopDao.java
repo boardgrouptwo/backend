@@ -39,4 +39,12 @@ public class ShopDao {
         logger.info(result+"");
         return result;
     }
+
+    public List<Map<String, Object>> productReceiveList(Map<String, Object> pMap) {
+        logger.info(pMap+"");
+        List<Map<String, Object>> pList = null;
+        pList = sqlSessionTemplate.selectList("productReceiveList", pMap);
+        logger.info(pList+"");
+        return pList;
+    }
 }

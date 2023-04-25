@@ -62,4 +62,15 @@ public class ShopController {
         result = shopService.productHit(pMap);
         return result;
     }
+
+
+    @GetMapping("/productReceiveList")
+    public String productReceiveList(@RequestParam Map<String,Object> pMap) {
+        logger.info(pMap+"");
+        List<Map<String,Object>> pList = null;
+        pList = shopService.productReceiveList(pMap);
+        Gson g = new Gson();
+        String temp =g.toJson(pList);
+        return temp;
+    }
 }
