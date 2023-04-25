@@ -33,6 +33,9 @@ public class QnADao {
     }
 
     public int qnaUpdate(Map<String,Object> pMap){
+        log.info("qna 수정하기");
+        log.info(pMap);
+
         int result = 0;
         result = sqlSessionTemplate.update("qnaUpdate", pMap);
 

@@ -14,6 +14,7 @@
                 AND qna_title LIKE '%' #{search} '%'
             </if>
         </where>
+        ORDER BY qna_no desc
         <if test="page != null">
             LIMIT 10 OFFSET #{page}
         </if>
@@ -44,8 +45,7 @@
 
     <update id="qnaUpdate" parameterType="map" >
         UPDATE qna SET
-        qna_type = #{qna_type}
-        ,qna_title = #{qna_title}
+        qna_title = #{qna_title}
         ,qna_content = #{qna_content}
         WHERE qna_no = #{qna_no}
     </update>
