@@ -1,6 +1,7 @@
 package com.khcare.spring.Service;
 
 import com.khcare.spring.config.JwtTokenProvider;
+import com.khcare.spring.dao.ElderDao;
 import com.khcare.spring.dao.UserDao;
 import com.khcare.spring.dto.LoginDto;
 import com.khcare.spring.dto.UserDto;
@@ -120,6 +121,15 @@ public class UserService {
         } catch (NullPointerException e) {
             result = 0;
         }
+        return result;
+    }
+
+    public int userUpdate(Map<String, Object> pMap) {
+        logger.info("userUpdate 호출");
+        int result = 0;
+
+        result = userMapper.userUpdate(pMap);
+
         return result;
     }
 }

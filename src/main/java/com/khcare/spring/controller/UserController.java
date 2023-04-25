@@ -135,6 +135,11 @@ public class UserController {
         return result;
     }
 
+    /**
+     * 사용자 정보 호출
+     * @param pMap 사용자ID
+     * @return  사용자 정보
+     */
     @PostMapping("/userInfo")
     public String userInfo(@RequestBody Map<String,Object> pMap) {
         logger.info("userInfo 호출");
@@ -152,10 +157,27 @@ public class UserController {
 
     @PostMapping("/duplicate")
     public int duplicateCheck(@RequestBody Map<String,Object> pMap) {
-        logger.info(pMap+"");
+        logger.info(pMap + "");
         int result = 0;
         result = userService.duplicateCheck(pMap);
-        logger.info(result+"");
+        logger.info(result + "");
+        return result;
+    }
+
+    /**
+     * 사용자 정보 수정
+     * @param pMap 사용자 입력값
+     * @return  0: 실패, 1: 성공
+     */
+    @PostMapping("/userUpdate")
+    public int userUpdate(@RequestBody Map<String,Object> pMap) {
+        logger.info("userUpdate 호출");
+        logger.info("pMap : " + pMap);
+        int result = 0;
+
+        result = userService.userUpdate(pMap);
+        logger.info("result : " + result);
+
         return result;
     }
 }
