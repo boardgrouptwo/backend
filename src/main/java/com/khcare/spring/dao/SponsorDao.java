@@ -38,4 +38,14 @@ public class SponsorDao {
 
         return result;
     }
+
+    public int sponsorUserSum(Map<String,Object> pMap) {
+        logger.info("sponsorUserSum 호출");
+        int result = 0;
+
+        result = sqlSessionTemplate.selectOne("sponsorUserSum", pMap);
+        logger.info(Integer.toString(result));
+
+        return result;
+    }
 }

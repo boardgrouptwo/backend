@@ -56,4 +56,10 @@
                                 , #{tid}
                             )
     </insert>
+
+    <!--  사용자 총 후원 금액  -->
+    <select id="sponsorUserSum" parameterType="java.util.HashMap" resultType="int">
+        SELECT SUM(spon_money) AS spon_sum FROM sponsor
+        WHERE user_id = #{user_id};
+    </select>
 </mapper>
