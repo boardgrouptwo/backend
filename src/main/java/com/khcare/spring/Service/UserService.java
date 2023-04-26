@@ -54,6 +54,7 @@ public class UserService {
         if (userMapper.findUserByUsername(userDto.getUser_id()).isPresent()) {
             throw new DuplicatedUserIdException("이미 가입된 유저입니다");
         }
+        logger.info(userDto.toString());
 
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userMapper.save(userDto);
