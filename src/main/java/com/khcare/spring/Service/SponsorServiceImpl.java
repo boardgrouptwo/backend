@@ -51,4 +51,13 @@ public class SponsorServiceImpl implements SponsorService{
 
         return result;
     }
+
+    public List<Map<String,Object>> sponStatistic(Map<String,Object> pMap) {
+        logger.info("sponStatistic 호출");
+        List<Map<String,Object>> rList = null;
+
+        rList = sponsorDao.sponStatistic(pMap);
+
+        return rList;
+    }
 }

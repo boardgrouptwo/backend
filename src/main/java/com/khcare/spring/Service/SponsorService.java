@@ -16,6 +16,9 @@ public interface SponsorService {
 
     // 사용자 총 후원 금액
     int sponsorUserSum(Map<String,Object> pMap);
+
+    // 후원 통계 조회
+    List<Map<String,Object>> sponStatistic(Map<String,Object> pMap);
 }
 
 

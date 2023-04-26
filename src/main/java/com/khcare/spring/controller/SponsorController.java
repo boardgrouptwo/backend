@@ -51,6 +51,11 @@ public class SponsorController {
         return result;
     } // end of sponsorNo
 
+    /**
+     * 사용자 총 후원금액 조회
+     * @param pMap 사용자 정보
+     * @return 총 후원금액
+     */
     @GetMapping("/sponsorUserSum")
     public int sponsorUserSum(@RequestParam Map<String,Object> pMap) {
         logger.info("sponsorUserSum 호출");
@@ -62,4 +67,24 @@ public class SponsorController {
 
         return result;
     } // end of sponsorUserSum
+
+    /**
+     * 후원 통계 조회
+     * @param pMap 검색 조건
+     * @return 후원 통계
+     */
+    @GetMapping("/sponStatistic")
+    public String sponStatistic(@RequestParam Map<String,Object> pMap) {
+        log.info("sponStatistic 호출");
+        log.info("pMap : " + pMap);
+        List<Map<String,Object>> rList = null;
+
+        rList = sponsorServiceImpl.sponStatistic(pMap);
+
+        Gson g = new Gson();
+        String result =g.toJson(rList);
+        logger.info("result : " + result);
+
+        return result;
+    } // end of sponStatistic
 }

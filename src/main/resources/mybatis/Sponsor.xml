@@ -62,4 +62,40 @@
         SELECT SUM(spon_money) AS spon_sum FROM sponsor
         WHERE user_id = #{user_id};
     </select>
+
+    <!--  후원 통계  -->
+    <select id="sponStatistic" resultType="map" >
+        SELECT u.user_name AS user_name
+        , s.spon_date AS spon_date
+        , s.spon_huwon AS spon_huwon
+        , s.spon_money AS spon_money
+        , s.spon_pay AS spon_pay
+        , s.spon_open AS spon_open
+        , s.spon_content AS spon_content
+        FROM sponsor AS s INNER JOIN users AS u ON s.user_id = u.user_id
+        <where>
+            <if test="user_name != null">
+                u.user_name LIKE '%'||#{user_name}||'%'
+            </if>
+            <if test="user_id != null">
+                AND s.user_id LIKE '%'||#{user_id}||'%'
+            </if>
+            <if test="start_date != null">
+                AND s.spon_date &gt; #{start_date}
+            </if>
+            <if test="end_date != null">
+                AND s.spon_date &lt; #{end_date}
+            </if>
+            <if test="spon_pay != null">
+                AND s.spon_pay = #{spon_pay}
+            </if>
+            <if test="spon_open != null">
+                AND s.spon_open = #{spon_open}
+            </if>
+            <if test="spon_huwon != null">
+                AND s.spon_huwon = #{spon_huwon}
+            </if>
+        </where>
+        ORDER BY spon_date desc
+    </select>
 </mapper>
