@@ -36,13 +36,13 @@ public class PaymentDao {
         logger.info("검색 분류(pay_type) ===> " + pMap.get("pay_type").toString());
 
         if (listType.equals("전체")) {
-            qList = sqlSessionTemplate.selectList("paymentList");
+            qList = sqlSessionTemplate.selectList("paymentList", pMap);
         }
         else if (listType.equals("결제")) {
-            qList = sqlSessionTemplate.selectList("paymentListP");
+            qList = sqlSessionTemplate.selectList("paymentListP", pMap);
         }
         else if (listType.equals("후원")) {
-            qList = sqlSessionTemplate.selectList("paymentListS");
+            qList = sqlSessionTemplate.selectList("paymentListS", pMap);
         }
 
         // 결제 금액 단위 나누기

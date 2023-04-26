@@ -23,4 +23,6 @@ public interface QnAService {
     //QnA 게시판 수정
     int qnaUpdate(Map<String, Object> pMap);
 
+    //QnA 게시판 댓글 추가
+    int repleInsert(Map<String, Object> pMap);
 }//end of Interface

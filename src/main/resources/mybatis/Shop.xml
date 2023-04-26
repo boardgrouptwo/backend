@@ -39,5 +39,25 @@
     </update>
 
 
+    <select id="productReceiveList" parameterType="map" resultType="map">
+        SELECT * FROM product
+        <where>
+            product_type = '받고 만족한'
+            <if test="select_type eq 'low'">
+                AND product_price BETWEEN 10000 AND 20000
+            </if>
+            <if test="select_type eq 'middle'">
+                AND product_price BETWEEN 20000 AND 50000
+            </if>
+            <if test="select_type eq 'high'">
+                AND product_price <![CDATA[>]]> 50000
+            </if>
+        </where>
+        <if test="select_type eq 'total'">
+            ORDER BY product_no DESC
+        </if>
+    </select>
+
+
 
 </mapper>

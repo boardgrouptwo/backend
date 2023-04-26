@@ -31,4 +31,7 @@ public interface UserMapper {
 
     // 회원 중복검사
     Map<String, Object> duplicateCheck(Map<String, Object> pMap);
+
+    // 사용자 정보 수정
+    int userUpdate(Map<String, Object> pMap);
 }
