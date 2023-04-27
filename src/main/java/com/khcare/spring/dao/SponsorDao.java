@@ -55,6 +55,11 @@ public class SponsorDao {
         logger.info("sponStatistic 호출");
         List<Map<String, Object>> qList = new ArrayList<Map<String, Object>>();
 
+        if(pMap.get("page") != null){
+            int num = Integer.parseInt(pMap.get("page").toString());
+            pMap.put("page", (num-1)*10);
+        }
+
         qList = sqlSessionTemplate.selectList("sponStatistic", pMap);
 
         // 결제 금액 단위 나누기
