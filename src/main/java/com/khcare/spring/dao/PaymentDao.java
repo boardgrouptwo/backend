@@ -31,6 +31,13 @@ public class PaymentDao {
         logger.info("paymentList 호출");
         List<Map<String, Object>> qList = new ArrayList<Map<String, Object>>();
 
+        // 페이지 번호
+        if(pMap.get("page") != null){
+            int num = Integer.parseInt(pMap.get("page").toString());
+            pMap.put("page", (num-1)*10);
+        }
+
+        // 검색 분류 설정
         String listType = pMap.get("pay_type").toString();
         pMap.put("pay_type", listType);
         logger.info("검색 분류(pay_type) ===> " + pMap.get("pay_type").toString());
