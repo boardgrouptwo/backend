@@ -52,13 +52,13 @@
                 #{user_id},
                 #{user_name},
                 #{password},
-                #{role},
+                'user',
                 #{user_birth},
                 #{user_gender},
                 #{user_tel},
                 #{user_email},
                 #{user_enter},
-                #{user_date}
+                now()
         )
     </insert>
 
