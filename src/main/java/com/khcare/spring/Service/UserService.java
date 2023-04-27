@@ -54,7 +54,16 @@ public class UserService {
         if (userMapper.findUserByUsername(userDto.getUser_id()).isPresent()) {
             throw new DuplicatedUserIdException("이미 가입된 유저입니다");
         }
-        logger.info(userDto.toString());
+        logger.info(userDto.getUser_id());
+        logger.info(userDto.getPassword());
+        logger.info(userDto.getUser_name());
+        logger.info(userDto.getUser_birth());
+        logger.info(userDto.getUser_gender());
+        logger.info(userDto.getUser_tel());
+        logger.info(userDto.getUser_email());
+        logger.info(userDto.getUser_enter());
+        logger.info(userDto.getRole());
+        logger.info(userDto.getUser_date());
 
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userMapper.save(userDto);
