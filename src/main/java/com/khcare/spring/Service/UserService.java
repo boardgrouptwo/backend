@@ -59,7 +59,7 @@ public class UserService {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userMapper.save(userDto);
 
-        return userMapper.findUserByUsername(userDto.getUsername()).get();
+        return userMapper.findUserByUsername(userDto.getUser_id()).get();
     }
 
     /*
