@@ -72,6 +72,7 @@
         , s.spon_pay AS spon_pay
         , s.spon_open AS spon_open
         , s.spon_content AS spon_content
+        , (SELECT count(*) FROM qna) as total_count
         FROM sponsor AS s INNER JOIN users AS u ON s.user_id = u.user_id
         <where>
             <if test="user_name != null">
@@ -97,5 +98,8 @@
             </if>
         </where>
         ORDER BY spon_date desc
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
     </select>
 </mapper>
