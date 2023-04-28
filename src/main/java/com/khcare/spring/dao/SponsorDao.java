@@ -55,6 +55,7 @@ public class SponsorDao {
         logger.info("sponStatistic 호출");
         List<Map<String, Object>> qList = new ArrayList<Map<String, Object>>();
 
+        // 페이지 번호
         if(pMap.get("page") != null){
             int num = Integer.parseInt(pMap.get("page").toString());
             pMap.put("page", (num-1)*10);
