@@ -12,7 +12,16 @@ import java.util.Map;
 public class ElderServiceImpl implements ElderService {
     Logger log = LogManager.getLogger(ElderServiceImpl.class);
     @Autowired
-    private ElderDao elderDao = null;
+    ElderDao elderDao;
+
+
+    @Override
+    public int elderJoin(Map<String, Object> pMap) {
+        log.info("elderJoin 호출");
+        int result = 0;
+        result = elderDao.elderJoin(pMap);
+        return result;
+    }
 
     @Override
     public int elderInsert(Map<String, Object> pMap) {
@@ -20,7 +29,7 @@ public class ElderServiceImpl implements ElderService {
         int result = 0;
 
         result = elderDao.elderInsert(pMap);
-
+        log.info(String.valueOf(result));
         return result;
     }
 

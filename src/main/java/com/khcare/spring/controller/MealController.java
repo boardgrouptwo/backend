@@ -32,7 +32,6 @@ public class MealController {
             String temp;
             temp = g.toJson(bList);
             return temp;
-
         }
 
 

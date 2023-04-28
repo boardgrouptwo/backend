@@ -2,12 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.khcare.spring.mapper.UserMapper">
+<mapper namespace="com.khcare.spring">
+
+    <!--어르신 가입-->
+    <insert id="elderJoin" parameterType="map">
+        INSERT INTO elders
+        (
+        elder_id
+        , elder_name
+<!--        <if test="elder_age != null">-->
+            , elder_age
+<!--        </if>-->
+<!--        <if test="elder_gender != null">-->
+            , elder_gender
+      <!--  </if>-->
+    <!--    <if test="elder_status != null">-->
+            , elder_status
+    <!--    </if>-->
+        , att_date
+        )
+        VALUES (
+        #{elder_id}
+        , #{elder_name}
+        <!--<if test="elder_age != null">-->
+            , #{elder_age}
+       <!-- </if>-->
+      <!--  <if test="elder_gender != null">-->
+            , #{elder_gender}
+      <!--  </if>-->
+<!--        <if test="elder_status != null">-->
+            , #{elder_status}
+    <!--    </if>-->
+        , #{att_date}
+        )
+    </insert>
+
+    <!--어르신 정보 조회-->
     <select id="elderSelect" parameterType="map" resultType="map">
         SELECT elder_id, elder_name, elder_age, elder_gender, elder_status, attendance_date, discharge_date FROM elders
-        WHERE elder_id = #{user_id};
+        WHERE elder_id = #{elder_id};
     </select>
 
+
+    <!--어르신 추가-->
     <insert id="elderInsert" parameterType="map">
         INSERT INTO elders
             (
@@ -25,7 +62,7 @@
                 , attendance_date
             )
         VALUES (
-                    #{user_id}
+                    #{elder_id}
                     , #{elder_name}
                 <if test="elder_age != null">
                     , #{elder_age}

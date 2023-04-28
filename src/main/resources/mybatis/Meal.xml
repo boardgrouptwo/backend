@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+    <select id="mealList" parameterType="map" resultType="map">
+        SELECT qna_no, qna_type, user_id, qna_title, qna_content, qna_date, qna_result, reple_content, (SELECT count(*) FROM qna) as total_count
+        FROM meal
+        <where>
+            <if test='qna_no != null'>
+                AND qna_no = #{qna_no}
+            </if>
+            <if test='search != null'>
+                AND qna_title LIKE '%' #{search} '%'
+            </if>
+        </where>
+        ORDER BY qna_no desc
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+    </select>
+
+</mapper>
