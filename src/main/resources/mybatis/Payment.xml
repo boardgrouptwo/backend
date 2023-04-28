@@ -75,4 +75,23 @@
         SELECT pay_no FROM payment
         ORDER BY pay_no DESC LIMIT 1;
     </select>
+
+    <!-- 카카오페이 결제 내역 추가 -->
+    <insert id="paymentInsertKakao" parameterType="com.khcare.spring.dto.KakaoPayDto">
+        INSERT INTO payment (
+                              user_id
+                            , pay_no
+                            , pay_date
+                            , pay_amount
+                            , pay_content
+                            , pay_tid
+        ) VALUES (
+                     #{partner_user_id}
+                 , #{partner_order_id}
+                 , now()
+                 , #{total_amount}
+                 , #{item_name}
+                 , #{tid}
+                 )
+    </insert>
 </mapper>
