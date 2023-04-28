@@ -54,6 +54,21 @@ public class KhServiceController {
         return result;
     }
 
+
+    @GetMapping("/userDate")
+    public Map<String,Object> userDate(@RequestParam Map<String,Object> pMap) {
+        log.info("userDate 호출");
+        log.info("pMap : " + pMap);
+        Map<String,Object> rMap = null;
+
+        rMap = khServiceImpl.userDate(pMap);
+
+        Gson g = new Gson();
+        String result = g.toJson(rMap);
+        log.info("result : " + result);
+
+        return rMap;
+    }
 }
 
 

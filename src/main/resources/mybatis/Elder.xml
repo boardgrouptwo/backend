@@ -39,7 +39,7 @@
 
     <!--어르신 정보 조회-->
     <select id="elderSelect" parameterType="map" resultType="map">
-        SELECT elder_id, elder_name, elder_age, elder_gender, elder_status, attendance_date, discharge_date FROM elders
+        SELECT elder_id, elder_name, elder_age, elder_gender, elder_status, att_date, dis_date FROM elders
         WHERE elder_id = #{elder_id};
     </select>
 

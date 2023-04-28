@@ -35,7 +35,7 @@ public class ElderServiceImpl implements ElderService {
 
     @Override
     public Map<String, Object> elderSelect(Map<String, Object> pMap) {
-        log.info("elderInsert 호출");
+        log.info("elderSelect 호출");
         Map<String, Object> rMap = null;
 
         rMap = elderDao.elderSelect(pMap);

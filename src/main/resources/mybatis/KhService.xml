@@ -53,4 +53,9 @@
 
     </select>
 
+    <select id="userDate" parameterType="map" resultType="map">
+        SELECT u.user_name, s.service_date, s.service_check
+        FROM service AS s INNER JOIN users AS u ON s.user_id = u.user_name
+        WHERE u.user_id = #{user_id}
+    </select>
 </mapper>
