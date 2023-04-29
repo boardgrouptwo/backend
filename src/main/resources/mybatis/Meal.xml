@@ -4,7 +4,7 @@
 
 <mapper namespace="com.khcare.spring">
     <select id="mealList" parameterType="map" resultType="map">
-        SELECT meal_no,meal_type,meal_origin,meal_cal,meal_nut,meal_date
+        SELECT meal_no,meal_type,meal_name,meal_origin,meal_cal,meal_nut,meal_date
         FROM meal
     </select>
 
