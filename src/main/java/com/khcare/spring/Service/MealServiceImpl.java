@@ -26,8 +26,8 @@ import com.opencsv.CSVReaderBuilder;
 @Service
 public class MealServiceImpl implements MealService {
 
-    @Autowired
-    private MealDao mealDao;
+        @Autowired
+        private MealDao mealDao;
 
         @Override
         public List<Map<String, Object>> mealList(Map<String, Object> pMap){
@@ -38,32 +38,5 @@ public class MealServiceImpl implements MealService {
 
            return bList;
         }
-
-    public List<Meal> readCsv() throws IOException, IOException, CsvValidationException {
-        String path = "D:/finalproject/meal.csv";
-        Reader reader = Files.newBufferedReader(Paths.get(path));
-
-        CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
-        List<Meal> meals = new ArrayList<>();
-        String[] line;
-        while ((line = csvReader.readNext()) != null) {
-            Meal meal = new Meal();
-            meal.setMealNo(Integer.parseInt(line[0]));
-            meal.setMealType(line[1]);
-            meal.setMealOrigin(line[2]);
-            meal.setMealCal(Integer.parseInt(line[3]));
-            meal.setMealNut(line[4]);
-            meal.setMealDate(line[5]);
-            meals.add(meal);
-        }
-        csvReader.close();
-
-        return meals;
-    }//end of redadCsv
-
-    public void mealInsert(List<Meal> meals) {
-        mealDao.mealInsert(meals);
-    }
-
 
 }//end of class

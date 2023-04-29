@@ -34,14 +34,5 @@ public class MealDao {
         return bList;
     }
 
-    public void mealInsert(List<Meal> meals) {
-        SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
-        MealMapper mealMapper = sqlSession.getMapper(MealMapper.class);
-        for (Meal meal : meals) {
-            mealMapper.mealInsert(meal);
-        }
-        sqlSession.flushStatements();
-        sqlSession.close();
-    }
 
 }
