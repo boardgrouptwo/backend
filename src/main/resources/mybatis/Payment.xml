@@ -11,26 +11,23 @@
 
     <!--  결제 내역 출력  -->
     <select id="paymentList" parameterType="java.util.HashMap" resultType="map">
-        select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment
-            WHERE user_id = #{user_id}
-        UNION ALL
-        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor
-            WHERE user_id = #{user_id}
-<!--        <choose>-->
-<!--            <when test='pay_type.equals("결제")'>-->
-<!--                HAVING pay_type LIKE '%결제%'-->
-<!--            </when>-->
-<!--            <when test='pay_type.equals("후원")'>-->
-<!--                HAVING pay_type LIKE '%후원%'-->
-<!--            </when>-->
-<!--            <when test='pay_type == "결제"'>-->
-<!--                HAVING pay_type LIKE '%결제%'-->
-<!--            </when>-->
-<!--            <when test='pay_type == "후원"'>-->
-<!--                HAVING pay_type LIKE '%후원%'-->
-<!--            </when>-->
-<!--        </choose>-->
+        SELECT user_id, pay_date, pay_amount, pay_content, pay_type
+            , ( select COUNT(*) FROM (
+                select user_id, pay_date, pay_amount, pay_content FROM payment WHERE user_id = #{user_id}
+                UNION ALL
+                SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content' FROM sponsor WHERE user_id = #{user_id}
+                ) AS fu
+            ) AS total_count
+        FROM
+        (
+            select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment WHERE user_id = #{user_id}
+            UNION ALL
+            SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor WHERE user_id = #{user_id}
+        ) AS fu
         ORDER BY pay_date desc
+        <if test="limit_cnt != null">
+            LIMIT 5
+        </if>
     </select>
 
     <!--  5건 결제 내역 출력  -->
@@ -46,20 +43,26 @@
 
     <!--  일반 결제 건  -->
     <select id="paymentListP" parameterType="java.util.HashMap" resultType="map">
-        select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type
+            , (SELECT COUNT(*) FROM payment WHERE user_id = #{user_id}) AS total_count
+        FROM payment
         WHERE user_id = #{user_id}
         ORDER BY pay_date desc
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
     </select>
 
     <!--  후원 결제 건  -->
     <select id="paymentListS" parameterType="java.util.HashMap" resultType="map">
-        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor
-        <where>
-            <if test="user_id != null and user_id.length() > 0">
-                user_id = #{user_id}
-            </if>
-        </where>
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type
+            , (SELECT COUNT(*) FROM sponsor WHERE user_id = #{user_id}) AS total_count
+        FROM sponsor
+        WHERE user_id = #{user_id}
         ORDER BY pay_date desc
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
     </select>
 
     <!-- 후원 내역 삭제 -->
@@ -72,4 +75,23 @@
         SELECT pay_no FROM payment
         ORDER BY pay_no DESC LIMIT 1;
     </select>
+
+    <!-- 카카오페이 결제 내역 추가 -->
+    <insert id="paymentInsertKakao" parameterType="com.khcare.spring.dto.KakaoPayDto">
+        INSERT INTO payment (
+                              user_id
+                            , pay_no
+                            , pay_date
+                            , pay_amount
+                            , pay_content
+                            , pay_tid
+        ) VALUES (
+                     #{partner_user_id}
+                 , #{partner_order_id}
+                 , now()
+                 , #{total_amount}
+                 , #{item_name}
+                 , #{tid}
+                 )
+    </insert>
 </mapper>

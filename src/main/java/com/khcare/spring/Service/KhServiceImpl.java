@@ -43,4 +43,14 @@ public class KhServiceImpl implements KhService{
         result = serviceDao.serviceDelete(pMap);
         return result;
     }
+
+    @Override
+    public Map<String, Object> userDate(Map<String, Object> pMap) {
+        log.info("userDate 호출");
+        Map<String, Object> rMap = null;
+
+        rMap = serviceDao.userDate(pMap);
+
+        return rMap;
+    }
 }

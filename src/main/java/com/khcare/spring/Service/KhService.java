@@ -15,4 +15,7 @@ public interface KhService {
     List<Map<String,Object>> managerList(Map<String,Object> pMap);
 
     int serviceDelete(Map<String, Object> pMap);
+
+    // 사용자 봉사일정 조회
+    Map<String,Object> userDate(Map<String,Object> pMap);
 }

@@ -42,4 +42,13 @@ public class ServiceDao {
         return result;
     }
 
+    public Map<String, Object> userDate(Map<String, Object> pMap) {
+        log.info("elderSelect 호출");
+        Map<String,Object> rMap = null;
+
+        rMap = sqlSessionTemplate.selectOne("userDate", pMap);
+        log.info("결과 : " + rMap);
+
+        return rMap;
+    }
 }

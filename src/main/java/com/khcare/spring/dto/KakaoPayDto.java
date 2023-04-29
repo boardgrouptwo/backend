@@ -20,6 +20,10 @@ public class KakaoPayDto {
     private String spon_content;                // 후원 내용
     private String spon_pay;                    // 결제 종류 (홈페이지 결제)
 
+    // 결제 시 사용하는 데이터
+    private String req_text;                    // 배송 요청사항
+    private String user_addr;                   // 배송 주소
+
     // 결제 요청 시 반환값
     private String tid;                         // 결제 고유 번호
     private String pg_token;                    // 결제승인 요청을 인증하는 토큰

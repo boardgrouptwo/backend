@@ -12,18 +12,30 @@ import java.util.Map;
 public class ElderDao {
     Logger log = LogManager.getLogger(ElderDao.class);
     @Autowired
-    private SqlSessionTemplate sqlSessionTemplate = null;
+    SqlSessionTemplate sqlSessionTemplate = null;
 
+    //어르신 가입
+    public int elderJoin(Map<String, Object> pMap) {
+        log.info("elderJoin 호출");
+        int result = 0;
+        result = sqlSessionTemplate.update("elderJoin", pMap);
+
+        return result;
+    }
+
+
+    //어르신 추가
     public int elderInsert(Map<String, Object> pMap) {
         log.info("elderInsert 호출");
         int result = 0;
 
-        result = sqlSessionTemplate.insert("elderInsert", pMap);
+        result = sqlSessionTemplate.update("elderInsert", pMap);
         log.info("결과 : " + result);
 
         return result;
     }
 
+    //어르신 정보 출력
     public Map<String,Object> elderSelect(Map<String, Object> pMap) {
         log.info("elderSelect 호출");
         Map<String,Object> rMap = null;
@@ -35,7 +47,7 @@ public class ElderDao {
     }
 
 
-
+    //어르신 정보 수정
     public int elderUpdate(Map<String,Object> pMap) {
         log.info("elderUpdate 호출");
         log.info(pMap);
