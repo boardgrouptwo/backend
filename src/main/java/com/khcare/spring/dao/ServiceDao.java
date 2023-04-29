@@ -51,4 +51,10 @@ public class ServiceDao {
 
         return rMap;
     }
+
+    public int reviewInsert(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("reviewInsert", pMap);
+        return result;
+    }
 }

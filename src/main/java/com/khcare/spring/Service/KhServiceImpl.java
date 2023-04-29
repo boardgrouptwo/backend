@@ -53,4 +53,12 @@ public class KhServiceImpl implements KhService{
 
         return rMap;
     }
+
+    @Override
+    public int reviewInsert(Map<String, Object> pMap) {
+        int result =0;
+        result = serviceDao.reviewInsert(pMap);
+        return result;
+    }
+
 }

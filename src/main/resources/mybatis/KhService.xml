@@ -58,4 +58,11 @@
         FROM service AS s INNER JOIN users AS u ON s.user_id = u.user_name
         WHERE u.user_id = #{user_id}
     </select>
+
+    <insert id="reviewInsert" parameterType="map">
+        INSERT INTO review
+            (user_id, review_title, review_content, review_date, review_image) VALUES
+            (#{user_id}, #{review_title}, #{review_content}, now(), #{review_image});
+    </insert>
+
 </mapper>

@@ -69,6 +69,18 @@ public class KhServiceController {
 
         return rMap;
     }
+
+    @PostMapping("/reviewInsert")
+    public String qnaInsert(@RequestBody Map<String,Object> pMap) {
+        if(pMap.get("mem_no")!=null) {
+            int mem_no = Integer.parseInt(pMap.get("mem_no").toString());
+            pMap.put("mem_no", mem_no);
+        }
+        int result =0;
+        result =khServiceImpl.reviewInsert(pMap);
+        return String.valueOf(result);
+    }
+
 }
 
 
