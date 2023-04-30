@@ -1,13 +1,17 @@
+
 package com.khcare.spring.controller;
 
-import com.google.gson.Gson;
-import com.khcare.spring.Service.KhServiceImpl;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+        import com.google.gson.Gson;
+        import com.khcare.spring.Service.KhServiceImpl;
+        import lombok.extern.log4j.Log4j2;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.web.bind.annotation.*;
+        import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Map;
+        import java.io.File;
+        import java.io.IOException;
+        import java.util.List;
+        import java.util.Map;
 
 @RestController
 @RequestMapping("/service")
@@ -81,6 +85,29 @@ public class KhServiceController {
         return String.valueOf(result);
     }
 
+    @PostMapping("/imageUpload")
+    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        String fileName = file.getOriginalFilename();
+        // 경로는 해당 pc에 맞게 바꿔야함
+        String filePath = "D://final_project/frontend/public/images/service" + "/" + fileName;
+        //String filePath = "images/service/" + fileName;
+        File dest = new File(filePath);
+        file.transferTo(dest);
+        return fileName;
+    }
+
+    @GetMapping("/reviewList")
+    public String reviewList(@RequestParam Map<String,Object> pMap) {
+        log.info("service review 리스트 호출");
+        log.info(pMap);
+        List<Map<String,Object>> bList = null;
+        bList = khServiceImpl.reviewList(pMap);
+        log.info(bList);
+        Gson g = new Gson();
+        String temp =g.toJson(bList);
+        return temp;
+    }
 }
+
 
 

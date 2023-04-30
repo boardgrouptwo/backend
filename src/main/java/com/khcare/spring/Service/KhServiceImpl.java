@@ -61,4 +61,16 @@ public class KhServiceImpl implements KhService{
         return result;
     }
 
+    @Override
+    public List<Map<String, Object>> reviewList(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        if(pMap.get("page") != null) {
+            int num = Integer.parseInt(pMap.get("page").toString());
+            pMap.put("page", (num-1)*10);
+        }
+        log.info(pMap);
+        bList = serviceDao.reviewList(pMap);
+        return bList;
+    }
+
 }
