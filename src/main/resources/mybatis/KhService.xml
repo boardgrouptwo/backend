@@ -61,8 +61,23 @@
 
     <insert id="reviewInsert" parameterType="map">
         INSERT INTO review
-            (user_id, review_title, review_content, review_date, review_image) VALUES
-            (#{user_id}, #{review_title}, #{review_content}, now(), #{review_image});
+            (user_id, review_title, review_content, review_date
+            <if test="review_image != null">
+                , review_image
+            </if>
+                ) VALUES
+            (#{user_id}, #{review_title}, #{review_content}, now()
+            <if test="review_image != null">
+                ,#{review_image}
+            </if>
+            )
     </insert>
+
+    <select id="reviewList" parameterType="map" resultType="map">
+        SELECT user_id, review_title, review_content, review_date, review_image
+        FROM review
+        order by review_date asc
+
+    </select>
 
 </mapper>

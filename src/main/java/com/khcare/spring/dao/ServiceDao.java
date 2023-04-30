@@ -57,4 +57,10 @@ public class ServiceDao {
         result = sqlSessionTemplate.update("reviewInsert", pMap);
         return result;
     }
+
+    public List<Map<String, Object>> reviewList(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = sqlSessionTemplate.selectList("reviewList", pMap);
+        return bList;
+    }
 }
