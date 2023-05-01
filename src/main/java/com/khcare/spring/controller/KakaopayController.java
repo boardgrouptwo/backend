@@ -362,7 +362,13 @@ public class KakaopayController {
 
         logger.info("결과 : " + resultText);
 
-        return "/";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<script>");
+        sb.append("  window.close();");
+        sb.append("</script>");
+
+        return sb.toString();
     } // end of kakaoPayCancel
 
     /**
