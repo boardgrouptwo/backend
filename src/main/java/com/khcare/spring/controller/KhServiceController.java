@@ -89,7 +89,7 @@ public class KhServiceController {
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         String fileName = file.getOriginalFilename();
         // 경로는 해당 pc에 맞게 바꿔야함
-        String filePath = "D://final_project/frontend/public/images/service" + "/" + fileName;
+        String filePath = "D://project_20230329/frontend/public/images/service" + "/" + fileName;
         //String filePath = "images/service/" + fileName;
         File dest = new File(filePath);
         file.transferTo(dest);
@@ -106,6 +106,14 @@ public class KhServiceController {
         Gson g = new Gson();
         String temp =g.toJson(bList);
         return temp;
+    }
+
+    @GetMapping("/reviewDelete")
+    public int reviewDelete(@RequestParam Map<String,Object> pMap) {
+        log.info("리뷰게시판 삭제");
+        int result = 0;
+        result = khServiceImpl.reviewDelete(pMap);
+        return result;
     }
 }
 

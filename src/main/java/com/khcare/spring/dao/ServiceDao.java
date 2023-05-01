@@ -63,4 +63,10 @@ public class ServiceDao {
         bList = sqlSessionTemplate.selectList("reviewList", pMap);
         return bList;
     }
+
+    public int reviewDelete(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("reviewDelete", pMap);
+        return result;
+    }
 }

@@ -73,4 +73,11 @@ public class KhServiceImpl implements KhService{
         return bList;
     }
 
+    @Override
+    public int reviewDelete(Map<String, Object> pMap) {
+        int result = 0;
+        result = serviceDao.reviewDelete(pMap);
+        return result;
+    }
+
 }

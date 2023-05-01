@@ -74,10 +74,14 @@
     </insert>
 
     <select id="reviewList" parameterType="map" resultType="map">
-        SELECT user_id, review_title, review_content, review_date, review_image
+        SELECT review_no, user_id, review_title, review_content, review_date, review_image
         FROM review
-        order by review_date asc
-
+        order by review_no desc
     </select>
+
+    <delete id="reviewDelete" parameterType="map">
+        DELETE FROM review
+        WHERE review_no = #{review_no}
+    </delete>
 
 </mapper>

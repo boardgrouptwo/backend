@@ -23,5 +23,9 @@ public interface KhService {
     //봉사활동리뷰 데이터 추가
     int reviewInsert(Map<String, Object> pMap);
 
+    //봉사활동리뷰 조회
     List<Map<String, Object>> reviewList(Map<String, Object> pMap);
+
+    //봉사활동리뷰 삭제
+    int reviewDelete(Map<String, Object> pMap);
 }
