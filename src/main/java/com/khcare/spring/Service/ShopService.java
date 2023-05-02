@@ -11,5 +11,10 @@ public interface ShopService {
 
     int productHit(Map<String, Object> pMap);
 
-    List<Map<String, Object>> productReceiveList(Map<String, Object> pMap);
+    List<Map<String, Object>>productReceiveList(Map<String,Object>pMap);
+    //장바구니 조회
+    List<Map<String,Object>> cartList(Map<String, Object> pMap);
+
+    // 장바구니 추가
+    int addCart(Map<String,Object> pMap);
 }

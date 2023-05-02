@@ -31,7 +31,6 @@ public class MealServiceImpl implements MealService {
 
         @Override
         public List<Map<String, Object>> mealList(Map<String, Object> pMap){
-            log.info("mealList 호출");
 
             List<Map<String, Object>> bList = null;
             bList = mealDao.mealList(pMap);

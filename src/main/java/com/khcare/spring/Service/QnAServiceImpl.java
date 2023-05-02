@@ -24,8 +24,6 @@ public class QnAServiceImpl implements QnAService{
             int num = Integer.parseInt(pMap.get("page").toString());
             pMap.put("page", (num-1)*10);
         }
-        log.info("QnA 목록보기");
-        log.info(pMap);
 
         bList = qnaDao.qnaList(pMap);
 
@@ -36,9 +34,6 @@ public class QnAServiceImpl implements QnAService{
     public int qnaInsert(Map<String, Object> pMap) {
         int result = 0;
 
-        log.info("qna 작성하기");
-        log.info(pMap);
-
         result = qnaDao.qnaInsert(pMap);
 
         return result;
@@ -47,8 +42,6 @@ public class QnAServiceImpl implements QnAService{
 
     @Override
     public int qnaUpdate(Map<String, Object> pMap) {
-        log.info("Qna 수정하기");
-        log.info(pMap);
         int result = 0;
         result = qnaDao.qnaUpdate(pMap);
 
@@ -57,8 +50,6 @@ public class QnAServiceImpl implements QnAService{
 
     @Override
     public int repleInsert(Map<String, Object> pMap) {
-        log.info("Qna 댓글달기");
-        log.info(pMap);
         int result = 0;
         result = qnaDao.repleInsert(pMap);
 
@@ -67,10 +58,6 @@ public class QnAServiceImpl implements QnAService{
 
     @Override
     public int qnaDelete(Map<String, Object> pMap) {
-        log.info("qna 삭제하기");
-        log.info(pMap);
-
-
         int result = 0;
         result = qnaDao.qnaDelete(pMap);
 

@@ -17,9 +17,9 @@ public class ElderServiceImpl implements ElderService {
 
     @Override
     public int elderJoin(Map<String, Object> pMap) {
-        log.info("elderJoin 호출");
         int result = 0;
         result = elderDao.elderJoin(pMap);
+
         return result;
     }
 

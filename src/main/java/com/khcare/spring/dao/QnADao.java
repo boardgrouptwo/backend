@@ -19,7 +19,6 @@ public class QnADao {
     public List<Map<String, Object>> qnaList(Map<String, Object> pMap){
         List<Map<String, Object>> bList = null;
         bList = sqlSessionTemplate.selectList("qnaList", pMap);
-        log.info(bList);
 
         return bList;
     }
@@ -33,8 +32,6 @@ public class QnADao {
     }
 
     public int qnaUpdate(Map<String,Object> pMap){
-        log.info("qna 수정하기");
-        log.info(pMap);
 
         int result = 0;
         result = sqlSessionTemplate.update("qnaUpdate", pMap);
@@ -43,12 +40,10 @@ public class QnADao {
     }
 
     public int repleInsert(Map<String, Object> pMap) {
-        log.info("qna 댓글달기");
-        log.info(pMap);
 
         int result = 0;
         result = sqlSessionTemplate.update("repleInsert", pMap);
-        log.info(result);
+
         return result;
     }
 

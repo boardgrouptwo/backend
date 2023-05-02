@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+
+
+    <update id="visitMUpdate" parameterType="map">
+        UPDATE visit
+        SET service_chk = 1
+        <where>
+            <if test="visit_no != null and visit_no.size() > 0">
+                AND visit_no IN
+                <foreach collection="visit_no" item="item" index="index" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+        </where>
+    </update>
+
+    <delete id="visitMDelete" parameterType="map">
+        DELETE FROM visit
+        <where>
+            <if test="visit_no != null and visit_no.size() > 0">
+                AND visit_no IN
+                <foreach collection="visit_no" item="item" index="index" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+
+
+    <update id="visitMUpdate2" parameterType="map">
+        UPDATE visit
+        SET service_chk = 0
+        <if test="visit_no != null and visit_no.size() > 0">
+            WHERE visit_no NOT IN
+            <foreach collection="visit_no" item="item" index="index" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+    </update>
+
+    <select id="visitMList" parameterType="map" resultType="map">
+        SELECT visit_no, user_id, visit_date, visit_time, visit_volume, elder_id,elder_no, service_chk
+        FROM visit
+        <where>
+            <if test="user_id != null">
+                AND user_id = #{user_id}
+            </if>
+            <if test="visit_no != null">
+                AND visit_no = #{visit_no}
+            </if>
+            <if test="elder_id != null">
+                AND elder_id = #{elder_id}
+            </if>
+            <if test="elder_no != null">
+                AND elder_no = #{elder_no}
+            </if>
+            <if test="visit_volume != null">
+                AND visit_volume = #{visit_volume}
+            </if>
+            <if test="visit_date != null">
+                AND visit_date = #{visit_date}
+            </if>
+            <if test="visit_time != null">
+                AND visit_time = #{visit_time}
+            </if>
+            <if test="service_chk != null">
+                AND service_chk = #{service_chk}
+            </if>
+
+        </where>
+        <if test="visit_no != null">
+            order by ${visit_no} desc
+        </if>
+
+    </select>
+
+</mapper>

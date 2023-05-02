@@ -29,7 +29,6 @@ public class MealDao {
         List<Map<String,Object>> bList = null;
         bList = sqlSessionTemplate.selectList("mealList", pMap);
 
-        log.info(bList);
 
         return bList;
     }
