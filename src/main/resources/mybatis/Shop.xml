@@ -38,7 +38,10 @@
         WHERE product_no = #{product_no}
     </update>
 
-
+    <select id="cartList" parameterType="map" resultType="map">
+        SELECT * from cart
+        WHERE user_id = #{user_id}
+    </select>
     <select id="productReceiveList" parameterType="map" resultType="map">
         SELECT * FROM product
         <where>
@@ -60,6 +63,43 @@
             ORDER BY product_hit DESC
         </if>
     </select>
+<!--장바구니 추가하기-->
+    <insert id="addCart" parameterType="map">
+        INSERT INTO cart
+        (user_id, product_no, product_image, product_title, product_price, product_hit, created_at)
+        VALUES
+            (#{user_id}, #{product_no}, #{product_image}, #{product_title}, #{product_price},  #{product_hit}, now())
+    </insert>
+    <select id="getCart" parameterType="map" resultType="map">
+        SELECT * FROM cart
+        <where>
+            <if test="product_no != null">
+                AND product_no = #{product_no}
+            </if>
+            <if test="product_title != null">
+                AND product_title = #{product_title}
+            </if>
+            <if test="product_price != null">
+                AND product_price = #{product_price}
+            </if>
+            <if test="product_hit != null">
+                AND product_hit = #{product_hit}
+            </if>
+        </where>
+    </select>
+
+
+    <!--수량 증감-->
+    <update id="cartUpdate" parameterType="map">
+        UPDATE cart SET
+            product_amount = product_amount + #{product_amount}
+        WHERE user_id = #{user_id} AND product_no = #{product_no}
+    </update>
+    <!--장바구니 제품 삭제-->
+    <delete id="cartDelete" parameterType="map">
+        DELETE FROM cart
+        WHERE user_id = #{user_id} AND product_no = #{product_no}
+    </delete>
 
 
 

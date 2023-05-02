@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.khcare.spring">
+    <select id="visitList" parameterType="map" resultType="map">
+        SELECT visit_no,user_id,elder_id,elder_no,visit_volume,visit_date,service_chk
+        FROM visit
+        <where>
+            <if test="visit_no != null">
+                AND visit_no = #{visit_no}
+            </if>
+            <if test="user_id != null">
+                AND user_id = #{user_id}
+            </if>
+            <if test="elder_id != null">
+                AND elder_id = #{elder_id}
+            </if>
+            <if test="elder_no != null">
+                AND elder_no = #{elder_no}
+            </if>
+            <if test="visit_volume != null">
+                AND visit_volume = #{visit_volume}
+            </if>
+            <if test="visit_date != null">
+                AND visit_date = #{visit_date}
+            </if>
+            <if test="service_chk != null">
+                AND service_chk = #{service_chk}
+            </if>
+
+        </where>
+        <if test="visit_no != null">
+            order by ${visit_no} desc
+        </if>
+    </select>
+    <insert id="visitInsert" parameterType="map">
+        INSERT INTO visit
+        (user_id, elder_id,elder_no , visit_date,visit_volume,visit_time) values
+        (#{user_id}, #{elder_id}, #{elder_no}, #{visit_date}, #{visit_volume},#{visit_time}
+        )
+    </insert>
+    <delete id="visitDelete" parameterType="map">
+        DELETE FROM visit
+        WHERE notice_no = #{notice_no}
+    </delete>
+</mapper>
