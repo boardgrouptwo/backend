@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.khcare.spring">
+    <select id="scheduleList" parameterType="map" resultType="map">
+        SELECT * ,  (SELECT count(*) FROM calendar) as total_count FROM calendar
+        <where>
+            <if test='cal_no != null'>
+                AND cal_no = #{cal_no}
+            </if>
+            <if test='search != null'>
+                AND cal_title LIKE '%' #{search} '%'
+            </if>
+        </where>
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+    </select>
+
+
+
+    <insert id="scheduleInsert" parameterType="map">
+        INSERT INTO calendar
+            (cal_title, cal_content, cal_start ,cal_end) VALUES
+            (#{cal_title}, #{cal_content}, #{cal_start},#{cal_end});
+    </insert>
+
+    <delete id="scheduleDelete" parameterType="map">
+        DELETE FROM calendar
+        WHERE cal_no = #{cal_no}
+    </delete>
+
+    <update id="scheduleUpdate" parameterType="map" >
+        UPDATE calendar SET
+            cal_title = #{cal_title}
+            ,cal_content = #{cal_content}
+            ,cal_start=#{cal_start}
+            ,cal_end=#{cal_end}
+        WHERE cal_no = #{cal_num}
+    </update>
+
+
+
+    <select id="scheduleAfterBefore" resultType="map">
+        SELECT * FROM
+            (SELECT cal_no, cal_title,
+                    LAG(cal_title) over (ORDER BY cal_title) AS beforeNotice,
+                     LAG(cal_no) over (ORDER BY cal_title) AS beforeNo,
+                     LEAD(cal_title) over (ORDER BY cal_title) AS afterNotice,
+                     LEAD(cal_no) over (ORDER BY cal_title) AS afterNo
+             FROM calendar) a
+        WHERE cal_no = #{cal_no}
+    </select>
+
+</mapper>

@@ -47,4 +47,17 @@ public class ShopDao {
         logger.info(pList+"");
         return pList;
     }
+
+    public List<Map<String, Object>> cartList(Map<String, Object> pMap) {
+        List<Map<String, Object>> pList = null;
+        pList = sqlSessionTemplate.selectList("cartList", pMap);
+        logger.info(pList+"");
+        return pList;
+    }
+
+    public int addCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("addCart", pMap);
+        return result;
+    }
 }

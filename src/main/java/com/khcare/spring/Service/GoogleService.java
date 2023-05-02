@@ -1,21 +1,17 @@
 package com.khcare.spring.Service;
 
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
 import com.khcare.spring.config.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import com.google.api.services.oauth2.Oauth2;
-
 import org.springframework.stereotype.Service;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.Properties;
 import java.util.Scanner;
 
 @Service
@@ -23,7 +19,22 @@ import java.util.Scanner;
 public class GoogleService {
     private final JwtTokenProvider jwtTokenProvider;
     private final Logger logger = LoggerFactory.getLogger(GoogleService.class);
+
+
     private static final String CLIENT_ID = "559072792143-366521ue3tu5jpmc1721ptke087c4ct0.apps.googleusercontent.com";
+
+    public String getKey() {
+        String key = null;
+        try {
+            Properties p = new Properties();
+            p.load(new FileReader(".env"));
+            key = "KakaoAK " + p.getProperty("KAKAO_PAY_KEY");
+        } catch(IOException e) {
+
+        }
+
+        return key;
+    }
 
     public String getUserInfo(String accessToken) throws IOException{
         URL url = new URL("https://www.googleapis.com/oauth2/v3/userinfo");

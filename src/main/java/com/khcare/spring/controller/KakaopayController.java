@@ -96,7 +96,7 @@ public class KakaopayController {
             Properties p = new Properties();
             p.load(new FileReader(".env"));
 
-            String key = "KakaoAK " + p.getProperty("key");         // APP_ADMIN_KEY
+            String key = "KakaoAK " + p.getProperty("KAKAO_PAY_KEY");         // APP_ADMIN_KEY
 
             connServer.setRequestMethod("POST");
             connServer.setRequestProperty("Authorization", key);
@@ -201,7 +201,7 @@ public class KakaopayController {
             Properties p = new Properties();
             p.load(new FileReader(".env"));
 
-            String key = "KakaoAK " + p.getProperty("key");     // APP_ADMIN_KEY
+            String key = "KakaoAK " + p.getProperty("KAKAO_PAY_KEY");     // APP_ADMIN_KEY
 
             connServer.setRequestMethod("POST");
             connServer.setRequestProperty("Authorization", key);
