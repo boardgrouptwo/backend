@@ -14,13 +14,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 @Service
 @RequiredArgsConstructor
 public class Oauth2Kakao {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    private final String kakaoOauth2ClinetId = "bece449c58107c94fbc36f061d1fe4ae";
     private final String frontendRedirectUrl = "http://localhost:3000/auth/kakao/callback";
 
     public AuthKakaoDto callTokenApi(String code) {
@@ -29,9 +32,20 @@ public class Oauth2Kakao {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
+        String key = null;
+        try {
+            Properties p = new Properties();
+            p.load(new FileReader(".env"));
+            key = p.getProperty("KAKAO_API_KEY");
+        } catch(IOException e) {
+
+        }
+
+
+
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", grantType);
-        params.add("client_id", kakaoOauth2ClinetId);
+        params.add("client_id", key);
         params.add("redirect_uri", frontendRedirectUrl);
         params.add("code", code);
 
