@@ -51,11 +51,13 @@ public class PaymentDao {
         else if (listType.equals("후원")) {
             qList = sqlSessionTemplate.selectList("paymentListS", pMap);
         }
+        logger.info(qList.toString());
 
         // 결제 금액 단위 나누기
         List<Map<String,Object>> rList = new ArrayList<Map<String,Object>>();
         for (int i=0; i<qList.size(); i++) {
             Map<String, Object> tMap = qList.get(i);
+            logger.info(tMap.get("pay_amount").toString());
             int mInt = Integer.parseInt(tMap.get("pay_amount").toString());
 
             // 숫자에 천단위 콤마찍기 (금액 표기하기)

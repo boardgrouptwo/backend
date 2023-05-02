@@ -16,4 +16,7 @@ public interface PaymentService {
 
     // 결제 테이블 pay_no값 확인
     int paymentNo();
+
+    // 아임포트 결제
+    String paymentImp(Map<String,Object> pMap);
 }

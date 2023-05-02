@@ -119,4 +119,17 @@ public class PaymentController {
 
         return result;
     } // end of paymentNo
+
+
+    @PostMapping("/imp")
+    @ResponseBody
+    public String paymentImp(@RequestBody Map<String,Object> pMap) {
+        logger.info("paymentImp 호출(아임포트)");
+        logger.info(pMap.toString());
+        String result = null;
+
+        result = paymentServiceImpl.paymentImp(pMap);
+
+        return result;
+    }
 }

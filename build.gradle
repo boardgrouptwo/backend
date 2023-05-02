@@ -44,6 +44,7 @@ dependencies {
     implementation "io.jsonwebtoken:jjwt:0.9.1"
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'com.opencsv:opencsv:5.5.1'
 }
 
 tasks.named('test') {

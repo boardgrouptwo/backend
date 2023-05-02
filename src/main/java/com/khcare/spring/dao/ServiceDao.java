@@ -42,4 +42,31 @@ public class ServiceDao {
         return result;
     }
 
+    public Map<String, Object> userDate(Map<String, Object> pMap) {
+        log.info("elderSelect 호출");
+        Map<String,Object> rMap = null;
+
+        rMap = sqlSessionTemplate.selectOne("userDate", pMap);
+        log.info("결과 : " + rMap);
+
+        return rMap;
+    }
+
+    public int reviewInsert(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("reviewInsert", pMap);
+        return result;
+    }
+
+    public List<Map<String, Object>> reviewList(Map<String, Object> pMap) {
+        List<Map<String, Object>> bList = null;
+        bList = sqlSessionTemplate.selectList("reviewList", pMap);
+        return bList;
+    }
+
+    public int reviewDelete(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("reviewDelete", pMap);
+        return result;
+    }
 }

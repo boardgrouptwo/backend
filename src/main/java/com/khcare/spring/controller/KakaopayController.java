@@ -67,6 +67,8 @@ public class KakaopayController {
             nMap = sqlSessionTemplate.selectOne("sponsorNo");
             order_id = Integer.parseInt(nMap.get("spon_no").toString());
         } else if ("결제".equals(pay_type)) {
+            kakaoPayDto.setReq_text(pMap.get("req_text").toString());
+            kakaoPayDto.setUser_addr(pMap.get("user_addr").toString());
 
             nMap = sqlSessionTemplate.selectOne("paymentNo");
             order_id = Integer.parseInt(nMap.get("pay_no").toString());
@@ -360,7 +362,13 @@ public class KakaopayController {
 
         logger.info("결과 : " + resultText);
 
-        return "/";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<script>");
+        sb.append("  window.close();");
+        sb.append("</script>");
+
+        return sb.toString();
     } // end of kakaoPayCancel
 
     /**

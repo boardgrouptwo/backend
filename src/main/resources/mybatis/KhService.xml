@@ -53,4 +53,35 @@
 
     </select>
 
+    <select id="userDate" parameterType="map" resultType="map">
+        SELECT u.user_name, s.service_date, s.service_check
+        FROM service AS s INNER JOIN users AS u ON s.user_id = u.user_name
+        WHERE u.user_id = #{user_id}
+    </select>
+
+    <insert id="reviewInsert" parameterType="map">
+        INSERT INTO review
+            (user_id, review_title, review_content, review_date
+            <if test="review_image != null">
+                , review_image
+            </if>
+                ) VALUES
+            (#{user_id}, #{review_title}, #{review_content}, now()
+            <if test="review_image != null">
+                ,#{review_image}
+            </if>
+            )
+    </insert>
+
+    <select id="reviewList" parameterType="map" resultType="map">
+        SELECT review_no, user_id, review_title, review_content, review_date, review_image
+        FROM review
+        order by review_no desc
+    </select>
+
+    <delete id="reviewDelete" parameterType="map">
+        DELETE FROM review
+        WHERE review_no = #{review_no}
+    </delete>
+
 </mapper>
