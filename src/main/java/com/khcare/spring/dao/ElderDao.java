@@ -16,7 +16,6 @@ public class ElderDao {
 
     //어르신 가입
     public int elderJoin(Map<String, Object> pMap) {
-        log.info("elderJoin 호출");
         int result = 0;
         result = sqlSessionTemplate.update("elderJoin", pMap);
 

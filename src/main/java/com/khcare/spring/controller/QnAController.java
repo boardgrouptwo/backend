@@ -19,12 +19,9 @@ public class QnAController {
 
     @GetMapping("/qnaList")
     public String qnaList(@RequestParam Map<String, Object> pMap) {
-        log.info("qna 게시판 리스트 호출");
-        log.info(pMap);
 
         List<Map<String, Object>> bList = null;
         bList = qnaServiceImpl.qnaList(pMap);
-        log.info(bList);
 
         Gson g = new Gson();
         String temp = g.toJson(bList);
@@ -35,19 +32,15 @@ public class QnAController {
     @PostMapping("/qnaInsert")
     @CrossOrigin(origins = "http://localhost:3000")
     public int qnaInsert(@RequestBody Map<String, Object> pMap){
-        log.info("QnA 글 추가");
 
         int result = 0;
         result = qnaServiceImpl.qnaInsert(pMap);
-        log.info(result);
 
         return result;
     }
 
     @PostMapping("/qnaUpdate")
     public int qnaUpdate(@RequestBody Map<String, Object> pMap){
-        log.info("QnA 수정");
-        log.info(pMap);
         int result = 0;
         result = qnaServiceImpl.qnaUpdate(pMap);
 
@@ -56,8 +49,6 @@ public class QnAController {
 
     @PostMapping("/repleInsert")
     public int repleInsert(@RequestBody Map<String, Object> pMap){
-        log.info("QnA 수정");
-        log.info(pMap);
         int result = 0;
         result = qnaServiceImpl.repleInsert(pMap);
 
@@ -66,7 +57,6 @@ public class QnAController {
 
     @GetMapping("/qnaDelete")
     public int qnaDelete(@RequestParam Map<String, Object> pMap){
-        log.info("QnA 삭제");
         int result = 0;
         result = qnaServiceImpl.qnaDelete(pMap);
 
@@ -76,11 +66,8 @@ public class QnAController {
 
     @GetMapping("/qnaSearch")
     public String qnaSearchList(@RequestParam Map<String, Object> pMap){
-        log.info("QnA 검색 조회");
-        log.info(pMap);
         List<Map<String,Object>> bList = null;
         bList = qnaServiceImpl.qnaSearchList(pMap);
-        log.info(bList);
 
         Gson g = new Gson();
         String temp = g.toJson(bList);
@@ -90,11 +77,8 @@ public class QnAController {
 
     @GetMapping("/qnaAfterBefore")
     public String qnaAfterBefore(@RequestParam Map<String,Object> pMap){
-        log.info("QnA 이전 이후 글");
-        log.info(pMap);
         List<Map<String,Object>> bList = null;
         bList = qnaServiceImpl.qnaAfterBefore(pMap);
-        log.info(bList);
 
         Gson g = new Gson();
         String temp = g.toJson(bList);
