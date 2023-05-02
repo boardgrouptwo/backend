@@ -32,15 +32,6 @@ public class PaymentController {
         logger.info("pMap : " + pMap);
         int result = 0;
 
-        /*
-        *         // 회원번호 컬럼을 int타입으로 변경하지 않으면 부적합 열유형 111에러메시지 - 다 이 문제
-        // Map, List : Object 주의할 것 - 부적합한 열유형 setNull(111)
-        if (pMap.get("mem_no") != null) {
-            // NumberFormatException 원인이 된다
-            int mem_no = Integer.parseInt(pMap.get("mem_no").toString());
-            pMap.put("mem_no", mem_no);
-        }*/
-
         result = paymentServiceImpl.paymentInsert(pMap);
         logger.info("result : " + result);
 

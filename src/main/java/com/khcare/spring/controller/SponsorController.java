@@ -57,10 +57,10 @@ public class SponsorController {
      * @return 총 후원금액
      */
     @GetMapping("/sponsorUserSum")
-    public int sponsorUserSum(@RequestParam Map<String,Object> pMap) {
+    public String sponsorUserSum(@RequestParam Map<String,Object> pMap) {
         logger.info("sponsorUserSum 호출");
         logger.info("pMap : " + pMap);
-        int result = 0;
+        String result = "";
 
         result = sponsorServiceImpl.sponsorUserSum(pMap);
         logger.info("result : " + result);

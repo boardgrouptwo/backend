@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Properties;
 
 // https://developers.kakao.com/docs/latest/ko/kakaopay/single-payment
 @RestController
@@ -91,8 +92,14 @@ public class KakaopayController {
             URL kakaoUrl = new URL("https://kapi.kakao.com/v1/payment/ready");
             HttpURLConnection connServer = (HttpURLConnection) kakaoUrl.openConnection();
 
+            // .env를 읽어서 Properties에 저장
+            Properties p = new Properties();
+            p.load(new FileReader(".env"));
+
+            String key = "KakaoAK " + p.getProperty("key");         // APP_ADMIN_KEY
+
             connServer.setRequestMethod("POST");
-            connServer.setRequestProperty("Authorization", "KakaoAK 37852f978f6dc3768976fea78a63b045");     // APP_ADMIN_KEY
+            connServer.setRequestProperty("Authorization", key);
             connServer.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
             // 카카오서버로 접속 시도
             connServer.setDoOutput(true);
@@ -190,8 +197,14 @@ public class KakaopayController {
             URL kakaoUrl = new URL("https://kapi.kakao.com/v1/payment/approve");
             HttpURLConnection connServer = (HttpURLConnection) kakaoUrl.openConnection();
 
+            // .env를 읽어서 Properties에 저장
+            Properties p = new Properties();
+            p.load(new FileReader(".env"));
+
+            String key = "KakaoAK " + p.getProperty("key");     // APP_ADMIN_KEY
+
             connServer.setRequestMethod("POST");
-            connServer.setRequestProperty("Authorization", "KakaoAK 37852f978f6dc3768976fea78a63b045");     // APP_ADMIN_KEY
+            connServer.setRequestProperty("Authorization", key);
             connServer.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
             // 카카오서버로 접속 시도
             connServer.setDoOutput(true);

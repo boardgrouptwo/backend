@@ -42,12 +42,18 @@ public class SponsorDao {
         return result;
     }
 
-    public int sponsorUserSum(Map<String,Object> pMap) {
+    public String sponsorUserSum(Map<String,Object> pMap) {
         logger.info("sponsorUserSum 호출");
-        int result = 0;
+        String result = "";
+        int sum = 0;
 
-        result = sqlSessionTemplate.selectOne("sponsorUserSum", pMap);
-        logger.info(Integer.toString(result));
+        sum = sqlSessionTemplate.selectOne("sponsorUserSum", pMap);
+
+        // 숫자에 천단위 콤마찍기 (금액 표기하기)
+        DecimalFormat df = new DecimalFormat("###,###");
+        result = df.format(sum) + " 원";
+
+        logger.info(result);
 
         return result;
     }

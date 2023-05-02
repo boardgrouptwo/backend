@@ -22,7 +22,7 @@
             (
                 select us.user_name AS user_id, pa.pay_date, pa.pay_amount, pa.pay_content, '결제' AS pay_type FROM payment AS pa LEFT JOIN users AS us ON pa.user_id = us.user_id WHERE us.user_id = #{user_id}
                 UNION ALL
-                SELECT sp.user_id AS user_id, sp.spon_date AS 'pay_date', sp.spon_money AS 'pay_amount', sp.spon_content AS 'pay_content', '결제' AS pay_type FROM sponsor AS sp LEFT JOIN users AS us ON sp.user_id = us.user_name WHERE us.user_id = #{user_id}
+                SELECT sp.user_id AS user_id, sp.spon_date AS 'pay_date', sp.spon_money AS 'pay_amount', sp.spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor AS sp LEFT JOIN users AS us ON sp.user_id = us.user_name WHERE us.user_id = #{user_id}
             ) AS fu
         ORDER BY pay_date desc
         <if test="limit_cnt != null">
