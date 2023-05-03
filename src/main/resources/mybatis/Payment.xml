@@ -9,32 +9,89 @@
         VALUES ( #{user_id}, #{pay_amount}, now(), #{pay_content} )
     </insert>
 
-    <!--  후원 내역 출력  -->
-    <select id="paymentList" resultType="map">
-        SELECT p.pay_no, p.user_id, p.pay_amount, p.pay_date, p.pay_content
-                , u.user_name
-        FROM payment p, users u
-        WHERE p.user_id = u.user_id
-            <where>
-                <if test='pay_no != null and pay_no > 0'>
-                    AND p.pay_no = #{pay_no}
-                </if>
-                <if test='content != null'>
-                    <choose>
-                        <when test='condition != null and condition.equals("후원자ID")'>
-                            AND u.user_name LIKE '%'||#{content}||'%'
-                        </when>
-                        <when test='condition != null and condition.equals("날짜")'>
-                            AND p.pay_date LIKE '%'||#{content}||'%'
-                        </when>
-                    </choose>
-                </if>
-            </where>
-        ORDER BY pay_no desc
+    <!--  결제 내역 출력  -->
+    <select id="paymentList" parameterType="java.util.HashMap" resultType="map">
+        SELECT user_id, pay_date, pay_amount, pay_content, pay_type
+            , ( SELECT COUNT(*) FROM (
+                    SELECT us.user_name AS user_id, pay_date, pay_amount, pay_content FROM payment AS pa LEFT JOIN users AS us ON pa.user_id = us.user_id WHERE us.user_id = #{user_id}
+                    UNION ALL
+                    SELECT sp.user_id AS user_id, sp.spon_date AS 'pay_date', sp.spon_money AS 'pay_amount', sp.spon_content AS 'pay_content' FROM sponsor AS sp LEFT JOIN users AS us ON sp.user_id = us.user_name WHERE us.user_id = #{user_id}
+                ) AS fu
+            ) AS total_count
+        FROM
+            (
+                select us.user_name AS user_id, pa.pay_date, pa.pay_amount, pa.pay_content, '결제' AS pay_type FROM payment AS pa LEFT JOIN users AS us ON pa.user_id = us.user_id WHERE us.user_id = #{user_id}
+                UNION ALL
+                SELECT sp.user_id AS user_id, sp.spon_date AS 'pay_date', sp.spon_money AS 'pay_amount', sp.spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor AS sp LEFT JOIN users AS us ON sp.user_id = us.user_name WHERE us.user_id = #{user_id}
+            ) AS fu
+        ORDER BY pay_date desc
+        <if test="limit_cnt != null">
+            LIMIT 5
+        </if>
     </select>
 
-    <!--  후원 내역 삭제 -->
+    <!--  5건 결제 내역 출력  -->
+    <select id="paymentListPreview" parameterType="java.util.HashMap" resultType="map">
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type FROM payment
+            WHERE user_id = #{user_id}
+        UNION ALL
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type FROM sponsor
+            WHERE user_id = #{user_id}
+        ORDER BY pay_date desc
+        LIMIT 5
+    </select>
+
+    <!--  일반 결제 건  -->
+    <select id="paymentListP" parameterType="java.util.HashMap" resultType="map">
+        select user_id, pay_date, pay_amount, pay_content, '결제' AS pay_type
+            , (SELECT COUNT(*) FROM payment WHERE user_id = #{user_id}) AS total_count
+        FROM payment
+        WHERE user_id = #{user_id}
+        ORDER BY pay_date desc
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+    </select>
+
+    <!--  후원 결제 건  -->
+    <select id="paymentListS" parameterType="java.util.HashMap" resultType="map">
+        SELECT user_id, spon_date AS 'pay_date', spon_money AS 'pay_amount', spon_content AS 'pay_content', '후원' AS pay_type
+            , (SELECT COUNT(*) FROM sponsor WHERE user_id = #{user_id}) AS total_count
+        FROM sponsor
+        WHERE user_id = #{user_id}
+        ORDER BY pay_date desc
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+    </select>
+
+    <!-- 후원 내역 삭제 -->
     <delete id="paymentDelete" parameterType="int">
         DELETE FROM payment WHERE pay_no = #{pay_no}
     </delete>
+
+    <!-- pay_no값 확인 -->
+    <select id="paymentNo" resultType="map">
+        SELECT pay_no FROM payment
+        ORDER BY pay_no DESC LIMIT 1;
+    </select>
+
+    <!-- 카카오페이 결제 내역 추가 -->
+    <insert id="paymentInsertKakao" parameterType="com.khcare.spring.dto.KakaoPayDto">
+        INSERT INTO payment (
+                              user_id
+                            , pay_no
+                            , pay_date
+                            , pay_amount
+                            , pay_content
+                            , pay_tid
+        ) VALUES (
+                     #{partner_user_id}
+                 , #{partner_order_id}
+                 , now()
+                 , #{total_amount}
+                 , #{item_name}
+                 , #{tid}
+                 )
+    </insert>
 </mapper>

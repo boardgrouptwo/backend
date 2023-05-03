@@ -3,11 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.khcare.spring">
-<<<<<<< HEAD
-    <select id="productList" resultType="map">
-        SELECT *  FROM product
-        order by product_hit
-=======
     <select id="productList" parameterType="map" resultType="map">
         SELECT * FROM product
         <where>
@@ -21,26 +16,17 @@
         <if test="select_type != null">
             order by ${select_type} desc
         </if>
->>>>>>> develop
+
     </select>
 
     <insert id="productUpload" parameterType="map">
         INSERT INTO product
-<<<<<<< HEAD
-        (product_title, product_price, product_date
-        <if test="product_image!= null">
-            ,product_image
-        </if>
-            ) values
-        (#{product_title}, #{product_price},  now()
-         <if test="product_image!= null">
-=======
-        (product_title, product_price, product_type, product_date
+        (product_title, product_price, product_type, product_date, product_detail
         <if test="product_image != null">
             ,product_image
         </if>
             ) values
-        (#{product_title}, #{product_price}, #{product_type}, now()
+        (#{product_title}, #{product_price}, #{product_type}, now(), #{product_detail}
          <if test="product_image != null">
 >>>>>>> develop
              ,#{product_image}
@@ -48,16 +34,82 @@
         )
     </insert>
 
-<<<<<<< HEAD
-
-=======
     <update id="productHit">
         UPDATE product SET
             product_hit = product_hit + 1
         WHERE product_no = #{product_no}
     </update>
->>>>>>> develop
 
+    <select id="productReceiveList" parameterType="map" resultType="map">
+        SELECT * FROM product
+        <where>
+            product_type = '받고 만족한'
+            <if test="select_type eq 'low'">
+                AND product_price BETWEEN 10000 AND 20000
+            </if>
+            <if test="select_type eq 'middle'">
+                AND product_price BETWEEN 20000 AND 50000
+            </if>
+            <if test="select_type eq 'high'">
+                AND product_price <![CDATA[>]]> 50000
+            </if>
+        </where>
+        <if test="select_type eq 'total'">
+            ORDER BY product_no DESC
+        </if>
+        <if test="select_type eq 'basic'">
+            ORDER BY product_hit DESC
+        </if>
+    </select>
+<!--장바구니 추가하기-->
+    <insert id="addCart" parameterType="map">
+        INSERT INTO cart
+        (user_id, product_no, product_image, product_title, product_price, product_hit, product_quantity,created_at)
+        VALUES
+            (#{user_id}, #{product_no}, #{product_image}, #{product_title}, #{product_price},  #{product_hit}, #{product_quantity},now())
+    </insert>
+    <select id="cartList" parameterType="map" resultType="map">
+        SELECT * FROM cart
+        <where>
+            <if test="product_no != null">
+                AND product_no = #{product_no}
+            </if>
+            <if test="product_title != null">
+                AND product_title = #{product_title}
+            </if>
+
+            <if test="product_price != null">
+                AND product_price = #{product_price}
+            </if>
+            <if test="product_hit != null">
+                AND product_hit = #{product_hit}
+            </if>
+            <if test="product_quantity != null">
+                AND product_quantity = #{product_quantity}
+            </if>
+
+        </where>
+    </select>
+
+    <!--수량 증감-->
+    <update id="updateCart" parameterType="map">
+        UPDATE cart SET
+            product_quantity = product_quantity + #{product_quantity}
+        WHERE user_id = #{user_id} AND product_no = #{product_no}
+    </update>
+
+    <!--장바구니 제품 삭제-->
+    <delete id="deleteCart" parameterType="map">
+        DELETE FROM cart
+        WHERE product_no = #{product_no}
+    </delete>
+
+    <!--장바구니 제품 삭제-->
+    <delete id="cartDelete" parameterType="map">
+        DELETE FROM cart
+        WHERE user_id = #{user_id} AND product_no = #{product_no}
+
+    </delete>
 
 
 </mapper>

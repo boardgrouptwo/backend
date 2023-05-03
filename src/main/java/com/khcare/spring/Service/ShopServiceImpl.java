@@ -33,4 +33,40 @@ public class ShopServiceImpl implements ShopService {
         result = shopDao.productHit(pMap);
         return 0;
     }
+
+    @Override
+    public List<Map<String, Object>> productReceiveList(Map<String, Object> pMap) {
+        List<Map<String, Object>> pList = null;
+        pList = shopDao.productReceiveList(pMap);
+        return pList;
+    }
+
+    @Override
+    public List<Map<String, Object>> cartList(Map<String, Object> pMap) {
+        List<Map<String, Object>> cartList = null;
+        cartList = shopDao.cartList(pMap);
+        return cartList;
+    }
+
+    @Override
+    public int addCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = shopDao.addCart(pMap);
+        return result;
+    }
+
+
+    public int deleteCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = shopDao.deleteCart(pMap);
+        return result;
+    }
+
+    @Override
+    public int updateCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = shopDao.updateCart(pMap);
+        return result;
+    }
+
 }

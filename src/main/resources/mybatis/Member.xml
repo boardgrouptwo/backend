@@ -2,24 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 <mapper namespace="com.khcare.spring">
     <select id="getUserAccount" resultType="String">
         SELECT * FROM user
         WHERE USER_ID=#{userId}
     </select>
-=======
-<mapper namespace="com.khcare.spring.mapper.UserMapper">
-    <select id="findUserByUsername" resultType="UserDto">
-        SELECT user_id userId, user_name, user_pw password, user_type role
-        FROM users
-        WHERE user_id = #{mem_id}
-    </select>
 
-    <select id="findByUserId" resultType="UserDto">
-        SELECT user_id userId, user_name, user_pw password, user_type role
-=======
 <mapper namespace="com.khcare.spring.mapper.UserMapper">
     <select id="findUserByUsername" resultType="UserDto">
         SELECT user_id , user_name, user_pw password, user_type role
@@ -29,19 +17,92 @@
 
     <select id="findByUserId" resultType="UserDto">
         SELECT user_id , user_name, user_pw password, user_type role
->>>>>>> develop
         FROM users
         WHERE user_id = #{mem_id}
     </select>
 
-<<<<<<< HEAD
+    <select id="findId" resultType="map">
+        SELECT user_id FROM users
+        WHERE user_name = #{user_name}
+        AND user_tel = #{user_tel}
+    </select>
 
->>>>>>> 71742ab76730762b705d13c5a934987ce0cc23e6
-=======
+    <select id="findPw" resultType="map">
+        SELECT user_id FROM users
+        WHERE user_id = #{user_id}
+        AND user_name = #{user_name}
+    </select>
+
+    <update id="changePw" parameterType="map">
+        UPDATE users SET
+        user_pw = #{user_password}
+        WHERE user_id = #{user_id}
+    </update>
+
     <insert id="save" parameterType="UserDto">
-        INSERT INTO user (username, password)
-        VALUES ( #{username}, #{password} )
+        INSERT INTO users
+            (
+             user_id,
+             user_name,
+             user_pw,
+             user_type,
+             user_birth,
+             user_gender,
+             user_tel,
+             user_email,
+             user_enter,
+             user_date
+            )
+        VALUES (
+                #{user_id},
+                #{user_name},
+                #{password},
+                'user',
+                #{user_birth},
+                #{user_gender},
+                #{user_tel},
+                #{user_email},
+                #{user_enter},
+                now()
+        )
     </insert>
 
->>>>>>> develop
+
+    <select id="userInfo" parameterType="map" resultType="map">
+        SELECT user_id, user_name, user_birth, user_gender, user_tel, user_email
+                , user_enter, user_type, user_profile_url, user_memo
+        FROM users
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="duplicateCheck" parameterType="map" resultType="map">
+        SELECT user_id FROM users
+        WHERE user_id = #{user_id}
+    </select>
+
+    <update id="userUpdate" parameterType="map">
+        UPDATE users SET
+            <if test="user_name != null and user_name.length > 0">
+                user_name = #{user_name}
+            </if>
+            <if test="user_birth != null and user_birth.length > 0">
+                , user_birth = #{user_birth}
+            </if>
+            <if test="user_gender != null and user_gender.length > 0">
+                , user_gender = #{user_gender}
+            </if>
+            <if test="user_tel != null and user_tel > 0">
+                , user_tel = #{user_tel}
+            </if>
+            <if test="user_email != null and user_email.length > 0">
+                , user_email = #{user_email}
+            </if>
+            <if test="user_profile_url != null and user_profile_url.length > 0">
+                , user_profile_url = #{user_profile_url}
+            </if>
+            <if test="user_memo != null and user_memo.length > 0">
+                , user_memo = #{user_memo}
+            </if>
+        WHERE user_id = #{user_id}
+    </update>
 </mapper>

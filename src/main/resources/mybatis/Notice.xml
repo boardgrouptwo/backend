@@ -63,7 +63,7 @@
         UPDATE notice SET
         notice_title = #{notice_title}
         , notice_content = #{notice_content}
-        WHERE notice_no = #{notice_no}
+        WHERE notice_no = #{notice_num}
     </update>
 
 

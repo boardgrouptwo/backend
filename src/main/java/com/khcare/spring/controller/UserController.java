@@ -1,6 +1,7 @@
 package com.khcare.spring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
 import com.khcare.spring.Service.GoogleService;
 import com.khcare.spring.Service.KakaoUserService;
 import com.khcare.spring.Service.ResponseService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -44,15 +46,6 @@ public class UserController {
         try {
             access_token = userService.login(loginDto);
             logger.info("login 성공");
-
-/*            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization", "Bearer " + token);
-            SingleDataResponse<String> response = responseService.getSingleDataResponse(true, "로그인 성공", token);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(response);
-
-            logger.info(token);
-            logger.info("response : "+response);
-            logger.info(responseEntity+"");*/
 
         } catch (LoginFailedException e) {
             String message = e.toString();
@@ -91,21 +84,20 @@ public class UserController {
         logger.info(pMap+"");
         String access_token=pMap.get("access_token").toString();
         logger.info(access_token+"");
-
+       String token = null;
         try {
-            String token = googleService.verifyAccessToken(access_token);
+            token = googleService.getUserInfo(access_token);
 
         } catch(IOException e) {
 
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
         }
-        return null;
+        return token;
     }
 
     @PostMapping("/join")
     public ResponseEntity join(@RequestBody UserDto userDto) {
         ResponseEntity responseEntity = null;
+        logger.info(userDto+"");
         try {
             UserDto savedUser = userService.join(userDto);
             SingleDataResponse<UserDto> response = responseService.getSingleDataResponse(true, "회원가입 성공", savedUser);
@@ -120,19 +112,72 @@ public class UserController {
         return responseEntity;
     }
 
+    @PostMapping("/findId")
+    public Map<String, Object> findId(@RequestBody Map<String,Object> pMap) {
 
-/*    @PostMapping("/googleLogin")
-    public String GoogleLogin(@RequestHeader("Authorization") String authorizationHeader) {
-        String accessToken = authorizationHeader.split(" ")[1]; // "Bearer <access_token>" 형식에서 <access_token> 부분 추출
-        logger.info(accessToken);
-        try {
-            String token = googleService.verifyAccessToken(accessToken);
+        Map<String, Object> userId = userService.findId(pMap);
+        return userId;
+    }
 
-        } catch(IOException e) {
+    @PostMapping("/findPw")
+    public int findPw(@RequestBody Map<String,Object> pMap) {
+        logger.info(pMap+"");
+        int result = 0;
+        result = userService.findPw(pMap);
+        return result;
+    }
 
-        } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }*/
+    @PostMapping("/changePw")
+    public int changePw(@RequestBody Map<String, Object> pMap) {
+        int result = 0;
+        result = userService.changePw(pMap);
+        logger.info(result+"");
+        return result;
+    }
+
+    /**
+     * 사용자 정보 호출
+     * @param pMap 사용자ID
+     * @return  사용자 정보
+     */
+    @PostMapping("/userInfo")
+    public String userInfo(@RequestBody Map<String,Object> pMap) {
+        logger.info("userInfo 호출");
+        logger.info("pMap : " + pMap);
+        Map<String,Object> rMap = null;
+
+        rMap = userService.userInfo(pMap);
+
+        Gson g = new Gson();
+        String result = g.toJson(rMap);
+        logger.info("result : " + result);
+
+        return result;
+    }
+
+    @PostMapping("/duplicate")
+    public int duplicateCheck(@RequestBody Map<String,Object> pMap) {
+        logger.info(pMap + "");
+        int result = 0;
+        result = userService.duplicateCheck(pMap);
+        logger.info(result + "");
+        return result;
+    }
+
+    /**
+     * 사용자 정보 수정
+     * @param pMap 사용자 입력값
+     * @return  0: 실패, 1: 성공
+     */
+    @PostMapping("/userUpdate")
+    public int userUpdate(@RequestBody Map<String,Object> pMap) {
+        logger.info("userUpdate 호출");
+        logger.info("pMap : " + pMap);
+        int result = 0;
+
+        result = userService.userUpdate(pMap);
+        logger.info("result : " + result);
+
+        return result;
+    }
 }

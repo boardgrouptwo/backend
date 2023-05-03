@@ -3,6 +3,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+application-oauth.properties
 
 ### STS ###
 .apt_generated
@@ -34,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Api Key ###
+.env

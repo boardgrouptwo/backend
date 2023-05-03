@@ -46,6 +46,7 @@ public class JwtTokenProvider {
     public String createToken(String userId, List<String> roles, String user_name) {
         logger.info(userId);
         Claims claims = Jwts.claims().setSubject(userId); //payload에 담기는 정보 subject에 userId를 담는다
+        claims.put("user_id", userId);
         claims.put("roles", roles);
         claims.put("user_name",user_name);
         Date now = new Date();

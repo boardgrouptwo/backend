@@ -4,16 +4,8 @@
 
 <mapper namespace="com.khcare.spring">
     <select id="mealList" parameterType="map" resultType="map">
-        SELECT  MMEAL_SC_CODE
-                ,MMEAL_SC_NM
-                ,DDISH_NM
-                ,ORPLC_INFO
-                ,CAL_INFO
-                ,NTR_INFO
+        SELECT meal_no,meal_type,meal_name,meal_origin,meal_cal,meal_nut,meal_date
         FROM meal
-
     </select>
-
-
 
 </mapper>

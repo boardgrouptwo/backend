@@ -39,4 +39,39 @@ public class ShopDao {
         logger.info(result+"");
         return result;
     }
+
+    public List<Map<String, Object>> productReceiveList(Map<String, Object> pMap) {
+        logger.info(pMap+"");
+        List<Map<String, Object>> pList = null;
+        pList = sqlSessionTemplate.selectList("productReceiveList", pMap);
+        logger.info(pList+"");
+        return pList;
+    }
+
+    public List<Map<String, Object>> cartList(Map<String, Object> pMap) {
+        List<Map<String, Object>> pList = null;
+        pList = sqlSessionTemplate.selectList("cartList", pMap);
+        logger.info(pList+"");
+        return pList;
+    }
+
+    public int addCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("addCart", pMap);
+        return result;
+    }
+
+
+    public int deleteCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("deleteCart", pMap);
+        return result;
+    }
+
+    public int updateCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("updateCart", pMap);
+        return result;
+    }
+
 }
