@@ -46,39 +46,36 @@
 
 
     <select id="visitMList" parameterType="map" resultType="map">
-        SELECT visit_no, user_id, visit_date, visit_time, visit_volume, elder_id,elder_no, service_chk
-        FROM visit
+        SELECT v.visit_no, v.user_id, v.visit_date, v.visit_time, v.visit_volume, e.elder_name, v.service_chk
+        FROM visit v
+        INNER JOIN elders e ON v.user_id = e.elder_id
         <where>
             <if test="user_id != null">
-                AND user_id = #{user_id}
+                AND v.user_id = #{user_id}
             </if>
             <if test="visit_no != null">
-                AND visit_no = #{visit_no}
+                AND v.visit_no = #{visit_no}
             </if>
-            <if test="elder_id != null">
-                AND elder_id = #{elder_id}
+            <if test="user_id != null">
+                AND v.user_id = #{user_id}
             </if>
-            <if test="elder_no != null">
-                AND elder_no = #{elder_no}
-            </if>
+
             <if test="visit_volume != null">
-                AND visit_volume = #{visit_volume}
+                AND v.visit_volume = #{visit_volume}
             </if>
             <if test="visit_date != null">
-                AND visit_date = #{visit_date}
+                AND v.visit_date = #{visit_date}
             </if>
             <if test="visit_time != null">
-                AND visit_time = #{visit_time}
+                AND v.visit_time = #{visit_time}
             </if>
             <if test="service_chk != null">
-                AND service_chk = #{service_chk}
+                AND v.service_chk = #{service_chk}
             </if>
-
         </where>
         <if test="visit_no != null">
-            order by ${visit_no} desc
+            ORDER BY v.visit_no DESC
         </if>
-
     </select>
 
 </mapper>
