@@ -5,18 +5,7 @@
 <mapper namespace="com.khcare.spring">
 
 
-    <update id="visitMUpdate" parameterType="map">
-        UPDATE visit
-        SET service_chk = 1
-        <where>
-            <if test="visit_no != null and visit_no.size() > 0">
-                AND visit_no IN
-                <foreach collection="visit_no" item="item" index="index" open="(" separator="," close=")">
-                    ${item}
-                </foreach>
-            </if>
-        </where>
-    </update>
+
 
     <delete id="visitMDelete" parameterType="map">
         DELETE FROM visit
@@ -30,6 +19,18 @@
         </where>
     </delete>
 
+    <update id="visitMUpdate" parameterType="map">
+        UPDATE visit
+        SET service_chk = 1
+        <where>
+            <if test="visit_no != null and visit_no.size() > 0">
+                AND visit_no IN
+                <foreach collection="visit_no" item="item" index="index" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+        </where>
+    </update>
 
     <update id="visitMUpdate2" parameterType="map">
         UPDATE visit
@@ -41,6 +42,8 @@
             </foreach>
         </if>
     </update>
+
+
 
     <select id="visitMList" parameterType="map" resultType="map">
         SELECT visit_no, user_id, visit_date, visit_time, visit_volume, elder_id,elder_no, service_chk

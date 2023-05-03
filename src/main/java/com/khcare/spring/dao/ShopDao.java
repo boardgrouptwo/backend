@@ -60,4 +60,18 @@ public class ShopDao {
         result = sqlSessionTemplate.update("addCart", pMap);
         return result;
     }
+
+
+    public int deleteCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("deleteCart", pMap);
+        return result;
+    }
+
+    public int updateCart(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.update("updateCart", pMap);
+        return result;
+    }
+
 }

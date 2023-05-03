@@ -39,13 +39,13 @@ public class VisitManagerController {
     @GetMapping("/visitMList")
     public String visitMList(@RequestParam Map<String,Object> pMap) {
         log.info("visitMList 호출");
-        log.info(pMap);
+        log.info(pMap);//빈값{{}}
         List<Map<String,Object>> bList = null;
         bList = visitManagerServiceImpl.visitMList(pMap);
-        log.info(bList);
+        log.info(bList);//빈값{[]}
         Gson g = new Gson();
         String temp =g.toJson(bList);
-        log.info(temp+"");
+        log.info(temp+"");//{[]}
         return temp;
     }
     @PostMapping("/visitMDelete")

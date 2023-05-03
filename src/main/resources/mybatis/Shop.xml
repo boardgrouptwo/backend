@@ -66,9 +66,15 @@
 <!--장바구니 추가하기-->
     <insert id="addCart" parameterType="map">
         INSERT INTO cart
+
+        (user_id, product_no, product_image, product_title, product_price, product_hit, product_quantity,created_at)
+        VALUES
+            (#{user_id}, #{product_no}, #{product_image}, #{product_title}, #{product_price},  #{product_hit}, #{product_quantity},now())
+
         (user_id, product_no, product_image, product_title, product_price, product_hit, created_at)
         VALUES
             (#{user_id}, #{product_no}, #{product_image}, #{product_title}, #{product_price},  #{product_hit}, now())
+
     </insert>
     <select id="getCart" parameterType="map" resultType="map">
         SELECT * FROM cart
@@ -85,11 +91,27 @@
             <if test="product_hit != null">
                 AND product_hit = #{product_hit}
             </if>
+
+            <if test="product_quantity != null">
+                AND product_quantity = #{product_quantity}
+            </if>
+
         </where>
     </select>
 
 
     <!--수량 증감-->
+
+    <update id="updateCart" parameterType="map">
+        UPDATE cart SET
+            product_quantity = product_quantity + #{product_quantity}
+        WHERE user_id = #{user_id} AND product_no = #{product_no}
+    </update>
+    <!--장바구니 제품 삭제-->
+    <delete id="deleteCart" parameterType="map">
+        DELETE FROM cart
+        WHERE product_no = #{product_no}
+    </delete>
     <update id="cartUpdate" parameterType="map">
         UPDATE cart SET
             product_amount = product_amount + #{product_amount}
@@ -99,6 +121,7 @@
     <delete id="cartDelete" parameterType="map">
         DELETE FROM cart
         WHERE user_id = #{user_id} AND product_no = #{product_no}
+
     </delete>
 
 

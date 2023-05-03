@@ -39,6 +39,20 @@ public class CartController {
         result = ShopService.addCart(pMap);
         return result;
     }
+    @PostMapping("/delete")
+    public int deleteCartItem(@RequestBody Map<String, Object> pMap) {
+        logger.info(pMap+"");
+        int result =0;
+        result = ShopService.deleteCart(pMap);
+        return result;
+    }
+    @PostMapping("/update")
+    public int updateCartItem(@RequestBody Map<String, Object> pMap) {
+        logger.info(pMap+"");
+        int result =0;
+        result = ShopService.updateCart(pMap);
+        return result;
+    }
 }
 
 
