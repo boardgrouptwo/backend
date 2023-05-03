@@ -38,10 +38,7 @@
         WHERE product_no = #{product_no}
     </update>
 
-    <select id="cartList" parameterType="map" resultType="map">
-        SELECT * from cart
-        WHERE user_id = #{user_id}
-    </select>
+
     <select id="productReceiveList" parameterType="map" resultType="map">
         SELECT * FROM product
         <where>
