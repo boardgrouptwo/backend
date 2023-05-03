@@ -30,22 +30,14 @@ public class UserService {
 
 
     public String login(LoginDto loginDto) {
-        logger.info(loginDto.getMem_id()+"");
-        logger.info(loginDto.getPassword()+"");
+
         UserDto userDto = userMapper.findUserByUsername(loginDto.getMem_id())
                 .orElseThrow(() -> new LoginFailedException("잘못된 아이디입니다"));
 
         if (!passwordEncoder.matches(loginDto.getPassword(), userDto.getPassword())) {
             throw new LoginFailedException("잘못된 비밀번호입니다");
         }
-        logger.info("성공");
-        logger.info(userDto+"");
-        logger.info(userDto.getUser_id());
-        logger.info(userDto.getUser_name());
-        logger.info(userDto.getPassword());
-        logger.info(userDto.getRole());
 
-        //return jwtTokenProvider.createToken(userDto.getPassword(), Collections.singletonList(userDto.getRole()), userDto.getUser_name());
         return jwtTokenProvider.createToken(userDto.getUser_id(), Collections.singletonList(userDto.getRole()), userDto.getUser_name());
     }
 
@@ -54,7 +46,6 @@ public class UserService {
         if (userMapper.findUserByUsername(userDto.getUser_id()).isPresent()) {
             throw new DuplicatedUserIdException("이미 가입된 유저입니다");
         }
-
 
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userMapper.save(userDto);
@@ -96,15 +87,13 @@ public class UserService {
         String password = pMap.get("user_password").toString();
         // 패스워드 인코딩
         pMap.put("user_password",passwordEncoder.encode(password));
-        logger.info(pMap+"");
         result = userMapper.changePw(pMap);
         return result;
     }
 
     public Map<String, Object> userInfo(Map<String, Object> pMap) {
-        logger.info("userInfo 호출");
-        Map<String, Object> rMap = null;
 
+        Map<String, Object> rMap = null;
         rMap = userMapper.userInfo(pMap);
 
         return rMap;
@@ -114,7 +103,7 @@ public class UserService {
         int result = 0;
         Map<String, Object> rMap = null;
         rMap = userMapper.duplicateCheck(pMap);
-        logger.info(rMap+"");
+
         try {
             if(rMap.size()!=0) {
                 result = 1;
@@ -126,11 +115,8 @@ public class UserService {
     }
 
     public int userUpdate(Map<String, Object> pMap) {
-        logger.info("userUpdate 호출");
         int result = 0;
-
         result = userMapper.userUpdate(pMap);
-
         return result;
     }
 }

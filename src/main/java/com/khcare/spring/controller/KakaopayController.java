@@ -96,7 +96,8 @@ public class KakaopayController {
             Properties p = new Properties();
             p.load(new FileReader(".env"));
 
-            String key = "KakaoAK " + p.getProperty("key");         // APP_ADMIN_KEY
+            String key = "KakaoAK " + p.getProperty("KAKAO_PAY_KEY");         // APP_ADMIN_KEY
+            logger.info(key);
 
             connServer.setRequestMethod("POST");
             connServer.setRequestProperty("Authorization", key);
@@ -201,7 +202,7 @@ public class KakaopayController {
             Properties p = new Properties();
             p.load(new FileReader(".env"));
 
-            String key = "KakaoAK " + p.getProperty("key");     // APP_ADMIN_KEY
+            String key = "KakaoAK " + p.getProperty("KAKAO_PAY_KEY");     // APP_ADMIN_KEY
 
             connServer.setRequestMethod("POST");
             connServer.setRequestProperty("Authorization", key);
@@ -321,15 +322,21 @@ public class KakaopayController {
             URL kakaoUrl = new URL("https://kapi.kakao.com/v1/payment/cancel");
             HttpURLConnection connServer = (HttpURLConnection) kakaoUrl.openConnection();
 
+            // .env를 읽어서 Properties에 저장
+            Properties p = new Properties();
+            p.load(new FileReader(".env"));
+
+            String key = "KakaoAK " + p.getProperty("KAKAO_PAY_KEY");     // APP_ADMIN_KEY
+
             connServer.setRequestMethod("POST");
-            connServer.setRequestProperty("Authorization", "KakaoAK 37852f978f6dc3768976fea78a63b045");     // APP_ADMIN_KEY
+            connServer.setRequestProperty("Authorization", key);     // APP_ADMIN_KEY
             connServer.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
             // 카카오서버로 접속 시도
             connServer.setDoOutput(true);
 
             // 송신 할 쿼리스트링
             // https://developers.kakao.com/docs/latest/ko/kakaopay/cancellation#cancellation-request
-            String tid = "test";    // 테스트용
+            String tid = kakaoPayDto.getTid();    // 테스트용
             String params = "cid=TC0ONETIME&tid=" + tid
                     +"&cancel_amount=2200&cancel_vat_amount=200&cancel_tax_free_amount=0&cancel_available_amount=4000";
 
