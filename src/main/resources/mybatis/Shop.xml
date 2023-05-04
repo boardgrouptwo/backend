@@ -70,6 +70,9 @@
     <select id="cartList" parameterType="map" resultType="map">
         SELECT * FROM cart
         <where>
+            <if test="user_id != null">
+                AND user_id = #{user_id}
+            </if>
             <if test="product_no != null">
                 AND product_no = #{product_no}
             </if>
