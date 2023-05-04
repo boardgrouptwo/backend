@@ -49,4 +49,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         result = scheduleDao.scheduleInsert(pMap);
         return result;
     }
+
+    @Override
+    public int scheduleSearch(Map<String, Object> pMap) {
+        int result = 0;
+        result = scheduleDao.scheduleSearch(pMap);
+        return result;
+    }
 }

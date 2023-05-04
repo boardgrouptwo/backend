@@ -59,7 +59,7 @@
                 <if test="elder_status != null">
                     , elder_status
                 </if>
-                , attendance_date
+                , att_date
             )
         VALUES (
                     #{elder_id}
@@ -73,7 +73,7 @@
                 <if test="elder_status != null">
                     , #{elder_status}
                 </if>
-                    , now()
+                    , #{att_date}
                )
     </insert>
 </mapper>

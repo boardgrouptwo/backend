@@ -15,4 +15,6 @@ public interface ScheduleService {
 
     //일정 추가
     int scheduleInsert(Map<String, Object>pMap);
+
+    int scheduleSearch(Map<String, Object> pMap);
 }

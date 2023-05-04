@@ -40,4 +40,11 @@ public class ScheduleDao {
         log.info("스케줄Dao" + pMap);
         return result;
     }
+
+    public int scheduleSearch(Map<String, Object> pMap) {
+        int result = 0;
+        result = sqlSessionTemplate.insert("scheduleSearch", pMap);
+        log.info("스케줄Dao" + pMap);
+        return result;
+    }
 }

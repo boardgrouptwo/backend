@@ -20,8 +20,9 @@ public class VisitManagerDao {
         return result;
     }
 
-    public int visitMUpdate(Map<String, Object> pMap) { int result = 0;
-        log.info(pMap.get("service_no").toString());
+    public int visitMUpdate(Map<String, Object> pMap) {
+        int result = 0;
+        log.info(pMap.get("visit_no").toString());
         result = sqlSessionTemplate.update("visitMUpdate", pMap);
         result = sqlSessionTemplate.update("visitMUpdate2", pMap);
         log.info(result);
@@ -31,7 +32,7 @@ public class VisitManagerDao {
     public List<Map<String, Object>> visitMList(Map<String, Object> pMap) {
         List<Map<String, Object>> bList = null;
         bList = sqlSessionTemplate.selectList("visitMList", pMap);
-        log.info("visitMList" + pMap);
+        log.info("visitMList" + bList);
         return bList;
     }
 

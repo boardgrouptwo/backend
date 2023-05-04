@@ -17,4 +17,11 @@ public interface ShopService {
 
     // 장바구니 추가
     int addCart(Map<String,Object> pMap);
+
+
+    //장바구니 삭제
+    int deleteCart(Map<String, Object> pMap);
+
+    int updateCart(Map<String, Object> pMap);
+
 }

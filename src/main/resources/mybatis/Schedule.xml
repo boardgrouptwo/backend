@@ -39,7 +39,21 @@
             ,cal_end=#{cal_end}
         WHERE cal_no = #{cal_num}
     </update>
-
+    <select id="scheduleSearch" parameterType="map" resultType="map">
+        SELECT cal_no, cal_title, cal_content, cal_start, cal_end, (SELECT COUNT(*) FROM calendar WHERE cal_title LIKE CONCAT('%', #{search}, '%')) as total_count
+        FROM calendar
+        <where>
+            <if test='cal_no != null'>
+                AND cal_no = #{cal_no}
+            </if>
+            <if test='search != null'>
+                AND cal_title LIKE '%' #{search} '%'
+            </if>
+        </where>
+        <if test="page != null">
+            LIMIT 10 OFFSET #{page}
+        </if>
+    </select>
 
 
     <select id="scheduleAfterBefore" resultType="map">

@@ -30,7 +30,7 @@ public class ScheduleController {
     //일정 추가
     @PostMapping("/scheduleInsert")
     public int scheduleInsert(@RequestBody Map<String,Object>pMap){
-        logger.info("일정추가");
+        logger.info("일정 추가");
         int result = 0;
         result = scheduleServiceImpl.scheduleInsert(pMap);
         return result;
@@ -47,9 +47,16 @@ public class ScheduleController {
     //예약취소메서드
     @GetMapping("scheduleDelete")
     public int scheduleDelete(@RequestParam Map<String, Object>pMap) {
-        logger.info("면회 취소");
+        logger.info("일정 삭제");
         int result =9;
         result = scheduleServiceImpl.scheduleDelete(pMap);
+        return result;
+    }
+    @GetMapping("scheduleSearch")
+    public int scheduleSearch(@RequestParam Map<String, Object>pMap){
+        logger.info("일정 검색");
+        int result =9;
+        result = scheduleServiceImpl.scheduleSearch(pMap);
         return result;
     }
 }
