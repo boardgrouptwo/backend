@@ -59,7 +59,7 @@
 
     <!--  사용자 총 후원 금액  -->
     <select id="sponsorUserSum" parameterType="java.util.HashMap" resultType="int">
-        SELECT SUM(sp.spon_money) AS spon_sum FROM sponsor AS sp INNER JOIN users AS us
+        SELECT SUM(sp.spon_money) AS spon_sum FROM sponsor AS sp INNER JOIN users AS us ON sp.user_id = us.user_name
         WHERE us.user_id = #{user_id}
     </select>
 
@@ -67,20 +67,20 @@
     <select id="sponStatistic" parameterType="java.util.HashMap" resultType="map" >
         SELECT
             u.user_id AS user_id
-            , u.user_name AS user_name
+            , s.user_id AS user_name
             , s.spon_date AS spon_date
             , s.spon_huwon AS spon_huwon
             , s.spon_money AS spon_money
             , s.spon_pay AS spon_pay
             , s.spon_open AS spon_open
             , s.spon_content AS spon_content
-            , (SELECT COUNT(*) FROM sponsor AS s INNER JOIN users AS u ON s.user_id = u.user_id
+            , (SELECT COUNT(*) FROM sponsor AS s LEFT JOIN users AS u ON s.user_id = u.user_name
                 <where>
                     <if test="user_name != null and user_name != ''">
-                        AND u.user_name LIKE CONCAT('%', #{user_name}, '%')
+                        AND s.user_id LIKE CONCAT('%', #{user_name}, '%')
                     </if>
                     <if test="user_id != null and user_id != ''">
-                        AND s.user_id LIKE CONCAT('%', #{user_id}, '%')
+                        AND u.user_id LIKE CONCAT('%', #{user_id}, '%')
                     </if>
                     <if test="start_date != null and start_date != ''">
                         AND s.spon_date &gt; #{start_date}
@@ -99,13 +99,13 @@
                     </if>
                 </where>
             ) as total_count
-        FROM sponsor AS s INNER JOIN users AS u ON s.user_id = u.user_id
+        FROM sponsor AS s LEFT JOIN users AS u ON s.user_id = u.user_name
         <where>
             <if test="user_name != null and user_name != ''">
-                AND u.user_name LIKE CONCAT('%', #{user_name}, '%')
+                AND s.user_id LIKE CONCAT('%', #{user_name}, '%')
             </if>
             <if test="user_id != null and user_id != ''">
-                AND s.user_id LIKE CONCAT('%', #{user_id}, '%')
+                AND u.user_id LIKE CONCAT('%', #{user_id}, '%')
             </if>
             <if test="start_date != null and start_date != ''">
                 AND s.spon_date &gt; #{start_date}
