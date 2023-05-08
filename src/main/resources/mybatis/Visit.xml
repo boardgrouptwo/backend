@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.khcare.spring">
     <select id="visitList" parameterType="map" resultType="map">
-        SELECT visit_no,user_id,visit_volume,visit_date,service_chk
+        SELECT visit_no,user_id,visit_volume,visit_date,service_check
         FROM visit
         <where>
             <if test="visit_no != null">
@@ -19,8 +19,8 @@
             <if test="visit_date != null">
                 AND visit_date = #{visit_date}
             </if>
-            <if test="service_chk != null">
-                AND service_chk = #{service_chk}
+            <if test="service_check != null">
+                AND service_check = #{service_check}
             </if>
 
         </where>

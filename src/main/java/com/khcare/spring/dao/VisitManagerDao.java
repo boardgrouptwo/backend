@@ -24,6 +24,7 @@ public class VisitManagerDao {
         int result = 0;
         log.info(pMap.get("visit_no").toString());
         result = sqlSessionTemplate.update("visitMUpdate", pMap);
+        log.info(result);
         result = sqlSessionTemplate.update("visitMUpdate2", pMap);
         log.info(result);
         return result;

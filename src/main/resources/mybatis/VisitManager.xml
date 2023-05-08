@@ -21,7 +21,7 @@
 
     <update id="visitMUpdate" parameterType="map">
         UPDATE visit
-        SET service_chk = 1
+        SET service_check = 1
         <where>
             <if test="visit_no != null and visit_no.size() > 0">
                 AND visit_no IN
@@ -34,7 +34,7 @@
 
     <update id="visitMUpdate2" parameterType="map">
         UPDATE visit
-        SET service_chk = 0
+        SET service_check = 0
         <if test="visit_no != null and visit_no.size() > 0">
             WHERE visit_no NOT IN
             <foreach collection="visit_no" item="item" index="index" open="(" separator="," close=")">
@@ -46,7 +46,7 @@
 
 
     <select id="visitMList" parameterType="map" resultType="map">
-        SELECT v.visit_no, v.user_id, v.visit_date, v.visit_time, v.visit_volume, e.elder_name, v.service_chk
+        SELECT v.visit_no, v.user_id, v.visit_date, v.visit_time, v.visit_volume, e.elder_name, v.service_check
         FROM visit v
         INNER JOIN elders e ON v.user_id = e.elder_id
         <where>
@@ -69,8 +69,8 @@
             <if test="visit_time != null">
                 AND v.visit_time = #{visit_time}
             </if>
-            <if test="service_chk != null">
-                AND v.service_chk = #{service_chk}
+            <if test="service_check != null">
+                AND v.service_check = #{service_check}
             </if>
         </where>
         <if test="visit_no != null">
